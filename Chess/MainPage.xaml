@@ -8,7 +8,7 @@
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    <Grid>
+    <Grid x:Name="maingrid">
         <Grid.RowDefinitions>
             <RowDefinition Height="72"/>
             <RowDefinition Height="72"/>
@@ -35,6 +35,106 @@
             <ColumnDefinition Width="356"/>
         </Grid.ColumnDefinitions>
 
+        <Border Grid.Column="1" Grid.Row="1" Background="Brown" />
+        <Border Grid.Column="2" Grid.Row="1" Background="Tan" />
+        <Border Grid.Column="3" Grid.Row="1" Background="Brown" />
+        <Border Grid.Column="4" Grid.Row="1" Background="Tan" />
+        <Border Grid.Column="5" Grid.Row="1" Background="Brown" />
+        <Border Grid.Column="6" Grid.Row="1" Background="Tan" />
+        <Border Grid.Column="7" Grid.Row="1" Background="Brown" />
+        <Border Grid.Column="8" Grid.Row="1" Background="Tan" />
+        <Border Grid.Column="1" Grid.Row="2" Background="Tan" />
+        <Border Grid.Column="2" Grid.Row="2" Background="Brown" />
+        <Border Grid.Column="3" Grid.Row="2" Background="Tan" />
+        <Border Grid.Column="4" Grid.Row="2" Background="Brown" />
+        <Border Grid.Column="5" Grid.Row="2" Background="Tan" />
+        <Border Grid.Column="6" Grid.Row="2" Background="Brown" />
+        <Border Grid.Column="7" Grid.Row="2" Background="Tan" />
+        <Border Grid.Column="8" Grid.Row="2" Background="Brown" />
+        <Border Grid.Column="1" Grid.Row="3" Background="Brown" />
+        <Border Grid.Column="2" Grid.Row="3" Background="Tan" />
+        <Border Grid.Column="3" Grid.Row="3" Background="Brown" />
+        <Border Grid.Column="4" Grid.Row="3" Background="Tan" />
+        <Border Grid.Column="5" Grid.Row="3" Background="Brown" />
+        <Border Grid.Column="6" Grid.Row="3" Background="Tan" />
+        <Border Grid.Column="7" Grid.Row="3" Background="Brown" />
+        <Border Grid.Column="8" Grid.Row="3" Background="Tan" />
+        <Border Grid.Column="1" Grid.Row="4" Background="Tan" />
+        <Border Grid.Column="2" Grid.Row="4" Background="Brown" />
+        <Border Grid.Column="3" Grid.Row="4" Background="Tan" />
+        <Border Grid.Column="4" Grid.Row="4" Background="Brown" />
+        <Border Grid.Column="5" Grid.Row="4" Background="Tan" />
+        <Border Grid.Column="6" Grid.Row="4" Background="Brown" />
+        <Border Grid.Column="7" Grid.Row="4" Background="Tan" />
+        <Border Grid.Column="8" Grid.Row="4" Background="Brown" />
+        <Border Grid.Column="1" Grid.Row="5" Background="Brown" />
+        <Border Grid.Column="2" Grid.Row="5" Background="Tan" />
+        <Border Grid.Column="3" Grid.Row="5" Background="Brown" />
+        <Border Grid.Column="4" Grid.Row="5" Background="Tan" />
+        <Border Grid.Column="5" Grid.Row="5" Background="Brown" />
+        <Border Grid.Column="6" Grid.Row="5" Background="Tan" />
+        <Border Grid.Column="7" Grid.Row="5" Background="Brown" />
+        <Border Grid.Column="8" Grid.Row="5" Background="Tan" />
+        <Border Grid.Column="1" Grid.Row="6" Background="Tan" />
+        <Border Grid.Column="2" Grid.Row="6" Background="Brown" />
+        <Border Grid.Column="3" Grid.Row="6" Background="Tan" />
+        <Border Grid.Column="4" Grid.Row="6" Background="Brown" />
+        <Border Grid.Column="5" Grid.Row="6" Background="Tan" />
+        <Border Grid.Column="6" Grid.Row="6" Background="Brown" />
+        <Border Grid.Column="7" Grid.Row="6" Background="Tan" />
+        <Border Grid.Column="8" Grid.Row="6" Background="Brown" />
+        <Border Grid.Column="1" Grid.Row="7" Background="Brown" />
+        <Border Grid.Column="2" Grid.Row="7" Background="Tan" />
+        <Border Grid.Column="3" Grid.Row="7" Background="Brown" />
+        <Border Grid.Column="4" Grid.Row="7" Background="Tan" />
+        <Border Grid.Column="5" Grid.Row="7" Background="Brown" />
+        <Border Grid.Column="6" Grid.Row="7" Background="Tan" />
+        <Border Grid.Column="7" Grid.Row="7" Background="Brown" />
+        <Border Grid.Column="8" Grid.Row="7" Background="Tan" />
+        <Border Grid.Column="1" Grid.Row="8" Background="Tan" />
+        <Border Grid.Column="2" Grid.Row="8" Background="Brown" />
+        <Border Grid.Column="3" Grid.Row="8" Background="Tan" />
+        <Border Grid.Column="4" Grid.Row="8" Background="Brown" />
+        <Border Grid.Column="5" Grid.Row="8" Background="Tan" />
+        <Border Grid.Column="6" Grid.Row="8" Background="Brown" />
+        <Border Grid.Column="7" Grid.Row="8" Background="Tan" />
+        <Border Grid.Column="8" Grid.Row="8" Background="Brown" />
+
+        <Image x:Name="wrook1" Grid.Column="1" Grid.Row="1" Width="72" Source="/assets/wrook1.png" />
+        <Image Grid.Column="2" Grid.Row="1" Width="72" Source="/assets/wknight1.png" />
+        <Image Grid.Column="3" Grid.Row="1" Width="72" Source="/assets/wbishop1.png" />
+        <Image Grid.Column="4" Grid.Row="1" Width="72" Source="/assets/wqueen.png" /> 
+        <Image Grid.Column="5" Grid.Row="1" Width="72" Source="/assets/wking.png" />
+        <Image Grid.Column="6" Grid.Row="1" Width="72" Source="/assets/wbishop2.png" />
+        <Image Grid.Column="7" Grid.Row="1" Width="72" Source="/assets/wknight2.png" />
+        
+        <Image Grid.Column="1" Grid.Row="2" Width="72" Source="/assets/wpawn1.png" />
+        <Image Grid.Column="2" Grid.Row="2" Width="72" Source="/assets/wpawn2.png" />
+        <Image Grid.Column="3" Grid.Row="2" Width="72" Source="/assets/wpawn3.png" />
+        <Image Grid.Column="4" Grid.Row="2" Width="72" Source="/assets/wpawn4.png" />
+        <Image Grid.Column="5" Grid.Row="2" Width="72" Source="/assets/wpawn5.png" />
+        <Image Grid.Column="6" Grid.Row="2" Width="72" Source="/assets/wpawn6.png" />
+        <Image Grid.Column="7" Grid.Row="2" Width="72" Source="/assets/wpawn7.png" />
+        <Image Grid.Column="8" Grid.Row="2" Width="72" Source="/assets/wpawn8.png" />
+
+        <Image Grid.Column="1" Grid.Row="8" Width="72" Source="/assets/brook1.png" />
+        <Image Grid.Column="2" Grid.Row="8" Width="72" Source="/assets/bknight1.png" />
+        <Image Grid.Column="3" Grid.Row="8" Width="72" Source="/assets/bbishop1.png" />
+        <Image Grid.Column="4" Grid.Row="8" Width="72" Source="/assets/bking.png" />
+        <Image Grid.Column="5" Grid.Row="8" Width="72" Source="/assets/bqueen.png" />
+        <Image Grid.Column="6" Grid.Row="8" Width="72" Source="/assets/bbishop2.png" />
+        <Image Grid.Column="7" Grid.Row="8" Width="72" Source="/assets/bknight2.png" />
+        <Image Grid.Column="8" Grid.Row="8" Width="72" Source="/assets/brook2.png" />
+        <Image Grid.Column="1" Grid.Row="7" Width="72" Source="/assets/bpawn1.png" />
+        <Image Grid.Column="2" Grid.Row="7" Width="72" Source="/assets/bpawn2.png" />
+        <Image Grid.Column="3" Grid.Row="7" Width="72" Source="/assets/bpawn3.png" />
+        <Image Grid.Column="4" Grid.Row="7" Width="72" Source="/assets/bpawn4.png" />
+        <Image Grid.Column="5" Grid.Row="7" Width="72" Source="/assets/bpawn5.png" />
+        <Image Grid.Column="6" Grid.Row="7" Width="72" Source="/assets/bpawn6.png" />
+        <Image Grid.Column="7" Grid.Row="7" Width="72" Source="/assets/bpawn7.png" />
+        <Image Grid.Column="8" Grid.Row="7" Width="72" Source="/assets/bpawn8.png" />
+
+        <Button Grid.Column="1" Grid.Row="1" Width="72" Height="72" Opacity="0" Click="Select"></Button>
     </Grid>
 
 </Page>
