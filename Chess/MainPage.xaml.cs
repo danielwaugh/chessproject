@@ -23,23 +23,32 @@ namespace Chess
     /// </summary>
     public sealed partial class MainPage : Page
     {
+
         public MainPage()
         {
             this.InitializeComponent();
-            Image img = new Image();
-            BitmapImage bitmapImage = new BitmapImage();
-            Uri uri = new Uri("ms-appx:///Assets/wrook2.png");
-            bitmapImage.UriSource = uri;
-            img.Source = bitmapImage;
-            img.Width = bitmapImage.DecodePixelWidth = 72;
-            Grid.SetColumn(img, 1);
-            Grid.SetRow(img, 3);
+
         }
 
         private void Select(object sender, RoutedEventArgs e)
         {
-            Grid.SetColumn(wrook1, 1);
-            Grid.SetRow(wrook1, 3);
+            Button curButton = sender as Button;
+            
+            Grid.SetColumn(curButton, 1);
+            Grid.SetRow(curButton, 3);
+        }
+        private void PawnSingleMoveWhite(object sender, RoutedEventArgs e)
+        {
+            Button curButton = sender as Button;
+            int currentRow = Grid.GetRow(curButton);
+            Grid.SetRow(curButton, ++currentRow);
+        }
+
+        private void PawnSingleMoveBlack(object sender, RoutedEventArgs e)
+        {
+            Button curButton = sender as Button;
+            int currentRow = Grid.GetRow(curButton);
+            Grid.SetRow(curButton, --currentRow);
         }
     }
 }
