@@ -14,41 +14,59 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using Windows.UI.Xaml.Media.Imaging;
 
-// The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
-
 namespace Chess
 {
-    /// <summary>
-    /// An empty page that can be used on its own or navigated to within a Frame.
-    /// </summary>
     public sealed partial class MainPage : Page
     {
+        Board chessBoard = new Board();
+
+        bool selectFlag = true;
 
         public MainPage()
         {
             this.InitializeComponent();
-
+            UIGlobal.XAMLpage = this;
         }
 
-        private void Select(object sender, RoutedEventArgs e)
+        public Grid getGrid()
         {
-            Button curButton = sender as Button;
-            
-            Grid.SetColumn(curButton, 1);
-            Grid.SetRow(curButton, 3);
+            return maingrid;
         }
-        private void PawnSingleMoveWhite(object sender, RoutedEventArgs e)
+        private void SelectPiece(object sender, RoutedEventArgs e)
+        {
+            Button currentPieceButton = (Button)sender;
+            int currentPieceNumber = 0;
+            currentPieceNumber = Convert.ToInt32(currentPieceButton.Name.Substring(1));
+
+            if (selectFlag || chessBoard.finishedMoveFlag)
+            {
+                chessBoard.SelectPiece(currentPieceNumber, currentPieceButton);
+                selectFlag = false;
+            }
+            else
+            {
+                chessBoard.UnselectPiece(currentPieceNumber);
+                selectFlag = true;
+            }
+
+
+        }
+
+        /*private void PawnSingleMoveWhite(object sender, RoutedEventArgs e)
         {
             Button curButton = sender as Button;
             int currentRow = Grid.GetRow(curButton);
             Grid.SetRow(curButton, ++currentRow);
-        }
+        }*/
 
-        private void PawnSingleMoveBlack(object sender, RoutedEventArgs e)
+    }
+    public static class UIGlobal
+    {
+        public static MainPage XAMLpage { get; set; }
+
+        public static Grid getGrid()
         {
-            Button curButton = sender as Button;
-            int currentRow = Grid.GetRow(curButton);
-            Grid.SetRow(curButton, --currentRow);
+            return XAMLpage.getGrid();
         }
     }
 }
