@@ -24,9 +24,12 @@ namespace Chess
 
         public bool finishedMoveFlag = false;
 
+        private int turn;       //holds whos turn it is
+
 
         public Board()
         {
+            turn = 0;
         }
 
         public void SelectPiece(int pieceNumber, Button piece)
@@ -92,6 +95,43 @@ namespace Chess
             piecePositions[Convert.ToInt32(rowCol[0]) - 1, Convert.ToInt32(rowCol[1]) - 1] = curPieceNumber;
             UnselectPiece(curPieceNumber);
             finishedMoveFlag = true;
+            ChangeTurn();
+        }
+
+        public void ChangeTurn()
+        {
+            if (turn == 0)
+            {
+                for(int i = 1; i < 17; i++)
+                {
+                    Button curButton = UIGlobal.XAMLpage.FindName($"p{i}") as Button;
+                    curButton.IsEnabled = false;
+                    curButton.Opacity = .7;
+                }
+                for(int i = 17; i < 33; i++)
+                {
+                    Button curButton = UIGlobal.XAMLpage.FindName($"p{i}") as Button;
+                    curButton.IsEnabled = true;
+                    curButton.Opacity = 1;
+                }
+                turn = 1;
+            }
+            else
+            {
+                for (int i = 1; i < 17; i++)
+                {
+                    Button curButton = UIGlobal.XAMLpage.FindName($"p{i}") as Button;
+                    curButton.IsEnabled = true;
+                    curButton.Opacity = 1;
+                }
+                for (int i = 17; i < 33; i++)
+                {
+                    Button curButton = UIGlobal.XAMLpage.FindName($"p{i}") as Button;
+                    curButton.IsEnabled = false;
+                    curButton.Opacity = .7;
+                }
+                turn = 0;
+            }
         }
     }
 }

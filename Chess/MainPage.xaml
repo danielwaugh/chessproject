@@ -100,193 +100,193 @@
         <Border Grid.Column="7" Grid.Row="8" Background="Tan" />
         <Border Grid.Column="8" Grid.Row="8" Background="Brown" />
 
-        <Button Grid.Column="1" Grid.Row="1" Width="72" Height="72" Click="SelectPiece" Name="p1">
+        <Button IsEnabled="True" Opacity="1" Grid.Column="1" Grid.Row="1" Width="72" Height="72" Click="SelectPiece" Name="p1">
             <Button.Background>
                 <SolidColorBrush Opacity="0"/>
             </Button.Background>
             <Image Source="/assets/wrook1.png" />
         </Button>
-        <Button Grid.Column="2" Grid.Row="1" Width="72" Height="72" Click="SelectPiece" Name="p2">
+        <Button IsEnabled="True" Opacity="1" Grid.Column="2" Grid.Row="1" Width="72" Height="72" Click="SelectPiece" Name="p2">
             <Button.Background>
                 <SolidColorBrush Opacity="0"/>
             </Button.Background>
             <Image Source="/assets/wknight1.png" />
         </Button>
-        <Button Grid.Column="3" Grid.Row="1" Width="72" Height="72" Click="SelectPiece" Name="p3">
+        <Button IsEnabled="True" Opacity="1" Grid.Column="3" Grid.Row="1" Width="72" Height="72" Click="SelectPiece" Name="p3">
             <Button.Background>
                 <SolidColorBrush Opacity="0"/>
             </Button.Background>
             <Image Source="/assets/wbishop1.png" />
         </Button>
-        <Button Grid.Column="4" Grid.Row="1" Width="72" Height="72" Click="SelectPiece" Name="p4">
+        <Button IsEnabled="True" Opacity="1" Grid.Column="4" Grid.Row="1" Width="72" Height="72" Click="SelectPiece" Name="p4">
             <Button.Background>
                 <SolidColorBrush Opacity="0"/>
             </Button.Background>
             <Image Source="/assets/wqueen.png" />
         </Button>
-        <Button Grid.Column="5" Grid.Row="1" Width="72" Height="72" Click="SelectPiece" Name="p5">
+        <Button IsEnabled="True" Opacity="1" Grid.Column="5" Grid.Row="1" Width="72" Height="72" Click="SelectPiece" Name="p5">
             <Button.Background>
                 <SolidColorBrush Opacity="0"/>
             </Button.Background>
             <Image Source="/assets/wking.png" />
         </Button>
-        <Button Grid.Column="6" Grid.Row="1" Width="72" Height="72" Click="SelectPiece" Name="p6">
+        <Button IsEnabled="True" Opacity="1" Grid.Column="6" Grid.Row="1" Width="72" Height="72" Click="SelectPiece" Name="p6">
             <Button.Background>
                 <SolidColorBrush Opacity="0"/>
             </Button.Background>
             <Image Source="/assets/wbishop2.png" />
         </Button>
-        <Button Grid.Column="7" Grid.Row="1" Width="72" Height="72" Click="SelectPiece" Name="p7">
+        <Button IsEnabled="True" Opacity="1" Grid.Column="7" Grid.Row="1" Width="72" Height="72" Click="SelectPiece" Name="p7">
             <Button.Background>
                 <SolidColorBrush Opacity="0"/>
             </Button.Background>
             <Image Source="/assets/wknight2.png" />
         </Button>
-        <Button Grid.Column="8" Grid.Row="1" Width="72" Height="72" Click="SelectPiece" Name="p8">
+        <Button IsEnabled="True" Opacity="1" Grid.Column="8" Grid.Row="1" Width="72" Height="72" Click="SelectPiece" Name="p8">
             <Button.Background>
                 <SolidColorBrush Opacity="0"/>
             </Button.Background>
             <Image Source="/assets/wrook2.png" />
         </Button>
-        <Button Grid.Column="1" Grid.Row="2" Width="72" Height="72" Click="SelectPiece" Name="p9">
+        <Button IsEnabled="True" Opacity="1" Grid.Column="1" Grid.Row="2" Width="72" Height="72" Click="SelectPiece" Name="p9">
             <Button.Background>
                 <SolidColorBrush Opacity="0"/>
             </Button.Background>
             <Image Source="/assets/wpawn1.png" />
         </Button>
-        <Button Grid.Column="2" Grid.Row="2" Width="72" Height="72" Click="SelectPiece" Name="p10">
+        <Button IsEnabled="True" Opacity="1" Grid.Column="2" Grid.Row="2" Width="72" Height="72" Click="SelectPiece" Name="p10">
             <Button.Background>
                 <SolidColorBrush Opacity="0"/>
             </Button.Background>
             <Image Source="/assets/wpawn2.png" />
         </Button>
-        <Button Grid.Column="3" Grid.Row="2" Width="72" Height="72" Click="SelectPiece" Name="p11">
+        <Button IsEnabled="True" Opacity="1" Grid.Column="3" Grid.Row="2" Width="72" Height="72" Click="SelectPiece" Name="p11">
             <Button.Background>
                 <SolidColorBrush Opacity="0"/>
             </Button.Background>
             <Image Source="/assets/wpawn3.png" />
         </Button>
-        <Button Grid.Column="4" Grid.Row="2" Width="72" Height="72" Click="SelectPiece" Name="p12">
+        <Button IsEnabled="True" Opacity="1" Grid.Column="4" Grid.Row="2" Width="72" Height="72" Click="SelectPiece" Name="p12">
             <Button.Background>
                 <SolidColorBrush Opacity="0"/>
             </Button.Background>
             <Image Source="/assets/wpawn4.png" />
         </Button>
-        <Button Grid.Column="5" Grid.Row="2" Width="72" Height="72" Click="SelectPiece" Name="p13">
+        <Button IsEnabled="True" Opacity="1" Grid.Column="5" Grid.Row="2" Width="72" Height="72" Click="SelectPiece" Name="p13">
             <Button.Background>
                 <SolidColorBrush Opacity="0"/>
             </Button.Background>
             <Image Source="/assets/wpawn5.png" />
         </Button>
-        <Button Grid.Column="6" Grid.Row="2" Width="72" Height="72" Click="SelectPiece" Name="p14">
+        <Button IsEnabled="True" Opacity="1" Grid.Column="6" Grid.Row="2" Width="72" Height="72" Click="SelectPiece" Name="p14">
             <Button.Background>
                 <SolidColorBrush Opacity="0"/>
             </Button.Background>
             <Image Source="/assets/wpawn6.png" />
         </Button>
-        <Button Grid.Column="7" Grid.Row="2" Width="72" Height="72" Click="SelectPiece" Name="p15">
+        <Button IsEnabled="True" Opacity="1" Grid.Column="7" Grid.Row="2" Width="72" Height="72" Click="SelectPiece" Name="p15">
             <Button.Background>
                 <SolidColorBrush Opacity="0"/>
             </Button.Background>
             <Image Source="/assets/wpawn7.png" />
         </Button>
-        <Button Grid.Column="8" Grid.Row="2" Width="72" Height="72" Click="SelectPiece" Name="p16">
+        <Button IsEnabled="True" Opacity="1" Grid.Column="8" Grid.Row="2" Width="72" Height="72" Click="SelectPiece" Name="p16">
             <Button.Background>
                 <SolidColorBrush Opacity="0"/>
             </Button.Background>
             <Image Source="/assets/wpawn8.png" />
         </Button>
-        <Button Grid.Column="1" Grid.Row="7" Width="72" Height="72" Click="SelectPiece" Name="p17">
+        <Button IsEnabled="False" Opacity=".7" Grid.Column="1" Grid.Row="7" Width="72" Height="72" Click="SelectPiece" Name="p17">
             <Button.Background>
-                <SolidColorBrush Opacity="0"/>
+                <SolidColorBrush Opacity=".5"/>
             </Button.Background>
             <Image Source="/assets/bpawn1.png" />
         </Button>
-        <Button Grid.Column="2" Grid.Row="7" Width="72" Height="72" Click="SelectPiece" Name="p18">
+        <Button IsEnabled="False" Opacity=".7" Grid.Column="2" Grid.Row="7" Width="72" Height="72" Click="SelectPiece" Name="p18">
             <Button.Background>
                 <SolidColorBrush Opacity="0"/>
             </Button.Background>
             <Image Source="/assets/bpawn2.png" />
         </Button>
-        <Button Grid.Column="3" Grid.Row="7" Width="72" Height="72" Click="SelectPiece" Name="p19">
+        <Button IsEnabled="False" Opacity=".7" Grid.Column="3" Grid.Row="7" Width="72" Height="72" Click="SelectPiece" Name="p19" FocusVisualPrimaryBrush="Transparent" Foreground="Transparent">
             <Button.Background>
                 <SolidColorBrush Opacity="0"/>
             </Button.Background>
             <Image Source="/assets/bpawn3.png" />
         </Button>
-        <Button Grid.Column="4" Grid.Row="7" Width="72" Height="72" Click="SelectPiece" Name="p20">
+        <Button IsEnabled="False" Opacity=".7" Grid.Column="4" Grid.Row="7" Width="72" Height="72" Click="SelectPiece" Name="p20">
             <Button.Background>
                 <SolidColorBrush Opacity="0"/>
             </Button.Background>
             <Image Source="/assets/bpawn4.png" />
         </Button>
-        <Button Grid.Column="5" Grid.Row="7" Width="72" Height="72" Click="SelectPiece" Name="p21">
+        <Button IsEnabled="False" Opacity=".7" Grid.Column="5" Grid.Row="7" Width="72" Height="72" Click="SelectPiece" Name="p21">
             <Button.Background>
                 <SolidColorBrush Opacity="0"/>
             </Button.Background>
             <Image Source="/assets/bpawn5.png" />
         </Button>
-        <Button Grid.Column="6" Grid.Row="7" Width="72" Height="72" Click="SelectPiece" Name="p22">
+        <Button IsEnabled="False" Opacity=".7" Grid.Column="6" Grid.Row="7" Width="72" Height="72" Click="SelectPiece" Name="p22">
             <Button.Background>
                 <SolidColorBrush Opacity="0"/>
             </Button.Background>
             <Image Source="/assets/bpawn6.png" />
         </Button>
-        <Button Grid.Column="7" Grid.Row="7" Width="72" Height="72" Click="SelectPiece" Name="p23">
+        <Button IsEnabled="False" Opacity=".7" Grid.Column="7" Grid.Row="7" Width="72" Height="72" Click="SelectPiece" Name="p23">
             <Button.Background>
                 <SolidColorBrush Opacity="0"/>
             </Button.Background>
             <Image Source="/assets/bpawn7.png" />
         </Button>
-        <Button Grid.Column="8" Grid.Row="7" Width="72" Height="72" Click="SelectPiece" Name="p24">
+        <Button IsEnabled="False" Opacity=".7" Grid.Column="8" Grid.Row="7" Width="72" Height="72" Click="SelectPiece" Name="p24">
             <Button.Background>
                 <SolidColorBrush Opacity="0"/>
             </Button.Background>
             <Image Source="/assets/bpawn8.png" />
         </Button>
-        <Button Grid.Column="1" Grid.Row="8" Width="72" Height="72" Click="SelectPiece" Name="p25">
+        <Button IsEnabled="False" Opacity=".7" Grid.Column="1" Grid.Row="8" Width="72" Height="72" Click="SelectPiece" Name="p25">
             <Button.Background>
                 <SolidColorBrush Opacity="0"/>
             </Button.Background>
             <Image Source="/assets/brook1.png" />
         </Button>
-        <Button Grid.Column="2" Grid.Row="8" Width="72" Height="72" Click="SelectPiece" Name="p26">
+        <Button IsEnabled="False" Opacity=".7" Grid.Column="2" Grid.Row="8" Width="72" Height="72" Click="SelectPiece" Name="p26">
             <Button.Background>
                 <SolidColorBrush Opacity="0"/>
             </Button.Background>
             <Image Source="/assets/bknight1.png" />
         </Button>
-        <Button Grid.Column="3" Grid.Row="8" Width="72" Height="72" Click="SelectPiece" Name="p27">
+        <Button IsEnabled="False" Opacity=".7" Grid.Column="3" Grid.Row="8" Width="72" Height="72" Click="SelectPiece" Name="p27">
             <Button.Background>
                 <SolidColorBrush Opacity="0"/>
             </Button.Background>
             <Image Source="/assets/bbishop1.png" />
         </Button>
-        <Button Grid.Column="4" Grid.Row="8" Width="72" Height="72" Click="SelectPiece" Name="p28">
+        <Button IsEnabled="False" Opacity=".7" Grid.Column="4" Grid.Row="8" Width="72" Height="72" Click="SelectPiece" Name="p28">
             <Button.Background>
                 <SolidColorBrush Opacity="0"/>
             </Button.Background>
             <Image Source="/assets/bqueen.png" />
         </Button>
-        <Button Grid.Column="5" Grid.Row="8" Width="72" Height="72" Click="SelectPiece" Name="p29">
+        <Button IsEnabled="False" Opacity=".7" Grid.Column="5" Grid.Row="8" Width="72" Height="72" Click="SelectPiece" Name="p29">
             <Button.Background>
                 <SolidColorBrush Opacity="0"/>
             </Button.Background>
             <Image Source="/assets/bking.png" />
         </Button>
-        <Button Grid.Column="6" Grid.Row="8" Width="72" Height="72" Click="SelectPiece" Name="p30">
+        <Button IsEnabled="False" Opacity=".7" Grid.Column="6" Grid.Row="8" Width="72" Height="72" Click="SelectPiece" Name="p30">
             <Button.Background>
                 <SolidColorBrush Opacity="0"/>
             </Button.Background>
             <Image Source="/assets/bbishop2.png" />
         </Button>
-        <Button Grid.Column="7" Grid.Row="8" Width="72" Height="72" Click="SelectPiece" Name="p31">
+        <Button IsEnabled="False" Opacity=".7" Grid.Column="7" Grid.Row="8" Width="72" Height="72" Click="SelectPiece" Name="p31">
             <Button.Background>
                 <SolidColorBrush Opacity="0"/>
             </Button.Background>
             <Image Source="/assets/bknight2.png" />
         </Button>
-        <Button Grid.Column="8" Grid.Row="8" Width="72" Height="72" Click="SelectPiece" Name="p32">
+        <Button IsEnabled="False" Opacity=".7" Grid.Column="8" Grid.Row="8" Width="72" Height="72" Click="SelectPiece" Name="p32">
             <Button.Background>
                 <SolidColorBrush Opacity="0"/>
             </Button.Background>
