@@ -35,6 +35,9 @@ namespace Chess
         private void SelectPiece(object sender, RoutedEventArgs e)
         {
             Button currentPieceButton = (Button)sender;
+            //currentPieceButton.IsEnabled = false;
+            //SolidColorBrush val = new SolidColorBrush();
+            //val = currentPieceButton.
             int currentPieceNumber = 0;
             currentPieceNumber = Convert.ToInt32(currentPieceButton.Name.Substring(1));
 
