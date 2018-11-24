@@ -292,6 +292,25 @@
             </Button.Background>
             <Image Source="/assets/brook2.png" />
         </Button>
+        <TextBlock HorizontalAlignment="Left" Grid.Row="4" Text="Player 1 Captured" TextWrapping="Wrap" Width="122" Margin="192,36,0,13" VerticalAlignment="Stretch"/>
+        <TextBlock HorizontalAlignment="Left" Grid.Row="4" Text="Player 2 Captured" TextWrapping="Wrap" Width="122" Margin="45,36,0,13" Grid.Column="9"/>
+        <Border Grid.Column="9" Grid.Row="5" Background="White" Margin="31,0,253,0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
+        <Border Grid.Column="9" Grid.Row="5" Background="White" Margin="103,0,181,0" Height="72" VerticalAlignment="Center" />
+        <Border Grid.Column="9" Grid.Row="6" Background="White" Margin="31,0,253,0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
+        <Border Grid.Column="9" Grid.Row="6" Background="White" Margin="103,0,181,0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
+        <Border Grid.Column="9" Grid.Row="7" Background="White" Margin="31,0,253,0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
+        <Border Grid.Column="9" Grid.Row="7" Background="White" Margin="103,0,181,0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
+        <Border Grid.Column="9" Grid.Row="5" Background="White" Margin="31,0,253,0" />
+        <Border Grid.Column="9" Grid.Row="8" Background="White" Margin="31,0,253,0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
+        <Border Grid.Column="9" Grid.Row="8" Background="White" Margin="103,0,181,0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
+        <Border Grid.Row="5" Background="White" Margin="173,0,111,0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
+        <Border Grid.Row="5" Background="White" Margin="245,0,39,0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
+        <Border Grid.Row="6" Background="White" Margin="173,0,111,0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
+        <Border Grid.Row="6" Background="White" Margin="245,0,39,0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
+        <Border Grid.Row="7" Background="White" Margin="173,0,111,0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
+        <Border Grid.Row="7" Background="White" Margin="245,0,39,0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
+        <Border Grid.Row="8" Background="White" Margin="173,0,111,0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
+        <Border Grid.Row="8" Background="White" Margin="244,0,40,0" />
 
     </Grid>
 

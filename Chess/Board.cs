@@ -36,29 +36,67 @@ namespace Chess
         {
             finishedMoveFlag = false;
             currentPiece = piece;
-            for (int i = 0; i < 8; i++)
+            for (int i = 0; i < 8; i++) //Nested for loop to find selected piece location
             {
                 for (int j = 0; j < 8; j++)
                 {
-                    if (piecePositions[i,j] == 0)
-                    {
-                        Button curButton = new Button();
-                        curButton.Width = 72;
-                        curButton.Height = 72;
-                        curButton.Name = $"{i + 1},{j + 1}";
-                        Grid.SetRow(curButton, i + 1);
-                        Grid.SetColumn(curButton, j + 1);
-                        curButton.Click += Move;
-                        UIGlobal.XAMLpage.getGrid().Children.Add(curButton);
-                        emptyLocations[i, j] = 1;
-                        emptyButtons.Add(curButton);
-                    }
                     if (piecePositions[i, j] == pieceNumber)
                     {
                         selectedPiece[i, j] = 1;
                     }
                 }
             }
+            if (pieceNumber == 1 || pieceNumber == 8 || pieceNumber == 25 || pieceNumber == 32) //Checks if piece is Rook
+            {
+                Rook thisRook = new Rook(selectedPiece); //Creates new rook object
+                thisRook.createDestination(); //Destination array created 
+                for (int i = 0; i < 8; i++) //Nested for loop to create available buttons for Rook Movement
+                {
+                    for (int j = 0; j < 8; j++)
+                    {
+                        if (thisRook.validMoveLocations[i,j] == true)
+                        {
+                            Button curButton = new Button();
+                            curButton.Width = 72;
+                            curButton.Height = 72;
+                            curButton.Name = $"{i + 1},{j + 1}";
+                            Grid.SetRow(curButton, i + 1);
+                            Grid.SetColumn(curButton, j + 1);
+                            curButton.Click += Move;
+                            UIGlobal.XAMLpage.getGrid().Children.Add(curButton);
+                            emptyLocations[i, j] = 1;
+                            emptyButtons.Add(curButton);
+                        }
+                    }
+                }
+            }
+            else
+            {
+                for (int i = 0; i < 8; i++)
+                {
+                    for (int j = 0; j < 8; j++)
+                    {
+                        if (piecePositions[i, j] == 0)
+                        {
+                            Button curButton = new Button();
+                            curButton.Width = 72;
+                            curButton.Height = 72;
+                            curButton.Name = $"{i + 1},{j + 1}";
+                            Grid.SetRow(curButton, i + 1);
+                            Grid.SetColumn(curButton, j + 1);
+                            curButton.Click += Move;
+                            UIGlobal.XAMLpage.getGrid().Children.Add(curButton);
+                            emptyLocations[i, j] = 1;
+                            emptyButtons.Add(curButton);
+                        }
+                        if (piecePositions[i, j] == pieceNumber)
+                        {
+                            selectedPiece[i, j] = 1;
+                        }
+                    }
+                }
+            }
+            
         }
 
         public void UnselectPiece(int pieceNumber)

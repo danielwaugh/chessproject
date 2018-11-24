@@ -32,7 +32,7 @@ namespace Chess
     }
     public class Rook : Piece
     {
-        private int[,] validMoveLocations = new int[8, 8]; //2-D integer array denotes available locations for rook to move
+        public bool[,] validMoveLocations = new bool[8, 8]; //2-D integer array denotes available locations for rook to move
         private int[] Location = new int[2];
         public Rook(int[,] loc) : base(loc)
         {
@@ -43,8 +43,8 @@ namespace Chess
                 {
                     if (loc[i,j] == 1)
                     {
-                        Location[1] = i; //row is stored in the first index of Location
-                        Location[2] = j; //col is stored in the second index of Location
+                        Location[0] = i; //row is stored in the first index of Location
+                        Location[1] = j; //col is stored in the second index of Location
                     }
                 }
             }
@@ -53,7 +53,15 @@ namespace Chess
            
         public void createDestination()
         {
-            //creates destination buttons for available locations to move to
+            for (int i = 0; i < 8; i++) //for loop to set the row of the piece location to true for the move locations
+            {
+                validMoveLocations[Location[0], i] = true;
+            }
+            for (int j = 0; j < 8; j++) //for loop to set the column of the piece location to true for the move locations
+            {
+                validMoveLocations[j, Location[1]] = true;
+            }
+
         }
         public void deleteDestination()
         {
