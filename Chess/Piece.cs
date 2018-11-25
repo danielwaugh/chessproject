@@ -68,4 +68,69 @@ namespace Chess
             //deletes destination buttons after the piece is moved. 
         }
     }
+
+    public class Bishop : Piece
+    {
+        public bool[,] validMoveLocations = new bool[8, 8]; //2-D integer array denotes available locations for rook to move
+        private int[] Location = new int[2];
+        public Bishop(int[,] loc) : base(loc)
+        {
+
+            for (int i = 0; i < 8; i++)
+            {
+                for (int j = 0; j < 8; j++)
+                {
+                    if (loc[i, j] == 1)
+                    {
+                        Location[0] = i; //row is stored in the first index of Location
+                        Location[1] = j; //col is stored in the second index of Location
+                    }
+                }
+            }
+
+        }
+
+        public void createDestination()
+        {
+            int i = Location[0];
+            int j = Location[1];
+            while (i < 8 && j < 8)
+            {
+                validMoveLocations[i, j] = true;
+                i++;
+                j++;
+            }
+
+            i = Location[0];
+            j = Location[1];
+            while (i >= 0 && j >= 0)
+            {
+                validMoveLocations[i, j] = true;
+                i--;
+                j--;
+            }
+
+            i = Location[0];
+            j = Location[1];
+            while (i < 8 && j >= 0)
+            {
+                validMoveLocations[i, j] = true;
+                i++;
+                j--;
+            }
+
+            i = Location[0];
+            j = Location[1];
+            while (i >= 0 && j < 8)
+            {
+                validMoveLocations[i, j] = true;
+                i--;
+                j++;
+            }
+        }
+        public void deleteDestination()
+        {
+            //deletes destination buttons after the piece is moved. 
+        }
+    }
 }
