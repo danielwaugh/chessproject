@@ -73,9 +73,9 @@ namespace Chess
 
             else if (pieceNumber == 3 || pieceNumber == 6 || pieceNumber == 27 || pieceNumber == 30) //Checks if piece is Bishop
             {
-                Bishop thisBishop = new Bishop(selectedPiece); //Creates new rook object
+                Bishop thisBishop = new Bishop(selectedPiece); //Creates new Bishop object
                 thisBishop.createDestination(); //Destination array created 
-                for (int i = 0; i < 8; i++) //Nested for loop to create available buttons for Rook Movement
+                for (int i = 0; i < 8; i++) //Nested for loop to create available buttons for Bishop Movement
                 {
                     for (int j = 0; j < 8; j++)
                     {
@@ -98,9 +98,9 @@ namespace Chess
 
             else if (pieceNumber == 4 || pieceNumber == 28) //Checks if piece is Queen
             {
-                Queen thisQueen = new Queen(selectedPiece); //Creates new rook object
+                Queen thisQueen = new Queen(selectedPiece); //Creates new Queen object
                 thisQueen.createDestination(); //Destination array created 
-                for (int i = 0; i < 8; i++) //Nested for loop to create available buttons for Rook Movement
+                for (int i = 0; i < 8; i++) //Nested for loop to create available buttons for Queen Movement
                 {
                     for (int j = 0; j < 8; j++)
                     {

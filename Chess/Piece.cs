@@ -50,7 +50,7 @@ namespace Chess
             }
             
         }
-           
+
         public void createDestination()
         {
             for (int i = 0; i < 8; i++) //for loop to set the row of the piece location to true for the move locations
@@ -61,12 +61,8 @@ namespace Chess
             {
                 validMoveLocations[j, Location[1]] = true;
             }
+        }
 
-        }
-        public void deleteDestination()
-        {
-            //deletes destination buttons after the piece is moved. 
-        }
     }
 
     public class Bishop : Piece
@@ -90,11 +86,15 @@ namespace Chess
 
         }
 
+        /// <summary>
+        /// Function updates the valid move locations array with a true or false for each index. True means the
+        /// object can move to that place and false means it cannot. 
+        /// </summary>
         public void createDestination()
         {
             int i = Location[0];
             int j = Location[1];
-            while (i < 8 && j < 8)
+            while (i < 8 && j < 8) //diagonal for down and right
             {
                 validMoveLocations[i, j] = true;
                 i++;
@@ -103,7 +103,7 @@ namespace Chess
 
             i = Location[0];
             j = Location[1];
-            while (i >= 0 && j >= 0)
+            while (i >= 0 && j >= 0) //diagonal for up and left
             {
                 validMoveLocations[i, j] = true;
                 i--;
@@ -112,7 +112,7 @@ namespace Chess
 
             i = Location[0];
             j = Location[1];
-            while (i < 8 && j >= 0)
+            while (i < 8 && j >= 0) //diagonal for down and left
             {
                 validMoveLocations[i, j] = true;
                 i++;
@@ -121,18 +121,13 @@ namespace Chess
 
             i = Location[0];
             j = Location[1];
-            while (i >= 0 && j < 8)
+            while (i >= 0 && j < 8) //diagonal for up and right
             {
                 validMoveLocations[i, j] = true;
                 i--;
                 j++;
             }
         }
-        public void deleteDestination()
-        {
-            //deletes destination buttons after the piece is moved. 
-        }
-
     }
     public class Queen : Piece
     {
@@ -170,7 +165,7 @@ namespace Chess
 
             i = Location[0];
             j = Location[1];
-            while (i < 8 && j < 8)
+            while (i < 8 && j < 8) //diagonal for down and right
             {
                 validMoveLocations[i, j] = true;
                 i++;
@@ -179,7 +174,7 @@ namespace Chess
 
             i = Location[0];
             j = Location[1];
-            while (i >= 0 && j >= 0)
+            while (i >= 0 && j >= 0) //diagonal for up and left
             {
                 validMoveLocations[i, j] = true;
                 i--;
@@ -188,7 +183,7 @@ namespace Chess
 
             i = Location[0];
             j = Location[1];
-            while (i < 8 && j >= 0)
+            while (i < 8 && j >= 0) //diagonal for down and left
             {
                 validMoveLocations[i, j] = true;
                 i++;
@@ -197,7 +192,7 @@ namespace Chess
 
             i = Location[0];
             j = Location[1];
-            while (i >= 0 && j < 8)
+            while (i >= 0 && j < 8) //diagonal for up and right
             {
                 validMoveLocations[i, j] = true;
                 i--;
