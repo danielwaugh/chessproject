@@ -71,7 +71,7 @@ namespace Chess
                 }
             }
 
-            if (pieceNumber == 3 || pieceNumber == 6 || pieceNumber == 27 || pieceNumber == 30) //Checks if piece is Bishop
+            else if (pieceNumber == 3 || pieceNumber == 6 || pieceNumber == 27 || pieceNumber == 30) //Checks if piece is Bishop
             {
                 Bishop thisBishop = new Bishop(selectedPiece); //Creates new rook object
                 thisBishop.createDestination(); //Destination array created 
@@ -80,6 +80,31 @@ namespace Chess
                     for (int j = 0; j < 8; j++)
                     {
                         if (thisBishop.validMoveLocations[i, j] == true)
+                        {
+                            Button curButton = new Button();
+                            curButton.Width = 72;
+                            curButton.Height = 72;
+                            curButton.Name = $"{i + 1},{j + 1}";
+                            Grid.SetRow(curButton, i + 1);
+                            Grid.SetColumn(curButton, j + 1);
+                            curButton.Click += Move;
+                            UIGlobal.XAMLpage.getGrid().Children.Add(curButton);
+                            emptyLocations[i, j] = 1;
+                            emptyButtons.Add(curButton);
+                        }
+                    }
+                }
+            }
+
+            else if (pieceNumber == 4 || pieceNumber == 28) //Checks if piece is Queen
+            {
+                Queen thisQueen = new Queen(selectedPiece); //Creates new rook object
+                thisQueen.createDestination(); //Destination array created 
+                for (int i = 0; i < 8; i++) //Nested for loop to create available buttons for Rook Movement
+                {
+                    for (int j = 0; j < 8; j++)
+                    {
+                        if (thisQueen.validMoveLocations[i, j] == true)
                         {
                             Button curButton = new Button();
                             curButton.Width = 72;
