@@ -206,4 +206,67 @@ namespace Chess
             //deletes destination buttons after the piece is moved. 
         }
     }
+    public class Knight : Piece
+    {
+        public bool[,] validMoveLocations = new bool[8, 8]; //2-D integer array denotes available locations for rook to move
+        private int[] Location = new int[2];
+        public Knight(int[,] loc) : base(loc)
+        {
+
+            for (int i = 0; i < 8; i++)
+            {
+                for (int j = 0; j < 8; j++)
+                {
+                    if (loc[i, j] == 1)
+                    {
+                        Location[0] = i; //row is stored in the first index of Location
+                        Location[1] = j; //col is stored in the second index of Location
+                    }
+                }
+            }
+
+        }
+
+        /// <summary>
+        /// Function updates the valid move locations array with a true or false for each index. True means the
+        /// object can move to that place and false means it cannot. 
+        /// </summary>
+        public void createDestination()
+        {
+            int i = Location[0];
+            int j = Location[1];
+            
+            if (i-2 >= 0)
+            {
+                validMoveLocations[i - 2, j - 1] = true;
+                validMoveLocations[i - 2, j + 1] = true;
+            }
+            if (i - 1 >= 0)
+            {
+                validMoveLocations[i - 1, j - 2] = true;
+                validMoveLocations[i - 1, j + 2] = true;
+            }
+            if (i+1 <= 8)
+            {
+                validMoveLocations[i + 1, j - 2] = true;
+                validMoveLocations[i + 1, j + 2] = true;
+            }
+            // stop here
+            if (i + 2 <= 8)
+            {
+                validMoveLocations[i + 1, j - 2] = true;
+                validMoveLocations[i + 1, j + 2] = true;
+            }
+
+            while (i < 8 && j < 8) //diagonal for down and right
+            {
+                validMoveLocations[i, j] = true;
+                i++;
+                j++;
+            }
+
+            
+        }
+    }
 }
+
