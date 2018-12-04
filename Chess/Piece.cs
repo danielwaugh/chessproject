@@ -10,17 +10,27 @@ namespace Chess
 {
     public class Piece
     {
-        public int[,] pieceLocation = new int[8,8]; //position of the piece on the board, first index is row, second is column.
-
+        protected int[] Location = new int[2];
+        public bool[,] validMoveLocations = new bool[8, 8]; //2-D integer array denotes available locations for rook to move
         /// <summary>
         /// The constructor takes an integer array of the location of the piece. It then passes the value into the pieceLocation field. 
         /// </summary>
         /// <param name="location"></param>
-        public Piece(int[,] location)
+        public Piece(int[,] loc)
         {
-            pieceLocation = location;
+            for (int i = 0; i < 8; i++)
+            {
+                for (int j = 0; j < 8; j++)
+                {
+                    if (loc[i, j] == 1)
+                    {
+                        Location[0] = i; //row is stored in the first index of Location
+                        Location[1] = j; //col is stored in the second index of Location
+                    }
+                }
+            }
         }
-        
+
         public void Move()
         {
             throw new NotImplementedException();
@@ -32,23 +42,9 @@ namespace Chess
     }
     public class Rook : Piece
     {
-        public bool[,] validMoveLocations = new bool[8, 8]; //2-D integer array denotes available locations for rook to move
-        private int[] Location = new int[2];
         public Rook(int[,] loc) : base(loc)
         {
-            
-            for (int i = 0; i < 8; i++)
-            {
-                for (int j = 0; j < 8; j++)
-                {
-                    if (loc[i,j] == 1)
-                    {
-                        Location[0] = i; //row is stored in the first index of Location
-                        Location[1] = j; //col is stored in the second index of Location
-                    }
-                }
-            }
-            
+
         }
 
         public void createDestination(int[,] pieces, int turn)
@@ -56,7 +52,7 @@ namespace Chess
             int i = 0;
             int j = 0;
             //sets the path for right movement
-            for (i = Location[1] + 1; i < 8; i++) 
+            for (i = Location[1] + 1; i < 8; i++)
             {
                 if (turn == 0)   //whites turn
                 {
@@ -90,7 +86,7 @@ namespace Chess
                         validMoveLocations[Location[0], i] = true;
                     }
                 }
-            }  
+            }
             //sets the path for left movement
             for (i = Location[1] - 1; i >= 0; i--) //for loop to set the row of the piece location to true for the move locations
             {
@@ -205,22 +201,8 @@ namespace Chess
 
     public class Bishop : Piece
     {
-        public bool[,] validMoveLocations = new bool[8, 8]; //2-D integer array denotes available locations for rook to move
-        private int[] Location = new int[2];
         public Bishop(int[,] loc) : base(loc)
         {
-
-            for (int i = 0; i < 8; i++)
-            {
-                for (int j = 0; j < 8; j++)
-                {
-                    if (loc[i, j] == 1)
-                    {
-                        Location[0] = i; //row is stored in the first index of Location
-                        Location[1] = j; //col is stored in the second index of Location
-                    }
-                }
-            }
 
         }
 
@@ -228,7 +210,7 @@ namespace Chess
         /// Function updates the valid move locations array with a true or false for each index. True means the
         /// object can move to that place and false means it cannot. 
         /// </summary>
-        public void createDestination(int [,] pieces, int turn)
+        public void createDestination(int[,] pieces, int turn)
         {
             //set the path for down and right
             int i = Location[0] + 1;
@@ -237,7 +219,7 @@ namespace Chess
             {
                 if (turn == 0)   //whites turn
                 {
-                    if (pieces[i,j] > 16) //if it is a black piece
+                    if (pieces[i, j] > 16) //if it is a black piece
                     {
                         validMoveLocations[i, j] = true;
                         break;
@@ -397,26 +379,12 @@ namespace Chess
     }
     public class Queen : Piece
     {
-        public bool[,] validMoveLocations = new bool[8, 8]; //2-D integer array denotes available locations for rook to move
-        private int[] Location = new int[2];
         public Queen(int[,] loc) : base(loc)
         {
 
-            for (int i = 0; i < 8; i++)
-            {
-                for (int j = 0; j < 8; j++)
-                {
-                    if (loc[i, j] == 1)
-                    {
-                        Location[0] = i; //row is stored in the first index of Location
-                        Location[1] = j; //col is stored in the second index of Location
-                    }
-                }
-            }
-
         }
 
-        public void createDestination(int [,] pieces, int turn)
+        public void createDestination(int[,] pieces, int turn)
         {
             int i = 0;
             int j = 0;
@@ -734,22 +702,8 @@ namespace Chess
     }
     public class Knight : Piece
     {
-        public bool[,] validMoveLocations = new bool[8, 8]; //2-D integer array denotes available locations for rook to move
-        private int[] Location = new int[2];
         public Knight(int[,] loc) : base(loc)
         {
-
-            for (int i = 0; i < 8; i++)
-            {
-                for (int j = 0; j < 8; j++)
-                {
-                    if (loc[i, j] == 1)
-                    {
-                        Location[0] = i; //row is stored in the first index of Location
-                        Location[1] = j; //col is stored in the second index of Location
-                    }
-                }
-            }
 
         }
 
@@ -757,13 +711,13 @@ namespace Chess
         /// Function updates the valid move locations array with a true or false for each index. True means the
         /// object can move to that place and false means it cannot. 
         /// </summary>
-        public void createDestination(int [,] pieces, int turn)
+        public void createDestination(int[,] pieces, int turn)
         {
             int i = Location[0];
             int j = Location[1];
-            
+
             //down 2 right 1
-            if (i + 2 < 8 && j + 1 < 8)  
+            if (i + 2 < 8 && j + 1 < 8)
             {
                 if (turn == 0)   //whites turn
                 {
@@ -773,7 +727,7 @@ namespace Chess
                     }
                     else if (pieces[i + 2, j + 1] > 0)   //if it is a white piece
                     {
-                        
+
                     }
                     else //it is a blank spot
                     {
@@ -1043,5 +997,7 @@ namespace Chess
             }
         }
     }
+       
 }
+
 
