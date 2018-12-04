@@ -51,15 +51,153 @@ namespace Chess
             
         }
 
-        public void createDestination()
+        public void createDestination(int[,] pieces, int turn)
         {
-            for (int i = 0; i < 8; i++) //for loop to set the row of the piece location to true for the move locations
+            int i = 0;
+            int j = 0;
+            //sets the path for right movement
+            for (i = Location[1] + 1; i < 8; i++) 
             {
-                validMoveLocations[Location[0], i] = true;
+                if (turn == 0)   //whites turn
+                {
+                    if (pieces[Location[0], i] > 16) //if it is a black piece
+                    {
+                        validMoveLocations[Location[0], i] = true;
+                        break;
+                    }
+                    else if (pieces[Location[0], i] > 0)   //if it is a white piece
+                    {
+                        break;
+                    }
+                    else //it is a blank spot
+                    {
+                        validMoveLocations[Location[0], i] = true;
+                    }
+                }
+                else //blacks turn
+                {
+                    if (pieces[Location[0], i] < 17 && pieces[Location[0], i] > 0) //if it is a white piece
+                    {
+                        validMoveLocations[Location[0], i] = true;
+                        break;
+                    }
+                    else if (pieces[Location[0], i] > 16)   //if it is a black piece
+                    {
+                        break;
+                    }
+                    else //it is a blank spot
+                    {
+                        validMoveLocations[Location[0], i] = true;
+                    }
+                }
+            }  
+            //sets the path for left movement
+            for (i = Location[1] - 1; i >= 0; i--) //for loop to set the row of the piece location to true for the move locations
+            {
+                if (turn == 0)   //whites turn
+                {
+                    if (pieces[Location[0], i] > 16) //if it is a black piece
+                    {
+                        validMoveLocations[Location[0], i] = true;
+                        break;
+                    }
+                    else if (pieces[Location[0], i] > 0)   //if it is a white piece
+                    {
+                        break;
+                    }
+                    else //it is a blank spot
+                    {
+                        validMoveLocations[Location[0], i] = true;
+                    }
+                }
+                else //blacks turn
+                {
+                    if (pieces[Location[0], i] < 17 && pieces[Location[0], i] > 0) //if it is a white piece
+                    {
+                        validMoveLocations[Location[0], i] = true;
+                        break;
+                    }
+                    else if (pieces[Location[0], i] > 16)   //if it is a black piece
+                    {
+                        break;
+                    }
+                    else //it is a blank spot
+                    {
+                        validMoveLocations[Location[0], i] = true;
+                    }
+                }
             }
-            for (int j = 0; j < 8; j++) //for loop to set the column of the piece location to true for the move locations
+            //sets the path for down movement
+            for (j = Location[0] + 1; j < 8; j++) //for loop to set the column of the piece location to true for the move locations
             {
-                validMoveLocations[j, Location[1]] = true;
+                if (turn == 0)   //whites turn
+                {
+                    if (pieces[j, Location[1]] > 16) //if it is a black piece
+                    {
+                        validMoveLocations[j, Location[1]] = true;
+                        break;
+                    }
+                    else if (pieces[j, Location[1]] > 0)   //if it is a white piece
+                    {
+                        break;
+                    }
+                    else //it is a blank spot
+                    {
+                        validMoveLocations[j, Location[1]] = true;
+                    }
+                }
+                else //blacks turn
+                {
+                    if (pieces[j, Location[1]] < 17 && pieces[j, Location[1]] > 0) //if it is a white piece
+                    {
+                        validMoveLocations[j, Location[1]] = true;
+                        break;
+                    }
+                    else if (pieces[j, Location[1]] > 16)   //if it is a black piece
+                    {
+                        break;
+                    }
+                    else //it is a blank spot
+                    {
+                        validMoveLocations[j, Location[1]] = true;
+                    }
+                }
+            }
+            //sets the path for up movement
+            for (j = Location[0] - 1; j >= 0; j--) //for loop to set the column of the piece location to true for the move locations
+            {
+                if (turn == 0)   //whites turn
+                {
+                    if (pieces[j, Location[1]] > 16) //if it is a black piece
+                    {
+                        validMoveLocations[j, Location[1]] = true;
+                        break;
+                    }
+                    else if (pieces[j, Location[1]] > 0)   //if it is a white piece
+                    {
+                        break;
+                    }
+                    else //it is a blank spot
+                    {
+                        validMoveLocations[j, Location[1]] = true;
+                    }
+                }
+                else //blacks turn
+                {
+                    if (pieces[j, Location[1]] < 17 && pieces[j, Location[1]] > 0) //if it is a white piece
+                    {
+                        validMoveLocations[j, Location[1]] = true;
+                        break;
+                    }
+                    else if (pieces[j, Location[1]] > 16)   //if it is a black piece
+                    {
+                        break;
+                    }
+                    else //it is a blank spot
+                    {
+                        validMoveLocations[j, Location[1]] = true;
+                    }
+                }
             }
         }
 
@@ -90,40 +228,168 @@ namespace Chess
         /// Function updates the valid move locations array with a true or false for each index. True means the
         /// object can move to that place and false means it cannot. 
         /// </summary>
-        public void createDestination()
+        public void createDestination(int [,] pieces, int turn)
         {
-            int i = Location[0];
-            int j = Location[1];
+            //set the path for down and right
+            int i = Location[0] + 1;
+            int j = Location[1] + 1;
             while (i < 8 && j < 8) //diagonal for down and right
             {
-                validMoveLocations[i, j] = true;
+                if (turn == 0)   //whites turn
+                {
+                    if (pieces[i,j] > 16) //if it is a black piece
+                    {
+                        validMoveLocations[i, j] = true;
+                        break;
+                    }
+                    else if (pieces[i, j] > 0)   //if it is a white piece
+                    {
+                        break;
+                    }
+                    else //it is a blank spot
+                    {
+                        validMoveLocations[i, j] = true;
+                    }
+                }
+                else //blacks turn
+                {
+                    if (pieces[i, j] < 17 && pieces[i, j] > 0) //if it is a white piece
+                    {
+                        validMoveLocations[i, j] = true;
+                        break;
+                    }
+                    else if (pieces[i, j] > 16)   //if it is a black piece
+                    {
+                        break;
+                    }
+                    else //it is a blank spot
+                    {
+                        validMoveLocations[i, j] = true;
+                    }
+                }
                 i++;
                 j++;
             }
 
-            i = Location[0];
-            j = Location[1];
+            //set the path for up and left
+            i = Location[0] - 1;
+            j = Location[1] - 1;
             while (i >= 0 && j >= 0) //diagonal for up and left
             {
-                validMoveLocations[i, j] = true;
+                if (turn == 0)   //whites turn
+                {
+                    if (pieces[i, j] > 16) //if it is a black piece
+                    {
+                        validMoveLocations[i, j] = true;
+                        break;
+                    }
+                    else if (pieces[i, j] > 0)   //if it is a white piece
+                    {
+                        break;
+                    }
+                    else //it is a blank spot
+                    {
+                        validMoveLocations[i, j] = true;
+                    }
+                }
+                else //blacks turn
+                {
+                    if (pieces[i, j] < 17 && pieces[i, j] > 0) //if it is a white piece
+                    {
+                        validMoveLocations[i, j] = true;
+                        break;
+                    }
+                    else if (pieces[i, j] > 16)   //if it is a black piece
+                    {
+                        break;
+                    }
+                    else //it is a blank spot
+                    {
+                        validMoveLocations[i, j] = true;
+                    }
+                }
                 i--;
                 j--;
             }
 
-            i = Location[0];
-            j = Location[1];
+            //set the path for down and left
+            i = Location[0] + 1;
+            j = Location[1] - 1;
             while (i < 8 && j >= 0) //diagonal for down and left
             {
-                validMoveLocations[i, j] = true;
+                if (turn == 0)   //whites turn
+                {
+                    if (pieces[i, j] > 16) //if it is a black piece
+                    {
+                        validMoveLocations[i, j] = true;
+                        break;
+                    }
+                    else if (pieces[i, j] > 0)   //if it is a white piece
+                    {
+                        break;
+                    }
+                    else //it is a blank spot
+                    {
+                        validMoveLocations[i, j] = true;
+                    }
+                }
+                else //blacks turn
+                {
+                    if (pieces[i, j] < 17 && pieces[i, j] > 0) //if it is a white piece
+                    {
+                        validMoveLocations[i, j] = true;
+                        break;
+                    }
+                    else if (pieces[i, j] > 16)   //if it is a black piece
+                    {
+                        break;
+                    }
+                    else //it is a blank spot
+                    {
+                        validMoveLocations[i, j] = true;
+                    }
+                }
                 i++;
                 j--;
             }
 
-            i = Location[0];
-            j = Location[1];
+            //set the path for up and right
+            i = Location[0] - 1;
+            j = Location[1] + 1;
             while (i >= 0 && j < 8) //diagonal for up and right
             {
-                validMoveLocations[i, j] = true;
+                if (turn == 0)   //whites turn
+                {
+                    if (pieces[i, j] > 16) //if it is a black piece
+                    {
+                        validMoveLocations[i, j] = true;
+                        break;
+                    }
+                    else if (pieces[i, j] > 0)   //if it is a white piece
+                    {
+                        break;
+                    }
+                    else //it is a blank spot
+                    {
+                        validMoveLocations[i, j] = true;
+                    }
+                }
+                else //blacks turn
+                {
+                    if (pieces[i, j] < 17 && pieces[i, j] > 0) //if it is a white piece
+                    {
+                        validMoveLocations[i, j] = true;
+                        break;
+                    }
+                    else if (pieces[i, j] > 16)   //if it is a black piece
+                    {
+                        break;
+                    }
+                    else //it is a blank spot
+                    {
+                        validMoveLocations[i, j] = true;
+                    }
+                }
                 i--;
                 j++;
             }
@@ -150,60 +416,320 @@ namespace Chess
 
         }
 
-        public void createDestination()
+        public void createDestination(int [,] pieces, int turn)
         {
             int i = 0;
             int j = 0;
-            for (i = 0; i < 8; i++) //for loop to set the row of the piece location to true for the move locations
+            //sets the path for right movement
+            for (i = Location[1] + 1; i < 8; i++)
             {
-                validMoveLocations[Location[0], i] = true;
+                if (turn == 0)   //whites turn
+                {
+                    if (pieces[Location[0], i] > 16) //if it is a black piece
+                    {
+                        validMoveLocations[Location[0], i] = true;
+                        break;
+                    }
+                    else if (pieces[Location[0], i] > 0)   //if it is a white piece
+                    {
+                        break;
+                    }
+                    else //it is a blank spot
+                    {
+                        validMoveLocations[Location[0], i] = true;
+                    }
+                }
+                else //blacks turn
+                {
+                    if (pieces[Location[0], i] < 17 && pieces[Location[0], i] > 0) //if it is a white piece
+                    {
+                        validMoveLocations[Location[0], i] = true;
+                        break;
+                    }
+                    else if (pieces[Location[0], i] > 16)   //if it is a black piece
+                    {
+                        break;
+                    }
+                    else //it is a blank spot
+                    {
+                        validMoveLocations[Location[0], i] = true;
+                    }
+                }
             }
-            for (j = 0; j < 8; j++) //for loop to set the column of the piece location to true for the move locations
+            //sets the path for left movement
+            for (i = Location[1] - 1; i >= 0; i--) //for loop to set the row of the piece location to true for the move locations
             {
-                validMoveLocations[j, Location[1]] = true;
+                if (turn == 0)   //whites turn
+                {
+                    if (pieces[Location[0], i] > 16) //if it is a black piece
+                    {
+                        validMoveLocations[Location[0], i] = true;
+                        break;
+                    }
+                    else if (pieces[Location[0], i] > 0)   //if it is a white piece
+                    {
+                        break;
+                    }
+                    else //it is a blank spot
+                    {
+                        validMoveLocations[Location[0], i] = true;
+                    }
+                }
+                else //blacks turn
+                {
+                    if (pieces[Location[0], i] < 17 && pieces[Location[0], i] > 0) //if it is a white piece
+                    {
+                        validMoveLocations[Location[0], i] = true;
+                        break;
+                    }
+                    else if (pieces[Location[0], i] > 16)   //if it is a black piece
+                    {
+                        break;
+                    }
+                    else //it is a blank spot
+                    {
+                        validMoveLocations[Location[0], i] = true;
+                    }
+                }
+            }
+            //sets the path for down movement
+            for (j = Location[0] + 1; j < 8; j++) //for loop to set the column of the piece location to true for the move locations
+            {
+                if (turn == 0)   //whites turn
+                {
+                    if (pieces[j, Location[1]] > 16) //if it is a black piece
+                    {
+                        validMoveLocations[j, Location[1]] = true;
+                        break;
+                    }
+                    else if (pieces[j, Location[1]] > 0)   //if it is a white piece
+                    {
+                        break;
+                    }
+                    else //it is a blank spot
+                    {
+                        validMoveLocations[j, Location[1]] = true;
+                    }
+                }
+                else //blacks turn
+                {
+                    if (pieces[j, Location[1]] < 17 && pieces[j, Location[1]] > 0) //if it is a white piece
+                    {
+                        validMoveLocations[j, Location[1]] = true;
+                        break;
+                    }
+                    else if (pieces[j, Location[1]] > 16)   //if it is a black piece
+                    {
+                        break;
+                    }
+                    else //it is a blank spot
+                    {
+                        validMoveLocations[j, Location[1]] = true;
+                    }
+                }
+            }
+            //sets the path for up movement
+            for (j = Location[0] - 1; j >= 0; j--) //for loop to set the column of the piece location to true for the move locations
+            {
+                if (turn == 0)   //whites turn
+                {
+                    if (pieces[j, Location[1]] > 16) //if it is a black piece
+                    {
+                        validMoveLocations[j, Location[1]] = true;
+                        break;
+                    }
+                    else if (pieces[j, Location[1]] > 0)   //if it is a white piece
+                    {
+                        break;
+                    }
+                    else //it is a blank spot
+                    {
+                        validMoveLocations[j, Location[1]] = true;
+                    }
+                }
+                else //blacks turn
+                {
+                    if (pieces[j, Location[1]] < 17 && pieces[j, Location[1]] > 0) //if it is a white piece
+                    {
+                        validMoveLocations[j, Location[1]] = true;
+                        break;
+                    }
+                    else if (pieces[j, Location[1]] > 16)   //if it is a black piece
+                    {
+                        break;
+                    }
+                    else //it is a blank spot
+                    {
+                        validMoveLocations[j, Location[1]] = true;
+                    }
+                }
             }
 
-            i = Location[0];
-            j = Location[1];
+            //set the path for down and right
+            i = Location[0] + 1;
+            j = Location[1] + 1;
             while (i < 8 && j < 8) //diagonal for down and right
             {
-                validMoveLocations[i, j] = true;
+                if (turn == 0)   //whites turn
+                {
+                    if (pieces[i, j] > 16) //if it is a black piece
+                    {
+                        validMoveLocations[i, j] = true;
+                        break;
+                    }
+                    else if (pieces[i, j] > 0)   //if it is a white piece
+                    {
+                        break;
+                    }
+                    else //it is a blank spot
+                    {
+                        validMoveLocations[i, j] = true;
+                    }
+                }
+                else //blacks turn
+                {
+                    if (pieces[i, j] < 17 && pieces[i, j] > 0) //if it is a white piece
+                    {
+                        validMoveLocations[i, j] = true;
+                        break;
+                    }
+                    else if (pieces[i, j] > 16)   //if it is a black piece
+                    {
+                        break;
+                    }
+                    else //it is a blank spot
+                    {
+                        validMoveLocations[i, j] = true;
+                    }
+                }
                 i++;
                 j++;
             }
 
-            i = Location[0];
-            j = Location[1];
+            //set the path for up and left
+            i = Location[0] - 1;
+            j = Location[1] - 1;
             while (i >= 0 && j >= 0) //diagonal for up and left
             {
-                validMoveLocations[i, j] = true;
+                if (turn == 0)   //whites turn
+                {
+                    if (pieces[i, j] > 16) //if it is a black piece
+                    {
+                        validMoveLocations[i, j] = true;
+                        break;
+                    }
+                    else if (pieces[i, j] > 0)   //if it is a white piece
+                    {
+                        break;
+                    }
+                    else //it is a blank spot
+                    {
+                        validMoveLocations[i, j] = true;
+                    }
+                }
+                else //blacks turn
+                {
+                    if (pieces[i, j] < 17 && pieces[i, j] > 0) //if it is a white piece
+                    {
+                        validMoveLocations[i, j] = true;
+                        break;
+                    }
+                    else if (pieces[i, j] > 16)   //if it is a black piece
+                    {
+                        break;
+                    }
+                    else //it is a blank spot
+                    {
+                        validMoveLocations[i, j] = true;
+                    }
+                }
                 i--;
                 j--;
             }
 
-            i = Location[0];
-            j = Location[1];
+            //set the path for down and left
+            i = Location[0] + 1;
+            j = Location[1] - 1;
             while (i < 8 && j >= 0) //diagonal for down and left
             {
-                validMoveLocations[i, j] = true;
+                if (turn == 0)   //whites turn
+                {
+                    if (pieces[i, j] > 16) //if it is a black piece
+                    {
+                        validMoveLocations[i, j] = true;
+                        break;
+                    }
+                    else if (pieces[i, j] > 0)   //if it is a white piece
+                    {
+                        break;
+                    }
+                    else //it is a blank spot
+                    {
+                        validMoveLocations[i, j] = true;
+                    }
+                }
+                else //blacks turn
+                {
+                    if (pieces[i, j] < 17 && pieces[i, j] > 0) //if it is a white piece
+                    {
+                        validMoveLocations[i, j] = true;
+                        break;
+                    }
+                    else if (pieces[i, j] > 16)   //if it is a black piece
+                    {
+                        break;
+                    }
+                    else //it is a blank spot
+                    {
+                        validMoveLocations[i, j] = true;
+                    }
+                }
                 i++;
                 j--;
             }
 
-            i = Location[0];
-            j = Location[1];
+            //set the path for up and right
+            i = Location[0] - 1;
+            j = Location[1] + 1;
             while (i >= 0 && j < 8) //diagonal for up and right
             {
-                validMoveLocations[i, j] = true;
+                if (turn == 0)   //whites turn
+                {
+                    if (pieces[i, j] > 16) //if it is a black piece
+                    {
+                        validMoveLocations[i, j] = true;
+                        break;
+                    }
+                    else if (pieces[i, j] > 0)   //if it is a white piece
+                    {
+                        break;
+                    }
+                    else //it is a blank spot
+                    {
+                        validMoveLocations[i, j] = true;
+                    }
+                }
+                else //blacks turn
+                {
+                    if (pieces[i, j] < 17 && pieces[i, j] > 0) //if it is a white piece
+                    {
+                        validMoveLocations[i, j] = true;
+                        break;
+                    }
+                    else if (pieces[i, j] > 16)   //if it is a black piece
+                    {
+                        break;
+                    }
+                    else //it is a blank spot
+                    {
+                        validMoveLocations[i, j] = true;
+                    }
+                }
                 i--;
                 j++;
             }
 
 
-        }
-        public void deleteDestination()
-        {
-            //deletes destination buttons after the piece is moved. 
         }
     }
     public class Knight : Piece
@@ -231,41 +757,290 @@ namespace Chess
         /// Function updates the valid move locations array with a true or false for each index. True means the
         /// object can move to that place and false means it cannot. 
         /// </summary>
-        public void createDestination()
+        public void createDestination(int [,] pieces, int turn)
         {
             int i = Location[0];
             int j = Location[1];
             
-            if (i-2 >= 0)
+            //down 2 right 1
+            if (i + 2 < 8 && j + 1 < 8)  
             {
-                validMoveLocations[i - 2, j - 1] = true;
-                validMoveLocations[i - 2, j + 1] = true;
-            }
-            if (i - 1 >= 0)
-            {
-                validMoveLocations[i - 1, j - 2] = true;
-                validMoveLocations[i - 1, j + 2] = true;
-            }
-            if (i+1 <= 8)
-            {
-                validMoveLocations[i + 1, j - 2] = true;
-                validMoveLocations[i + 1, j + 2] = true;
-            }
-            // stop here
-            if (i + 2 <= 8)
-            {
-                validMoveLocations[i + 1, j - 2] = true;
-                validMoveLocations[i + 1, j + 2] = true;
+                if (turn == 0)   //whites turn
+                {
+                    if (pieces[i + 2, j + 1] > 16) //if it is a black piece
+                    {
+                        validMoveLocations[i + 2, j + 1] = true;
+                    }
+                    else if (pieces[i + 2, j + 1] > 0)   //if it is a white piece
+                    {
+                        
+                    }
+                    else //it is a blank spot
+                    {
+                        validMoveLocations[i + 2, j + 1] = true;
+                    }
+                }
+                else //blacks turn
+                {
+                    if (pieces[i + 2, j + 1] < 17 && pieces[i + 2, j + 1] > 0) //if it is a white piece
+                    {
+                        validMoveLocations[i + 2, j + 1] = true;
+                    }
+                    else if (pieces[i + 2, j + 1] > 16)   //if it is a black piece
+                    {
+
+                    }
+                    else //it is a blank spot
+                    {
+                        validMoveLocations[i + 2, j + 1] = true;
+                    }
+                }
             }
 
-            while (i < 8 && j < 8) //diagonal for down and right
+            //down 1 right 2  
+            if (i + 1 < 8 && j + 2 < 8)
             {
-                validMoveLocations[i, j] = true;
-                i++;
-                j++;
+                if (turn == 0)   //whites turn
+                {
+                    if (pieces[i + 1, j + 2] > 16) //if it is a black piece
+                    {
+                        validMoveLocations[i + 1, j + 2] = true;
+                    }
+                    else if (pieces[i + 1, j + 2] > 0)   //if it is a white piece
+                    {
+
+                    }
+                    else //it is a blank spot
+                    {
+                        validMoveLocations[i + 1, j + 2] = true;
+                    }
+                }
+                else //blacks turn
+                {
+                    if (pieces[i + 1, j + 2] < 17 && pieces[i + 1, j + 2] > 0) //if it is a white piece
+                    {
+                        validMoveLocations[i + 1, j + 2] = true;
+                    }
+                    else if (pieces[i + 1, j + 2] > 16)   //if it is a black piece
+                    {
+
+                    }
+                    else //it is a blank spot
+                    {
+                        validMoveLocations[i + 1, j + 2] = true;
+                    }
+                }
             }
 
-            
+            //down 2 left 1
+            if (i + 2 < 8 && j - 1 >= 0)
+            {
+                if (turn == 0)   //whites turn
+                {
+                    if (pieces[i + 2, j - 1] > 16) //if it is a black piece
+                    {
+                        validMoveLocations[i + 2, j - 1] = true;
+                    }
+                    else if (pieces[i + 2, j - 1] > 0)   //if it is a white piece
+                    {
+
+                    }
+                    else //it is a blank spot
+                    {
+                        validMoveLocations[i + 2, j - 1] = true;
+                    }
+                }
+                else //blacks turn
+                {
+                    if (pieces[i + 2, j - 1] < 17 && pieces[i + 2, j - 1] > 0) //if it is a white piece
+                    {
+                        validMoveLocations[i + 2, j - 1] = true;
+                    }
+                    else if (pieces[i + 2, j - 1] > 16)   //if it is a black piece
+                    {
+
+                    }
+                    else //it is a blank spot
+                    {
+                        validMoveLocations[i + 2, j - 1] = true;
+                    }
+                }
+            }
+
+            //down 1 left 2
+            if (i + 1 < 8 && j - 2 >= 0)
+            {
+                if (turn == 0)   //whites turn
+                {
+                    if (pieces[i + 1, j - 2] > 16) //if it is a black piece
+                    {
+                        validMoveLocations[i + 1, j - 2] = true;
+                    }
+                    else if (pieces[i + 1, j - 2] > 0)   //if it is a white piece
+                    {
+
+                    }
+                    else //it is a blank spot
+                    {
+                        validMoveLocations[i + 1, j - 2] = true;
+                    }
+                }
+                else //blacks turn
+                {
+                    if (pieces[i + 1, j - 2] < 17 && pieces[i + 1, j - 2] > 0) //if it is a white piece
+                    {
+                        validMoveLocations[i + 1, j - 2] = true;
+                    }
+                    else if (pieces[i + 1, j - 2] > 16)   //if it is a black piece
+                    {
+
+                    }
+                    else //it is a blank spot
+                    {
+                        validMoveLocations[i + 1, j - 2] = true;
+                    }
+                }
+            }
+
+            //up 2  right 1
+            if (i - 2 >= 0 && j + 1 < 8)
+            {
+                if (turn == 0)   //whites turn
+                {
+                    if (pieces[i - 2, j + 1] > 16) //if it is a black piece
+                    {
+                        validMoveLocations[i - 2, j + 1] = true;
+                    }
+                    else if (pieces[i - 2, j + 1] > 0)   //if it is a white piece
+                    {
+
+                    }
+                    else //it is a blank spot
+                    {
+                        validMoveLocations[i - 2, j + 1] = true;
+                    }
+                }
+                else //blacks turn
+                {
+                    if (pieces[i - 2, j + 1] < 17 && pieces[i - 2, j + 1] > 0) //if it is a white piece
+                    {
+                        validMoveLocations[i - 2, j + 1] = true;
+                    }
+                    else if (pieces[i - 2, j + 1] > 16)   //if it is a black piece
+                    {
+
+                    }
+                    else //it is a blank spot
+                    {
+                        validMoveLocations[i - 2, j + 1] = true;
+                    }
+                }
+            }
+
+            //up 1 right 2  
+            if (i - 1 >= 0 && j + 2 < 8)
+            {
+                if (turn == 0)   //whites turn
+                {
+                    if (pieces[i - 1, j + 2] > 16) //if it is a black piece
+                    {
+                        validMoveLocations[i - 1, j + 2] = true;
+                    }
+                    else if (pieces[i - 1, j + 2] > 0)   //if it is a white piece
+                    {
+
+                    }
+                    else //it is a blank spot
+                    {
+                        validMoveLocations[i - 1, j + 2] = true;
+                    }
+                }
+                else //blacks turn
+                {
+                    if (pieces[i - 1, j + 2] < 17 && pieces[i - 1, j + 2] > 0) //if it is a white piece
+                    {
+                        validMoveLocations[i - 1, j + 2] = true;
+                    }
+                    else if (pieces[i - 1, j + 2] > 16)   //if it is a black piece
+                    {
+
+                    }
+                    else //it is a blank spot
+                    {
+                        validMoveLocations[i - 1, j + 2] = true;
+                    }
+                }
+            }
+
+            //up 2 left 1
+            if (i - 2 >= 0 && j - 1 >= 0)
+            {
+                if (turn == 0)   //whites turn
+                {
+                    if (pieces[i - 2, j - 1] > 16) //if it is a black piece
+                    {
+                        validMoveLocations[i - 2, j - 1] = true;
+                    }
+                    else if (pieces[i - 2, j - 1] > 0)   //if it is a white piece
+                    {
+
+                    }
+                    else //it is a blank spot
+                    {
+                        validMoveLocations[i - 2, j - 1] = true;
+                    }
+                }
+                else //blacks turn
+                {
+                    if (pieces[i - 2, j - 1] < 17 && pieces[i - 2, j - 1] > 0) //if it is a white piece
+                    {
+                        validMoveLocations[i - 2, j - 1] = true;
+                    }
+                    else if (pieces[i - 2, j - 1] > 16)   //if it is a black piece
+                    {
+
+                    }
+                    else //it is a blank spot
+                    {
+                        validMoveLocations[i - 2, j - 1] = true;
+                    }
+                }
+            }
+
+            //up 1 left 2
+            if (i - 1 >= 0 && j - 2 >= 0)
+            {
+                if (turn == 0)   //whites turn
+                {
+                    if (pieces[i - 1, j - 2] > 16) //if it is a black piece
+                    {
+                        validMoveLocations[i - 1, j - 2] = true;
+                    }
+                    else if (pieces[i - 1, j - 2] > 0)   //if it is a white piece
+                    {
+
+                    }
+                    else //it is a blank spot
+                    {
+                        validMoveLocations[i - 1, j - 2] = true;
+                    }
+                }
+                else //blacks turn
+                {
+                    if (pieces[i - 1, j - 2] < 17 && pieces[i - 1, j - 2] > 0) //if it is a white piece
+                    {
+                        validMoveLocations[i - 1, j - 2] = true;
+                    }
+                    else if (pieces[i - 1, j - 2] > 16)   //if it is a black piece
+                    {
+
+                    }
+                    else //it is a blank spot
+                    {
+                        validMoveLocations[i - 1, j - 2] = true;
+                    }
+                }
+            }
         }
     }
 }

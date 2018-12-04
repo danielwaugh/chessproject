@@ -51,7 +51,7 @@ namespace Chess
             if (pieceNumber == 1 || pieceNumber == 8 || pieceNumber == 25 || pieceNumber == 32) //Checks if piece is Rook
             {
                 Rook thisRook = new Rook(selectedPiece); //Creates new rook object
-                thisRook.createDestination(); //Destination array created 
+                thisRook.createDestination(piecePositions, turn); //Destination array created 
                 for (int i = 0; i < 8; i++) //Nested for loop to create available buttons for Rook Movement
                 {
                     for (int j = 0; j < 8; j++)
@@ -75,7 +75,7 @@ namespace Chess
             else if (pieceNumber == 3 || pieceNumber == 6 || pieceNumber == 27 || pieceNumber == 30) //Checks if piece is Bishop
             {
                 Bishop thisBishop = new Bishop(selectedPiece); //Creates new Bishop object
-                thisBishop.createDestination(); //Destination array created 
+                thisBishop.createDestination(piecePositions, turn); //Destination array created 
                 for (int i = 0; i < 8; i++) //Nested for loop to create available buttons for Bishop Movement
                 {
                     for (int j = 0; j < 8; j++)
@@ -99,12 +99,35 @@ namespace Chess
             else if (pieceNumber == 4 || pieceNumber == 28) //Checks if piece is Queen
             {
                 Queen thisQueen = new Queen(selectedPiece); //Creates new Queen object
-                thisQueen.createDestination(); //Destination array created 
+                thisQueen.createDestination(piecePositions, turn); //Destination array created 
                 for (int i = 0; i < 8; i++) //Nested for loop to create available buttons for Queen Movement
                 {
                     for (int j = 0; j < 8; j++)
                     {
                         if (thisQueen.validMoveLocations[i, j] == true)
+                        {
+                            Button curButton = new Button();    //creates button
+                            curButton.Width = 72;
+                            curButton.Height = 72;
+                            curButton.Name = $"{i + 1},{j + 1}";    //gives it a name for indexing later (name: "grid row, grid column")
+                            Grid.SetRow(curButton, i + 1);  //sets the location in the grid
+                            Grid.SetColumn(curButton, j + 1);
+                            curButton.Click += Move;    //sets method to run when button is pressed
+                            UIGlobal.XAMLpage.getGrid().Children.Add(curButton);     //adds button to grid 
+                            createdButtons.Add(curButton);
+                        }
+                    }
+                }
+            }
+            else if (pieceNumber == 2 || pieceNumber == 7 || pieceNumber == 26 || pieceNumber == 31) //Checks if piece is Knight
+            {
+                Knight thisKnight = new Knight(selectedPiece); //Creates new Queen object
+                thisKnight.createDestination(piecePositions, turn); //Destination array created 
+                for (int i = 0; i < 8; i++) //Nested for loop to create available buttons for Queen Movement
+                {
+                    for (int j = 0; j < 8; j++)
+                    {
+                        if (thisKnight.validMoveLocations[i, j] == true)
                         {
                             Button curButton = new Button();    //creates button
                             curButton.Width = 72;
