@@ -142,13 +142,15 @@ namespace Chess
                     }
                 }
             }
-            else
+            else if (pieceNumber == 5 || pieceNumber == 29) //Checks if piece is King
             {
-                for (int i = 0; i < 8; i++)
+                King thisKing = new King(selectedPiece); //Creates new Queen object
+                thisKing.createDestination(piecePositions, turn); //Destination array created 
+                for (int i = 0; i < 8; i++) //Nested for loop to create available buttons for Queen Movement
                 {
                     for (int j = 0; j < 8; j++)
                     {
-                        if (piecePositions[i, j] == 0)
+                        if (thisKing.validMoveLocations[i, j] == true)
                         {
                             Button curButton = new Button();    //creates button
                             curButton.Width = 72;
@@ -160,9 +162,28 @@ namespace Chess
                             UIGlobal.XAMLpage.getGrid().Children.Add(curButton);     //adds button to grid 
                             createdButtons.Add(curButton);
                         }
-                        if (piecePositions[i, j] == pieceNumber)
+                    }
+                }
+            }
+            else
+            {
+                Pawn thisPawn = new Pawn(selectedPiece); //Creates new Queen object
+                thisPawn.createDestination(piecePositions, turn); //Destination array created 
+                for (int i = 0; i < 8; i++) //Nested for loop to create available buttons for Queen Movement
+                {
+                    for (int j = 0; j < 8; j++)
+                    {
+                        if (thisPawn.validMoveLocations[i, j] == true)
                         {
-                            selectedPiece[i, j] = 1;
+                            Button curButton = new Button();    //creates button
+                            curButton.Width = 72;
+                            curButton.Height = 72;
+                            curButton.Name = $"{i + 1},{j + 1}";    //gives it a name for indexing later (name: "grid row, grid column")
+                            Grid.SetRow(curButton, i + 1);  //sets the location in the grid
+                            Grid.SetColumn(curButton, j + 1);
+                            curButton.Click += Move;    //sets method to run when button is pressed
+                            UIGlobal.XAMLpage.getGrid().Children.Add(curButton);     //adds button to grid 
+                            createdButtons.Add(curButton);
                         }
                     }
                 }
