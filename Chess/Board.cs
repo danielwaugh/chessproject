@@ -33,19 +33,28 @@ namespace Chess
 
         private int[] capturedPieceBlack = new int[2] { 1, 1 };
 
+        private bool checkmode = false;
+
 
         public Board()
         {
             turn = 0;   //turn starts out with white pieces
         }
 
+        /// <summary>
+        /// moves the appropriate captured piece from the board to the captured bank
+        /// of the specefied player.
+        /// </summary>
+        /// <param name="piece"></param>
         private void CapturePiece(int piece)
         {
+            Button captureButton = (Button)UIGlobal.XAMLpage.FindName($"p{piece}");
             if (turn == 0)  //whites turn
             {
-                Button captureButton = (Button)UIGlobal.XAMLpage.FindName($"p{piece}");
                 Grid.SetRow(captureButton, capturedPieceWhite[0]);
                 Grid.SetColumn(captureButton, capturedPieceWhite[1]);
+                captureButton.IsEnabled = false;
+                captureButton.Opacity = 1;
                 UIGlobal.getGrid().Children.Remove(captureButton);
                 UIGlobal.getPlayer1Grid().Children.Add(captureButton);
                 if (capturedPieceWhite[1] == 2)
@@ -60,9 +69,10 @@ namespace Chess
             }
             if (turn == 1)  //blacks turn
             {
-                Button captureButton = (Button)UIGlobal.XAMLpage.FindName($"p{piece}");
                 Grid.SetRow(captureButton, capturedPieceBlack[0]);
                 Grid.SetColumn(captureButton, capturedPieceBlack[1]);
+                captureButton.IsEnabled = false;
+                captureButton.Opacity = 1;
                 UIGlobal.getGrid().Children.Remove(captureButton);
                 UIGlobal.getPlayer2Grid().Children.Add(captureButton);
                 if (capturedPieceBlack[1] == 2)
@@ -77,6 +87,12 @@ namespace Chess
             }
 
         }
+
+        /// <summary>
+        /// selects the piece and creates all the destinations that the piece can go to 
+        /// </summary>
+        /// <param name="pieceNumber"></param>
+        /// <param name="piece"></param>
         public void SelectPiece(int pieceNumber, Button piece)
         {
             finishedMoveFlag = false;
@@ -91,146 +107,176 @@ namespace Chess
                     }
                 }
             }
-            if (pieceNumber == 1 || pieceNumber == 8 || pieceNumber == 25 || pieceNumber == 32) //Checks if piece is Rook
+            if(checkmode)
             {
-                Rook thisRook = new Rook(selectedPiece); //Creates new rook object
-                thisRook.createDestination(piecePositions, turn); //Destination array created 
-                for (int i = 0; i < 8; i++) //Nested for loop to create available buttons for Rook Movement
+                if (pieceNumber == 5 || pieceNumber == 29) //Checks if piece is King
                 {
-                    for (int j = 0; j < 8; j++)
+                    King thisKing = new King(selectedPiece); //Creates new King object
+                    thisKing.createDestination(piecePositions, turn); //Destination array created 
+                    for (int i = 0; i < 8; i++) //Nested for loop to create available buttons for King Movement
                     {
-                        if (thisRook.validMoveLocations[i,j] == true)
+                        for (int j = 0; j < 8; j++)
                         {
-                            Button curButton = new Button();    //creates button
-                            curButton.Width = 72;
-                            curButton.Height = 72;
-                            curButton.Name = $"{i + 1},{j + 1}";    //gives it a name for indexing later (name: "grid row, grid column")
-                            Grid.SetRow(curButton, i + 1);  //sets the location in the grid
-                            Grid.SetColumn(curButton, j + 1);
-                            curButton.Click += Move;    //sets method to run when button is pressed
-                            UIGlobal.XAMLpage.getGrid().Children.Add(curButton);    //adds button to grid 
-                            createdButtons.Add(curButton);
-                        }
-                    }
-                }
-            }
-
-            else if (pieceNumber == 3 || pieceNumber == 6 || pieceNumber == 27 || pieceNumber == 30) //Checks if piece is Bishop
-            {
-                Bishop thisBishop = new Bishop(selectedPiece); //Creates new Bishop object
-                thisBishop.createDestination(piecePositions, turn); //Destination array created 
-                for (int i = 0; i < 8; i++) //Nested for loop to create available buttons for Bishop Movement
-                {
-                    for (int j = 0; j < 8; j++)
-                    {
-                        if (thisBishop.validMoveLocations[i, j] == true)
-                        {
-                            Button curButton = new Button();    //creates button
-                            curButton.Width = 72;
-                            curButton.Height = 72;
-                            curButton.Name = $"{i + 1},{j + 1}";    //gives it a name for indexing later (name: "grid row, grid column")
-                            Grid.SetRow(curButton, i + 1);  //sets the location in the grid
-                            Grid.SetColumn(curButton, j + 1);
-                            curButton.Click += Move;    //sets method to run when button is pressed
-                            UIGlobal.XAMLpage.getGrid().Children.Add(curButton);     //adds button to grid 
-                            createdButtons.Add(curButton);
-                        }
-                    }
-                }
-            }
-
-            else if (pieceNumber == 4 || pieceNumber == 28) //Checks if piece is Queen
-            {
-                Queen thisQueen = new Queen(selectedPiece); //Creates new Queen object
-                thisQueen.createDestination(piecePositions, turn); //Destination array created 
-                for (int i = 0; i < 8; i++) //Nested for loop to create available buttons for Queen Movement
-                {
-                    for (int j = 0; j < 8; j++)
-                    {
-                        if (thisQueen.validMoveLocations[i, j] == true)
-                        {
-                            Button curButton = new Button();    //creates button
-                            curButton.Width = 72;
-                            curButton.Height = 72;
-                            curButton.Name = $"{i + 1},{j + 1}";    //gives it a name for indexing later (name: "grid row, grid column")
-                            Grid.SetRow(curButton, i + 1);  //sets the location in the grid
-                            Grid.SetColumn(curButton, j + 1);
-                            curButton.Click += Move;    //sets method to run when button is pressed
-                            UIGlobal.XAMLpage.getGrid().Children.Add(curButton);     //adds button to grid 
-                            createdButtons.Add(curButton);
-                        }
-                    }
-                }
-            }
-            else if (pieceNumber == 2 || pieceNumber == 7 || pieceNumber == 26 || pieceNumber == 31) //Checks if piece is Knight
-            {
-                Knight thisKnight = new Knight(selectedPiece); //Creates new Queen object
-                thisKnight.createDestination(piecePositions, turn); //Destination array created 
-                for (int i = 0; i < 8; i++) //Nested for loop to create available buttons for Queen Movement
-                {
-                    for (int j = 0; j < 8; j++)
-                    {
-                        if (thisKnight.validMoveLocations[i, j] == true)
-                        {
-                            Button curButton = new Button();    //creates button
-                            curButton.Width = 72;
-                            curButton.Height = 72;
-                            curButton.Name = $"{i + 1},{j + 1}";    //gives it a name for indexing later (name: "grid row, grid column")
-                            Grid.SetRow(curButton, i + 1);  //sets the location in the grid
-                            Grid.SetColumn(curButton, j + 1);
-                            curButton.Click += Move;    //sets method to run when button is pressed
-                            UIGlobal.XAMLpage.getGrid().Children.Add(curButton);     //adds button to grid 
-                            createdButtons.Add(curButton);
-                        }
-                    }
-                }
-            }
-            else if (pieceNumber == 5 || pieceNumber == 29) //Checks if piece is King
-            {
-                King thisKing = new King(selectedPiece); //Creates new King object
-                thisKing.createDestination(piecePositions, turn); //Destination array created 
-                for (int i = 0; i < 8; i++) //Nested for loop to create available buttons for King Movement
-                {
-                    for (int j = 0; j < 8; j++)
-                    {
-                        if (thisKing.validMoveLocations[i, j] == true)
-                        {
-                            Button curButton = new Button();    //creates button
-                            curButton.Width = 72;
-                            curButton.Height = 72;
-                            curButton.Name = $"{i + 1},{j + 1}";    //gives it a name for indexing later (name: "grid row, grid column")
-                            Grid.SetRow(curButton, i + 1);  //sets the location in the grid
-                            Grid.SetColumn(curButton, j + 1);
-                            curButton.Click += Move;    //sets method to run when button is pressed
-                            UIGlobal.XAMLpage.getGrid().Children.Add(curButton);     //adds button to grid 
-                            createdButtons.Add(curButton);
+                            if (thisKing.validMoveLocations[i, j] == true)
+                            {
+                                Button curButton = new Button();    //creates button
+                                curButton.Width = 72;
+                                curButton.Height = 72;
+                                curButton.Name = $"{i + 1},{j + 1}";    //gives it a name for indexing later (name: "grid row, grid column")
+                                Grid.SetRow(curButton, i + 1);  //sets the location in the grid
+                                Grid.SetColumn(curButton, j + 1);
+                                curButton.Click += Move;    //sets method to run when button is pressed
+                                UIGlobal.XAMLpage.getGrid().Children.Add(curButton);     //adds button to grid 
+                                createdButtons.Add(curButton);
+                            }
                         }
                     }
                 }
             }
             else
             {
-                Pawn thisPawn = new Pawn(selectedPiece); //Creates new Pawn object
-                thisPawn.createDestination(piecePositions, turn); //Destination array created 
-                for (int i = 0; i < 8; i++) //Nested for loop to create available buttons for Pawn Movement
+                if (pieceNumber == 1 || pieceNumber == 8 || pieceNumber == 25 || pieceNumber == 32) //Checks if piece is Rook
                 {
-                    for (int j = 0; j < 8; j++)
+                    Rook thisRook = new Rook(selectedPiece); //Creates new rook object
+                    thisRook.createDestination(piecePositions, turn); //Destination array created 
+                    for (int i = 0; i < 8; i++) //Nested for loop to create available buttons for Rook Movement
                     {
-                        if (thisPawn.validMoveLocations[i, j] == true)
+                        for (int j = 0; j < 8; j++)
                         {
-                            Button curButton = new Button();    //creates button
-                            curButton.Width = 72;
-                            curButton.Height = 72;
-                            curButton.Name = $"{i + 1},{j + 1}";    //gives it a name for indexing later (name: "grid row, grid column")
-                            Grid.SetRow(curButton, i + 1);  //sets the location in the grid
-                            Grid.SetColumn(curButton, j + 1);
-                            curButton.Click += Move;    //sets method to run when button is pressed
-                            UIGlobal.XAMLpage.getGrid().Children.Add(curButton);     //adds button to grid 
-                            createdButtons.Add(curButton);
+                            if (thisRook.validMoveLocations[i, j] == true)
+                            {
+                                Button curButton = new Button();    //creates button
+                                curButton.Width = 72;
+                                curButton.Height = 72;
+                                curButton.Name = $"{i + 1},{j + 1}";    //gives it a name for indexing later (name: "grid row, grid column")
+                                Grid.SetRow(curButton, i + 1);  //sets the location in the grid
+                                Grid.SetColumn(curButton, j + 1);
+                                curButton.Click += Move;    //sets method to run when button is pressed
+                                UIGlobal.XAMLpage.getGrid().Children.Add(curButton);    //adds button to grid 
+                                createdButtons.Add(curButton);
+                            }
+                        }
+                    }
+                }
+
+                else if (pieceNumber == 3 || pieceNumber == 6 || pieceNumber == 27 || pieceNumber == 30) //Checks if piece is Bishop
+                {
+                    Bishop thisBishop = new Bishop(selectedPiece); //Creates new Bishop object
+                    thisBishop.createDestination(piecePositions, turn); //Destination array created 
+                    for (int i = 0; i < 8; i++) //Nested for loop to create available buttons for Bishop Movement
+                    {
+                        for (int j = 0; j < 8; j++)
+                        {
+                            if (thisBishop.validMoveLocations[i, j] == true)
+                            {
+                                Button curButton = new Button();    //creates button
+                                curButton.Width = 72;
+                                curButton.Height = 72;
+                                curButton.Name = $"{i + 1},{j + 1}";    //gives it a name for indexing later (name: "grid row, grid column")
+                                Grid.SetRow(curButton, i + 1);  //sets the location in the grid
+                                Grid.SetColumn(curButton, j + 1);
+                                curButton.Click += Move;    //sets method to run when button is pressed
+                                UIGlobal.XAMLpage.getGrid().Children.Add(curButton);     //adds button to grid 
+                                createdButtons.Add(curButton);
+                            }
+                        }
+                    }
+                }
+
+                else if (pieceNumber == 4 || pieceNumber == 28) //Checks if piece is Queen
+                {
+                    Queen thisQueen = new Queen(selectedPiece); //Creates new Queen object
+                    thisQueen.createDestination(piecePositions, turn); //Destination array created 
+                    for (int i = 0; i < 8; i++) //Nested for loop to create available buttons for Queen Movement
+                    {
+                        for (int j = 0; j < 8; j++)
+                        {
+                            if (thisQueen.validMoveLocations[i, j] == true)
+                            {
+                                Button curButton = new Button();    //creates button
+                                curButton.Width = 72;
+                                curButton.Height = 72;
+                                curButton.Name = $"{i + 1},{j + 1}";    //gives it a name for indexing later (name: "grid row, grid column")
+                                Grid.SetRow(curButton, i + 1);  //sets the location in the grid
+                                Grid.SetColumn(curButton, j + 1);
+                                curButton.Click += Move;    //sets method to run when button is pressed
+                                UIGlobal.XAMLpage.getGrid().Children.Add(curButton);     //adds button to grid 
+                                createdButtons.Add(curButton);
+                            }
+                        }
+                    }
+                }
+                else if (pieceNumber == 2 || pieceNumber == 7 || pieceNumber == 26 || pieceNumber == 31) //Checks if piece is Knight
+                {
+                    Knight thisKnight = new Knight(selectedPiece); //Creates new Queen object
+                    thisKnight.createDestination(piecePositions, turn); //Destination array created 
+                    for (int i = 0; i < 8; i++) //Nested for loop to create available buttons for Queen Movement
+                    {
+                        for (int j = 0; j < 8; j++)
+                        {
+                            if (thisKnight.validMoveLocations[i, j] == true)
+                            {
+                                Button curButton = new Button();    //creates button
+                                curButton.Width = 72;
+                                curButton.Height = 72;
+                                curButton.Name = $"{i + 1},{j + 1}";    //gives it a name for indexing later (name: "grid row, grid column")
+                                Grid.SetRow(curButton, i + 1);  //sets the location in the grid
+                                Grid.SetColumn(curButton, j + 1);
+                                curButton.Click += Move;    //sets method to run when button is pressed
+                                UIGlobal.XAMLpage.getGrid().Children.Add(curButton);     //adds button to grid 
+                                createdButtons.Add(curButton);
+                            }
+                        }
+                    }
+                }
+                else if (pieceNumber == 5 || pieceNumber == 29) //Checks if piece is King
+                {
+                    King thisKing = new King(selectedPiece); //Creates new King object
+                    thisKing.createDestination(piecePositions, turn); //Destination array created 
+                    for (int i = 0; i < 8; i++) //Nested for loop to create available buttons for King Movement
+                    {
+                        for (int j = 0; j < 8; j++)
+                        {
+                            if (thisKing.validMoveLocations[i, j] == true)
+                            {
+                                Button curButton = new Button();    //creates button
+                                curButton.Width = 72;
+                                curButton.Height = 72;
+                                curButton.Name = $"{i + 1},{j + 1}";    //gives it a name for indexing later (name: "grid row, grid column")
+                                Grid.SetRow(curButton, i + 1);  //sets the location in the grid
+                                Grid.SetColumn(curButton, j + 1);
+                                curButton.Click += Move;    //sets method to run when button is pressed
+                                UIGlobal.XAMLpage.getGrid().Children.Add(curButton);     //adds button to grid 
+                                createdButtons.Add(curButton);
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    Pawn thisPawn = new Pawn(selectedPiece); //Creates new Pawn object
+                    thisPawn.createDestination(piecePositions, turn); //Destination array created 
+                    for (int i = 0; i < 8; i++) //Nested for loop to create available buttons for Pawn Movement
+                    {
+                        for (int j = 0; j < 8; j++)
+                        {
+                            if (thisPawn.validMoveLocations[i, j] == true)
+                            {
+                                Button curButton = new Button();    //creates button
+                                curButton.Width = 72;
+                                curButton.Height = 72;
+                                curButton.Name = $"{i + 1},{j + 1}";    //gives it a name for indexing later (name: "grid row, grid column")
+                                Grid.SetRow(curButton, i + 1);  //sets the location in the grid
+                                Grid.SetColumn(curButton, j + 1);
+                                curButton.Click += Move;    //sets method to run when button is pressed
+                                UIGlobal.XAMLpage.getGrid().Children.Add(curButton);     //adds button to grid 
+                                createdButtons.Add(curButton);
+                            }
                         }
                     }
                 }
             }
+            
             
         }
 
@@ -260,21 +306,20 @@ namespace Chess
             string[] rowCol = curButton.Name.Split(',');    //splits the name of the created button to get the row and column of it's location
 
             int possibleCapture = piecePositions[Convert.ToInt32(rowCol[0]) - 1, Convert.ToInt32(rowCol[1]) - 1];
+
             if (turn == 0)  //whites turn
             {
-                if(possibleCapture > 16)
+                if(possibleCapture > 16)    // if white is capturing a black, run capture function
                 {
                     CapturePiece(possibleCapture);
                 }
-                // if white is capturing a black, run capture function
             }
             else //blacks turn
             {
                 if (possibleCapture <= 16 && possibleCapture > 0)
                 {
-                    CapturePiece(possibleCapture);
+                    CapturePiece(possibleCapture);  //if black is capturing a white, run capture function
                 }
-                //if black is capturing a white, run capture function
             }
 
             Grid.SetRow(currentPiece, Convert.ToInt32(rowCol[0]));  //sets the row of the current piece selected to row of button pressed
@@ -293,6 +338,10 @@ namespace Chess
 
             piecePositions[Convert.ToInt32(rowCol[0]) - 1, Convert.ToInt32(rowCol[1]) - 1] = curPieceNumber;    //stores the new location of the selected piece
             UnselectPiece(curPieceNumber);  //unselects the piece by using the unselect function
+            selectedPiece[Convert.ToInt32(rowCol[0]) - 1, Convert.ToInt32(rowCol[1]) - 1] = 1;
+            checkmode = false;
+            kingCheck();
+            Array.Clear(selectedPiece, 0, selectedPiece.Length);        //clears the aray of location of selected piece
             finishedMoveFlag = true;    //move is now finished
             ChangeTurn();       //changes the turn to the other player
         }
@@ -300,19 +349,27 @@ namespace Chess
         /// <summary>
         /// handles changing the turn so only one users pieces are usable at a time
         /// </summary>
-        public void ChangeTurn()
+        private void ChangeTurn()
         {
             if (turn == 0)  //turn = 0 is white, turn = 1 is black
             {
                 for(int i = 1; i < 17; i++)     //sets all the white buttons to an opacity of .7 and disables the buttons
                 {
                     Button curButton = UIGlobal.XAMLpage.FindName($"p{i}") as Button;   //gets piece by name
+                    if(!curButton.IsEnabled && curButton.Opacity == 1)  //checks to see if it is in the captured bank
+                    {
+                        continue;
+                    }
                     curButton.IsEnabled = false;
                     curButton.Opacity = .7;
                 }
                 for(int i = 17; i < 33; i++)    //sets all the black buttons to an opacity of 1 and enables the buttons
                 {
                     Button curButton = UIGlobal.XAMLpage.FindName($"p{i}") as Button;   //gets piece by name
+                    if (!curButton.IsEnabled && curButton.Opacity == 1) //checks to see if it is in the captured bank
+                    {
+                        continue;
+                    }
                     curButton.IsEnabled = true;
                     curButton.Opacity = 1;
                 }
@@ -323,16 +380,81 @@ namespace Chess
                 for (int i = 1; i < 17; i++)    //sets all the white buttons to an opacity of 1 and enables the buttons
                 {
                     Button curButton = UIGlobal.XAMLpage.FindName($"p{i}") as Button;   //gets piece by name
+                    if (!curButton.IsEnabled && curButton.Opacity == 1) //checks to see if it is in the captured bank
+                    {
+                        continue;
+                    }
                     curButton.IsEnabled = true;
                     curButton.Opacity = 1;
                 }
                 for (int i = 17; i < 33; i++)   //sets all the black buttons to an opacity of .7 and disables the buttons
                 {
                     Button curButton = UIGlobal.XAMLpage.FindName($"p{i}") as Button;   //gets piece by name
+                    if (!curButton.IsEnabled && curButton.Opacity == 1) //checks to see if it is in the captured bank
+                    {
+                        continue;
+                    }
                     curButton.IsEnabled = false;
                     curButton.Opacity = .7;
                 }
                 turn = 0;   //changees turn
+            }
+        }
+
+        /// <summary>
+        /// checks to see if the king is in the check stage.
+        /// </summary>
+        private void kingCheck()
+        {
+            int pieceNumber = Convert.ToInt32(currentPiece.Name.Substring(1));   //gets the current pieces identification number for xaml
+            bool[,] checkComparison;
+            if (pieceNumber == 1 || pieceNumber == 8 || pieceNumber == 25 || pieceNumber == 32) //Checks if piece is Rook
+            {
+                Rook thisRook = new Rook(selectedPiece); //Creates new rook object
+                thisRook.createDestination(piecePositions, turn); //Destination array created 
+                checkComparison = thisRook.validMoveLocations;
+            }
+
+            else if (pieceNumber == 3 || pieceNumber == 6 || pieceNumber == 27 || pieceNumber == 30) //Checks if piece is Bishop
+            {
+                Bishop thisBishop = new Bishop(selectedPiece); //Creates new Bishop object
+                thisBishop.createDestination(piecePositions, turn); //Destination array created 
+                checkComparison = thisBishop.validMoveLocations;
+            }
+
+            else if (pieceNumber == 4 || pieceNumber == 28) //Checks if piece is Queen
+            {
+                Queen thisQueen = new Queen(selectedPiece); //Creates new Queen object
+                thisQueen.createDestination(piecePositions, turn); //Destination array created 
+                checkComparison = thisQueen.validMoveLocations;
+            }
+            else if (pieceNumber == 2 || pieceNumber == 7 || pieceNumber == 26 || pieceNumber == 31) //Checks if piece is Knight
+            {
+                Knight thisKnight = new Knight(selectedPiece); //Creates new Queen object
+                thisKnight.createDestination(piecePositions, turn); //Destination array created 
+                checkComparison = thisKnight.validMoveLocations;
+            }
+            else if (pieceNumber == 5 || pieceNumber == 29) //Checks if piece is King
+            {
+                King thisKing = new King(selectedPiece); //Creates new King object
+                thisKing.createDestination(piecePositions, turn); //Destination array created 
+                checkComparison = thisKing.validMoveLocations;
+            }
+            else
+            {
+                Pawn thisPawn = new Pawn(selectedPiece); //Creates new Pawn object
+                thisPawn.createDestination(piecePositions, turn); //Destination array created 
+                checkComparison = thisPawn.validMoveLocations;
+            }
+            for (int i = 0; i < 8; i++)
+            {
+                for (int j = 0; j < 8; j++)
+                {
+                    if (checkComparison[i, j] == true && (piecePositions[i, j] == 29 || piecePositions[i, j] == 5))
+                    {
+                        checkmode = true;
+                    }
+                }
             }
         }
     }

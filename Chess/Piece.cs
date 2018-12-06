@@ -1073,7 +1073,7 @@ namespace Chess
                 }
             }
             // right 1
-            if (i + 1 < 8)
+            if (j + 1 < 8)
             {
                 if (turn == 0)   //whites turn
                 {
@@ -1107,7 +1107,7 @@ namespace Chess
                 }
             }
             // left 1
-            if (i - 1 >= 0)
+            if (j - 1 >= 0)
             {
                 if (turn == 0)   //whites turn
                 {
