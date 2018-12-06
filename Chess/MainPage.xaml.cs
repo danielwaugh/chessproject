@@ -64,7 +64,17 @@ namespace Chess
 
         public static Grid getGrid()
         {
-            return XAMLpage.getGrid();  //returns the grid object to be used in external classes
+            return XAMLpage.getGrid();  //returns the grid object to be used in external classes //OfType<Grid>().
+        }
+
+        public static Grid getPlayer1Grid()
+        {
+            return (Grid)XAMLpage.FindName("player1grid");
+        }
+
+        public static Grid getPlayer2Grid()
+        {
+            return (Grid)XAMLpage.FindName("player2grid");
         }
     }
 }

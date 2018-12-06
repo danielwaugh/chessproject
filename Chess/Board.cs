@@ -275,3 +275,6 @@ namespace Chess
         }
     }
 }
+
+//UIGlobal.getGrid().Children.Remove();
+//UIGlobal.getPlayer1Grid().Children.Add();
