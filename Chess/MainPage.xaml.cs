@@ -48,11 +48,9 @@ namespace Chess
                 chessBoard.UnselectPiece(currentPieceNumber);       //unselects piece only if it is already selected
                 selectFlag = true;      //tells the program that the piece has been unselected
             }
-
-
         }
-
     }
+
     /// <summary>
     /// This class handles making the grid public to other classes. Without this,
     /// it would not be possible to modify the xaml file outside of the xaml main

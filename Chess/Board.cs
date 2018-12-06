@@ -15,7 +15,7 @@ namespace Chess
         /// holds the position of all the pieces on the 8x8 board (total of 32 pieces represented by corresponding
         /// numbers, 0 represents empty position). These numbers map to the name of the xaml object in the uwp application
         /// </summary>
-        private int[,] piecePositions = new int[8, 8]      
+        private int[,] piecePositions = new int[8, 8]
             { {1, 2, 3, 4, 5, 6, 7, 8}, {9, 10, 11, 12, 13, 14, 15, 16}, {0, 0, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0, 0, 0},
             {0, 0, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0, 0, 0}, {17, 18, 19, 20, 21, 22, 23, 24}, {25, 26, 27, 28, 29, 30, 31, 32} };
 
@@ -35,7 +35,11 @@ namespace Chess
 
         private bool checkmode = false;
 
+        private bool[,] checkModePath = new bool[8, 8];
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
         public Board()
         {
             turn = 0;   //turn starts out with white pieces
@@ -107,7 +111,7 @@ namespace Chess
                     }
                 }
             }
-            if(checkmode)
+            if (checkmode)
             {
                 if (pieceNumber == 5 || pieceNumber == 29) //Checks if piece is King
                 {
@@ -117,7 +121,124 @@ namespace Chess
                     {
                         for (int j = 0; j < 8; j++)
                         {
-                            if (thisKing.validMoveLocations[i, j] == true)
+                            if (thisKing.validMoveLocations[i, j] == true && checkModePath[i, j] == false)  //can only move to spots that wouldn't keep it in check
+                            {
+                                Button curButton = new Button();    //creates button
+                                curButton.Width = 72;
+                                curButton.Height = 72;
+                                curButton.Name = $"{i + 1},{j + 1}";    //gives it a name for indexing later (name: "grid row, grid column")
+                                Grid.SetRow(curButton, i + 1);  //sets the location in the grid
+                                Grid.SetColumn(curButton, j + 1);
+                                curButton.Click += Move;    //sets method to run when button is pressed
+                                UIGlobal.XAMLpage.getGrid().Children.Add(curButton);     //adds button to grid 
+                                createdButtons.Add(curButton);
+                            }
+                        }
+                    }
+                }
+                if (pieceNumber == 1 || pieceNumber == 8 || pieceNumber == 25 || pieceNumber == 32) //Checks if piece is Rook
+                {
+                    Rook thisRook = new Rook(selectedPiece); //Creates new rook object
+                    thisRook.createDestination(piecePositions, turn); //Destination array created 
+                    for (int i = 0; i < 8; i++) //Nested for loop to create available buttons for Rook Movement
+                    {
+                        for (int j = 0; j < 8; j++)
+                        {
+                            if (thisRook.validMoveLocations[i, j] == true && checkModePath[i, j] == true)   //can move to only spots defending the king
+                            {
+                                Button curButton = new Button();    //creates button
+                                curButton.Width = 72;
+                                curButton.Height = 72;
+                                curButton.Name = $"{i + 1},{j + 1}";    //gives it a name for indexing later (name: "grid row, grid column")
+                                Grid.SetRow(curButton, i + 1);  //sets the location in the grid
+                                Grid.SetColumn(curButton, j + 1);
+                                curButton.Click += Move;    //sets method to run when button is pressed
+                                UIGlobal.XAMLpage.getGrid().Children.Add(curButton);    //adds button to grid 
+                                createdButtons.Add(curButton);
+                            }
+                        }
+                    }
+                }
+
+                else if (pieceNumber == 3 || pieceNumber == 6 || pieceNumber == 27 || pieceNumber == 30) //Checks if piece is Bishop
+                {
+                    Bishop thisBishop = new Bishop(selectedPiece); //Creates new Bishop object
+                    thisBishop.createDestination(piecePositions, turn); //Destination array created 
+                    for (int i = 0; i < 8; i++) //Nested for loop to create available buttons for Bishop Movement
+                    {
+                        for (int j = 0; j < 8; j++)
+                        {
+                            if (thisBishop.validMoveLocations[i, j] == true && checkModePath[i, j] == true)     //can move to only spots defending the king
+                            {
+                                Button curButton = new Button();    //creates button
+                                curButton.Width = 72;
+                                curButton.Height = 72;
+                                curButton.Name = $"{i + 1},{j + 1}";    //gives it a name for indexing later (name: "grid row, grid column")
+                                Grid.SetRow(curButton, i + 1);  //sets the location in the grid
+                                Grid.SetColumn(curButton, j + 1);
+                                curButton.Click += Move;    //sets method to run when button is pressed
+                                UIGlobal.XAMLpage.getGrid().Children.Add(curButton);     //adds button to grid 
+                                createdButtons.Add(curButton);
+                            }
+                        }
+                    }
+                }
+
+                else if (pieceNumber == 4 || pieceNumber == 28) //Checks if piece is Queen
+                {
+                    Queen thisQueen = new Queen(selectedPiece); //Creates new Queen object
+                    thisQueen.createDestination(piecePositions, turn); //Destination array created 
+                    for (int i = 0; i < 8; i++) //Nested for loop to create available buttons for Queen Movement
+                    {
+                        for (int j = 0; j < 8; j++)
+                        {
+                            if (thisQueen.validMoveLocations[i, j] == true && checkModePath[i, j] == true)  //can move to only spots defending the king
+                            {
+                                Button curButton = new Button();    //creates button
+                                curButton.Width = 72;
+                                curButton.Height = 72;
+                                curButton.Name = $"{i + 1},{j + 1}";    //gives it a name for indexing later (name: "grid row, grid column")
+                                Grid.SetRow(curButton, i + 1);  //sets the location in the grid
+                                Grid.SetColumn(curButton, j + 1);
+                                curButton.Click += Move;    //sets method to run when button is pressed
+                                UIGlobal.XAMLpage.getGrid().Children.Add(curButton);     //adds button to grid 
+                                createdButtons.Add(curButton);
+                            }
+                        }
+                    }
+                }
+                else if (pieceNumber == 2 || pieceNumber == 7 || pieceNumber == 26 || pieceNumber == 31) //Checks if piece is Knight
+                {
+                    Knight thisKnight = new Knight(selectedPiece); //Creates new Queen object
+                    thisKnight.createDestination(piecePositions, turn); //Destination array created 
+                    for (int i = 0; i < 8; i++) //Nested for loop to create available buttons for Queen Movement
+                    {
+                        for (int j = 0; j < 8; j++)
+                        {
+                            if (thisKnight.validMoveLocations[i, j] == true && checkModePath[i, j] == true) //can move to only spots defending the king
+                            {
+                                Button curButton = new Button();    //creates button
+                                curButton.Width = 72;
+                                curButton.Height = 72;
+                                curButton.Name = $"{i + 1},{j + 1}";    //gives it a name for indexing later (name: "grid row, grid column")
+                                Grid.SetRow(curButton, i + 1);  //sets the location in the grid
+                                Grid.SetColumn(curButton, j + 1);
+                                curButton.Click += Move;    //sets method to run when button is pressed
+                                UIGlobal.XAMLpage.getGrid().Children.Add(curButton);     //adds button to grid 
+                                createdButtons.Add(curButton);
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    Pawn thisPawn = new Pawn(selectedPiece); //Creates new Pawn object
+                    thisPawn.createDestination(piecePositions, turn); //Destination array created 
+                    for (int i = 0; i < 8; i++) //Nested for loop to create available buttons for Pawn Movement
+                    {
+                        for (int j = 0; j < 8; j++)
+                        {
+                            if (thisPawn.validMoveLocations[i, j] == true && checkModePath[i, j] == true)
                             {
                                 Button curButton = new Button();    //creates button
                                 curButton.Width = 72;
@@ -276,17 +397,17 @@ namespace Chess
                     }
                 }
             }
-            
-            
+
+
         }
 
         /// <summary>
         /// unselects the piece by deleting all buttons created by the select piece function
         /// </summary>
         /// <param name="pieceNumber"></param>
-        public void UnselectPiece(int pieceNumber)  
+        public void UnselectPiece(int pieceNumber)
         {
-            foreach(Button clearbutton in createdButtons)     //goes through emptybutton locations (places where the piece can go)
+            foreach (Button clearbutton in createdButtons)     //goes through emptybutton locations (places where the piece can go)
             {
                 UIGlobal.XAMLpage.getGrid().Children.Remove(clearbutton);       //removes the buttons from the board
             }
@@ -309,7 +430,7 @@ namespace Chess
 
             if (turn == 0)  //whites turn
             {
-                if(possibleCapture > 16)    // if white is capturing a black, run capture function
+                if (possibleCapture > 16)    // if white is capturing a black, run capture function
                 {
                     CapturePiece(possibleCapture);
                 }
@@ -339,7 +460,9 @@ namespace Chess
             piecePositions[Convert.ToInt32(rowCol[0]) - 1, Convert.ToInt32(rowCol[1]) - 1] = curPieceNumber;    //stores the new location of the selected piece
             UnselectPiece(curPieceNumber);  //unselects the piece by using the unselect function
             selectedPiece[Convert.ToInt32(rowCol[0]) - 1, Convert.ToInt32(rowCol[1]) - 1] = 1;
+            Array.Clear(checkModePath, 0, checkModePath.Length);        //clears the array of the checkmode path
             checkmode = false;
+            CheckPopUp();
             kingCheck();
             Array.Clear(selectedPiece, 0, selectedPiece.Length);        //clears the aray of location of selected piece
             finishedMoveFlag = true;    //move is now finished
@@ -353,17 +476,17 @@ namespace Chess
         {
             if (turn == 0)  //turn = 0 is white, turn = 1 is black
             {
-                for(int i = 1; i < 17; i++)     //sets all the white buttons to an opacity of .7 and disables the buttons
+                for (int i = 1; i < 17; i++)     //sets all the white buttons to an opacity of .7 and disables the buttons
                 {
                     Button curButton = UIGlobal.XAMLpage.FindName($"p{i}") as Button;   //gets piece by name
-                    if(!curButton.IsEnabled && curButton.Opacity == 1)  //checks to see if it is in the captured bank
+                    if (!curButton.IsEnabled && curButton.Opacity == 1)  //checks to see if it is in the captured bank
                     {
                         continue;
                     }
                     curButton.IsEnabled = false;
                     curButton.Opacity = .7;
                 }
-                for(int i = 17; i < 33; i++)    //sets all the black buttons to an opacity of 1 and enables the buttons
+                for (int i = 17; i < 33; i++)    //sets all the black buttons to an opacity of 1 and enables the buttons
                 {
                     Button curButton = UIGlobal.XAMLpage.FindName($"p{i}") as Button;   //gets piece by name
                     if (!curButton.IsEnabled && curButton.Opacity == 1) //checks to see if it is in the captured bank
@@ -407,58 +530,136 @@ namespace Chess
         private void kingCheck()
         {
             int pieceNumber = Convert.ToInt32(currentPiece.Name.Substring(1));   //gets the current pieces identification number for xaml
-            bool[,] checkComparison;
             if (pieceNumber == 1 || pieceNumber == 8 || pieceNumber == 25 || pieceNumber == 32) //Checks if piece is Rook
             {
                 Rook thisRook = new Rook(selectedPiece); //Creates new rook object
                 thisRook.createDestination(piecePositions, turn); //Destination array created 
-                checkComparison = thisRook.validMoveLocations;
+                checkModePath = thisRook.validMoveLocations;    //sets valid locations for piece
             }
 
             else if (pieceNumber == 3 || pieceNumber == 6 || pieceNumber == 27 || pieceNumber == 30) //Checks if piece is Bishop
             {
                 Bishop thisBishop = new Bishop(selectedPiece); //Creates new Bishop object
                 thisBishop.createDestination(piecePositions, turn); //Destination array created 
-                checkComparison = thisBishop.validMoveLocations;
+                checkModePath = thisBishop.validMoveLocations;  //sets valid locations for piece
             }
 
             else if (pieceNumber == 4 || pieceNumber == 28) //Checks if piece is Queen
             {
                 Queen thisQueen = new Queen(selectedPiece); //Creates new Queen object
                 thisQueen.createDestination(piecePositions, turn); //Destination array created 
-                checkComparison = thisQueen.validMoveLocations;
+                checkModePath = thisQueen.validMoveLocations;   //sets valid locations for piece
             }
             else if (pieceNumber == 2 || pieceNumber == 7 || pieceNumber == 26 || pieceNumber == 31) //Checks if piece is Knight
             {
                 Knight thisKnight = new Knight(selectedPiece); //Creates new Queen object
                 thisKnight.createDestination(piecePositions, turn); //Destination array created 
-                checkComparison = thisKnight.validMoveLocations;
+                checkModePath = thisKnight.validMoveLocations;  //sets valid locations for piece
             }
             else if (pieceNumber == 5 || pieceNumber == 29) //Checks if piece is King
             {
                 King thisKing = new King(selectedPiece); //Creates new King object
                 thisKing.createDestination(piecePositions, turn); //Destination array created 
-                checkComparison = thisKing.validMoveLocations;
+                checkModePath = thisKing.validMoveLocations;    //sets valid locations for piece
             }
             else
             {
                 Pawn thisPawn = new Pawn(selectedPiece); //Creates new Pawn object
                 thisPawn.createDestination(piecePositions, turn); //Destination array created 
-                checkComparison = thisPawn.validMoveLocations;
+                checkModePath = thisPawn.validMoveLocations;    //sets valid locations for piece
             }
-            for (int i = 0; i < 8; i++)
+            for (int i = 0; i < 8; i++)     //goes through and checks to see if a king lies in the path of the attacker
             {
                 for (int j = 0; j < 8; j++)
                 {
-                    if (checkComparison[i, j] == true && (piecePositions[i, j] == 29 || piecePositions[i, j] == 5))
+                    if (checkModePath[i, j] == true)    //if path is valid
                     {
-                        checkmode = true;
+                        if (piecePositions[i, j] == 29 || piecePositions[i, j] == 5)   //and is a king
+                        {
+                            Button captureButton;
+                            if (piecePositions[i, j] == 5)  //get white king if it is white
+                            {
+                                captureButton = (Button)UIGlobal.XAMLpage.FindName($"p{5}");
+                            }
+                            else  //get black king if it is black
+                            {
+                                captureButton = (Button)UIGlobal.XAMLpage.FindName($"p{29}");
+                            }
+                            int kingRow = Grid.GetRow(captureButton) - 1;   //get current location of king
+                            int kingCol = Grid.GetColumn(captureButton) - 1;
+                            int curPieceRow = Grid.GetRow(currentPiece) - 1;    //get current location of current piece
+                            int curPieceCol = Grid.GetColumn(currentPiece) - 1;
+                            for (int k = 0; k < 8; k++) //go through all valid move locations and remove invalid moves under check conditions, outcome is only valid moves that defenders can go to
+                            {
+                                for (int l = 0; l < 8; l++)
+                                {
+                                    //if king is above attacker
+                                    if (kingRow < curPieceRow && kingCol == curPieceCol && (k >= curPieceRow || l != curPieceCol) && checkModePath[k, l] == true)
+                                    {
+                                        checkModePath[k, l] = false;
+                                    }
+                                    //if king is above and to the right of attacker
+                                    if (kingRow < curPieceRow && kingCol > curPieceCol && (k >= curPieceRow || l <= curPieceCol) && checkModePath[k, l] == true)
+                                    {
+                                        checkModePath[k, l] = false;
+                                    }
+                                    //if king is to the left of attacker
+                                    if (kingRow == curPieceRow && kingCol > curPieceCol && (k != curPieceRow || l <= curPieceCol) && checkModePath[k, l] == true)
+                                    {
+                                        checkModePath[k, l] = false;
+                                    }
+                                    //if king is down and to the right of attacker
+                                    if (kingRow > curPieceRow && kingCol > curPieceCol && (k <= curPieceRow || l <= curPieceCol) && checkModePath[k, l] == true)
+                                    {
+                                        checkModePath[k, l] = false;
+                                    }
+                                    //if king is below the attacker
+                                    if (kingRow > curPieceRow && kingCol == curPieceCol && (k <= curPieceRow || l != curPieceCol) && checkModePath[k, l] == true)
+                                    {
+                                        checkModePath[k, l] = false;
+                                    }
+                                    //if king is below and to the left of attacker
+                                    if (kingRow > curPieceRow && kingCol < curPieceCol && (k <= curPieceRow || l >= curPieceCol) && checkModePath[k, l] == true)
+                                    {
+                                        checkModePath[k, l] = false;
+                                    }
+                                    //if king is to the left of attacker
+                                    if (kingRow == curPieceRow && kingCol < curPieceCol && (k != curPieceRow || l >= curPieceCol) && checkModePath[k, l] == true)
+                                    {
+                                        checkModePath[k, l] = false;
+                                    }
+                                    //if king is above and to the left of attacker
+                                    if (kingRow < curPieceRow && kingCol < curPieceCol && (k >= curPieceRow || l >= curPieceCol) && checkModePath[k, l] == true)
+                                    {
+                                        checkModePath[k, l] = false;
+                                    }
+                                }
+                            }
+                            if (pieceNumber == 2 || pieceNumber == 7 || pieceNumber == 26 || pieceNumber == 31) //special conditions for the knight, no other pieces can block the knight
+                            {
+                                Array.Clear(checkModePath, 0, checkModePath.Length);        //clears the array of the checkmode path
+                                checkModePath[kingRow, kingCol] = true; //sets the only valid location, the location of the king
+                            }
+                            checkModePath[curPieceRow, curPieceCol] = true; //sets a valid location so that defenders can attack the attacker
+                            checkmode = true;   //sets the mode of the board into check mode.
+                            CheckPopUp();
+                        }
                     }
                 }
             }
         }
+        private void CheckPopUp()
+        {
+            TextBlock checkText = (TextBlock)UIGlobal.XAMLpage.FindName($"check");  //get the textblock containing the check text
+            if (checkmode)  //if we are in check mode
+            {
+                checkText.Opacity = 1;  //show the text
+            }
+            else  //if we are not in check mode
+            {
+                checkText.Opacity = 0;  //make the text disapear
+            }
+        }
+
     }
 }
-
-//UIGlobal.getGrid().Children.Remove();
-//UIGlobal.getPlayer1Grid().Children.Add();
