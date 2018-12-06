@@ -44,18 +44,36 @@ namespace Chess
             if (turn == 0)  //whites turn
             {
                 Button captureButton = (Button)UIGlobal.XAMLpage.FindName($"p{piece}");
-                Grid.SetRow(captureButton, 1);
-                Grid.SetColumn(captureButton, 1);
+                Grid.SetRow(captureButton, capturedPieceWhite[0]);
+                Grid.SetColumn(captureButton, capturedPieceWhite[1]);
                 UIGlobal.getGrid().Children.Remove(captureButton);
                 UIGlobal.getPlayer1Grid().Children.Add(captureButton);
+                if (capturedPieceWhite[1] == 2)
+                {
+                    capturedPieceWhite[0]++;
+                    capturedPieceWhite[1] = 1;
+                }
+                else
+                {
+                    capturedPieceWhite[1]++;
+                }
             }
             if (turn == 1)  //blacks turn
             {
                 Button captureButton = (Button)UIGlobal.XAMLpage.FindName($"p{piece}");
-                Grid.SetRow(captureButton, 1);
-                Grid.SetColumn(captureButton, 1);
+                Grid.SetRow(captureButton, capturedPieceBlack[0]);
+                Grid.SetColumn(captureButton, capturedPieceBlack[1]);
                 UIGlobal.getGrid().Children.Remove(captureButton);
                 UIGlobal.getPlayer2Grid().Children.Add(captureButton);
+                if (capturedPieceBlack[1] == 2)
+                {
+                    capturedPieceBlack[0]++;
+                    capturedPieceBlack[1] = 1;
+                }
+                else
+                {
+                    capturedPieceBlack[1]++;
+                }
             }
 
         }
