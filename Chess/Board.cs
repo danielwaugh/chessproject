@@ -144,9 +144,9 @@ namespace Chess
             }
             else if (pieceNumber == 5 || pieceNumber == 29) //Checks if piece is King
             {
-                King thisKing = new King(selectedPiece); //Creates new Queen object
+                King thisKing = new King(selectedPiece); //Creates new King object
                 thisKing.createDestination(piecePositions, turn); //Destination array created 
-                for (int i = 0; i < 8; i++) //Nested for loop to create available buttons for Queen Movement
+                for (int i = 0; i < 8; i++) //Nested for loop to create available buttons for King Movement
                 {
                     for (int j = 0; j < 8; j++)
                     {
@@ -167,9 +167,9 @@ namespace Chess
             }
             else
             {
-                Pawn thisPawn = new Pawn(selectedPiece); //Creates new Queen object
+                Pawn thisPawn = new Pawn(selectedPiece); //Creates new Pawn object
                 thisPawn.createDestination(piecePositions, turn); //Destination array created 
-                for (int i = 0; i < 8; i++) //Nested for loop to create available buttons for Queen Movement
+                for (int i = 0; i < 8; i++) //Nested for loop to create available buttons for Pawn Movement
                 {
                     for (int j = 0; j < 8; j++)
                     {
