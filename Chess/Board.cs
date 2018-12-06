@@ -28,12 +28,36 @@ namespace Chess
 
         private int turn;       //holds whos turn it is
 
+        private int[] capturedPieceWhite = new int[2] { 1, 1 };
+
+        private int[] capturedPieceBlack = new int[2] { 1, 1 };
+
 
         public Board()
         {
             turn = 0;   //turn starts out with white pieces
         }
 
+        private void CapturePiece(int piece)
+        {
+            if (turn == 0)  //whites turn
+            {
+                Button captureButton = (Button)UIGlobal.XAMLpage.FindName($"p{piece}");
+                Grid.SetRow(captureButton, 1);
+                Grid.SetColumn(captureButton, 1);
+                UIGlobal.getGrid().Children.Remove(captureButton);
+                UIGlobal.getPlayer1Grid().Children.Add(captureButton);
+            }
+            if (turn == 1)  //blacks turn
+            {
+                Button captureButton = (Button)UIGlobal.XAMLpage.FindName($"p{piece}");
+                Grid.SetRow(captureButton, 1);
+                Grid.SetColumn(captureButton, 1);
+                UIGlobal.getGrid().Children.Remove(captureButton);
+                UIGlobal.getPlayer2Grid().Children.Add(captureButton);
+            }
+
+        }
         public void SelectPiece(int pieceNumber, Button piece)
         {
             finishedMoveFlag = false;
@@ -216,6 +240,24 @@ namespace Chess
             Button curButton = (Button)sender;      //casts the object to button
             string[] rowCol = curButton.Name.Split(',');    //splits the name of the created button to get the row and column of it's location
 
+            int possibleCapture = piecePositions[Convert.ToInt32(rowCol[0]) - 1, Convert.ToInt32(rowCol[1]) - 1];
+            if (turn == 0)  //whites turn
+            {
+                if(possibleCapture > 16)
+                {
+                    CapturePiece(possibleCapture);
+                }
+                // if white is capturing a black, run capture function
+            }
+            else //blacks turn
+            {
+                if (possibleCapture <= 16 && possibleCapture > 0)
+                {
+                    CapturePiece(possibleCapture);
+                }
+                //if black is capturing a white, run capture function
+            }
+
             Grid.SetRow(currentPiece, Convert.ToInt32(rowCol[0]));  //sets the row of the current piece selected to row of button pressed
             Grid.SetColumn(currentPiece, Convert.ToInt32(rowCol[1]));   //sets the col of the current piece selected to col of button pressed
 
@@ -229,6 +271,7 @@ namespace Chess
                     }
                 }
             }
+
             piecePositions[Convert.ToInt32(rowCol[0]) - 1, Convert.ToInt32(rowCol[1]) - 1] = curPieceNumber;    //stores the new location of the selected piece
             UnselectPiece(curPieceNumber);  //unselects the piece by using the unselect function
             finishedMoveFlag = true;    //move is now finished
