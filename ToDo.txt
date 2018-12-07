@@ -1,6 +1,6 @@
 For Checkmate functionality:
 1. King can attack pieces in check //Done
-2. Moving king Backwards one position //To Do
+2. Moving king Backwards one position //Done
 3. If own pieces move out of way for check //To Do
 4. King attacking people causes check //To Do
 

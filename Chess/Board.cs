@@ -43,6 +43,8 @@ namespace Chess
 
         private int[] checkAttackerLocation = new int[2];
 
+        private int[] invalidSingleKingMovement = new int[2];
+
         /// <summary>
         /// Constructor
         /// </summary>
@@ -126,6 +128,7 @@ namespace Chess
                     King thisKing = new King(selectedPiece); //Creates new King object
                     thisKing.createDestination(piecePositions, turn); //Destination array created 
                     checkModePath[checkAttackerLocation[0], checkAttackerLocation[1]] = (true ^ checkModePath[checkAttackerLocation[0], checkAttackerLocation[1]]); //toggles attacker cell so that king can attack it if it is right by the king
+                    checkModePath[invalidSingleKingMovement[0], invalidSingleKingMovement[1]] = (true ^ checkModePath[invalidSingleKingMovement[0], invalidSingleKingMovement[1]]);
                     for (int i = 0; i < 8; i++) //Nested for loop to create available buttons for King Movement
                     {
                         for (int j = 0; j < 8; j++)
@@ -145,6 +148,7 @@ namespace Chess
                         }
                     }
                     checkModePath[checkAttackerLocation[0], checkAttackerLocation[1]] = (true ^ checkModePath[checkAttackerLocation[0], checkAttackerLocation[1]]); //resets to original value
+                    checkModePath[invalidSingleKingMovement[0], invalidSingleKingMovement[1]] = (true ^ checkModePath[invalidSingleKingMovement[0], invalidSingleKingMovement[1]]);
                 }
                 else if (pieceNumber == 1 || pieceNumber == 8 || pieceNumber == 25 || pieceNumber == 32) //Checks if piece is Rook
                 {
@@ -601,6 +605,9 @@ namespace Chess
                             int curPieceCol = Grid.GetColumn(currentPiece) - 1;
                             checkAttackerLocation[0] = curPieceRow;     //for use in king attacking attacker on defense
                             checkAttackerLocation[1] = curPieceCol;
+
+                            int[] pawnarray = new int[16] { 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24 };
+
                             for (int k = 0; k < 8; k++) //go through all valid move locations and remove invalid moves under check conditions, outcome is only valid moves that defenders can go to
                             {
                                 for (int l = 0; l < 8; l++)
@@ -609,41 +616,81 @@ namespace Chess
                                     if (kingRow < curPieceRow && kingCol == curPieceCol && (k >= curPieceRow || l != curPieceCol) && checkModePath[k, l] == true)
                                     {
                                         checkModePath[k, l] = false;
+                                        if(kingRow - 1 >= 0 && !(pawnarray.Contains(pieceNumber)))  //solves the problem of extra invalid position behind king on check except for pawns causing check
+                                        {
+                                            invalidSingleKingMovement[0] = kingRow - 1; //stores this invalid move location
+                                            invalidSingleKingMovement[1] = kingCol;
+                                        }
                                     }
                                     //if king is above and to the right of attacker
                                     if (kingRow < curPieceRow && kingCol > curPieceCol && (k >= curPieceRow || l <= curPieceCol) && checkModePath[k, l] == true)
                                     {
                                         checkModePath[k, l] = false;
+                                        if (kingRow - 1 >= 0  && kingCol + 1 < 8 && !(pawnarray.Contains(pieceNumber))) //solves the problem of extra invalid position behind king on check except for pawns causing check
+                                        {
+                                            invalidSingleKingMovement[0] = kingRow - 1; //stores this invalid move location
+                                            invalidSingleKingMovement[1] = kingCol + 1;
+                                        }
                                     }
-                                    //if king is to the left of attacker
+                                    //if king is to the right of attacker
                                     if (kingRow == curPieceRow && kingCol > curPieceCol && (k != curPieceRow || l <= curPieceCol) && checkModePath[k, l] == true)
                                     {
                                         checkModePath[k, l] = false;
+                                        if (kingCol + 1 < 8 && !(pawnarray.Contains(pieceNumber)))  //solves the problem of extra invalid position behind king on check except for pawns causing check
+                                        {
+                                            invalidSingleKingMovement[0] = kingRow; //stores this invalid move location
+                                            invalidSingleKingMovement[1] = kingCol + 1;
+                                        }
                                     }
                                     //if king is down and to the right of attacker
                                     if (kingRow > curPieceRow && kingCol > curPieceCol && (k <= curPieceRow || l <= curPieceCol) && checkModePath[k, l] == true)
                                     {
                                         checkModePath[k, l] = false;
+                                        if (kingRow + 1 < 8 && kingCol + 1 < 8 && !(pawnarray.Contains(pieceNumber)))   //solves the problem of extra invalid position behind king on check except for pawns causing check
+                                        {
+                                            invalidSingleKingMovement[0] = kingRow + 1; //stores this invalid move location
+                                            invalidSingleKingMovement[1] = kingCol + 1;
+                                        }
                                     }
                                     //if king is below the attacker
                                     if (kingRow > curPieceRow && kingCol == curPieceCol && (k <= curPieceRow || l != curPieceCol) && checkModePath[k, l] == true)
                                     {
                                         checkModePath[k, l] = false;
+                                        if (kingRow + 1 < 8 && !(pawnarray.Contains(pieceNumber)))  //solves the problem of extra invalid position behind king on check except for pawns causing check
+                                        {
+                                            invalidSingleKingMovement[0] = kingRow + 1; //stores this invalid move location
+                                            invalidSingleKingMovement[1] = kingCol;
+                                        }
                                     }
                                     //if king is below and to the left of attacker
                                     if (kingRow > curPieceRow && kingCol < curPieceCol && (k <= curPieceRow || l >= curPieceCol) && checkModePath[k, l] == true)
                                     {
                                         checkModePath[k, l] = false;
+                                        if (kingRow + 1 < 8 && kingCol - 1 >= 0 && !(pawnarray.Contains(pieceNumber)))  //solves the problem of extra invalid position behind king on check except for pawns causing check
+                                        {
+                                            invalidSingleKingMovement[0] = kingRow + 1; //stores this invalid move location
+                                            invalidSingleKingMovement[1] = kingCol - 1;
+                                        }
                                     }
                                     //if king is to the left of attacker
                                     if (kingRow == curPieceRow && kingCol < curPieceCol && (k != curPieceRow || l >= curPieceCol) && checkModePath[k, l] == true)
                                     {
                                         checkModePath[k, l] = false;
+                                        if (kingCol - 1 >= 0 && !(pawnarray.Contains(pieceNumber))) //solves the problem of extra invalid position behind king on check except for pawns causing check
+                                        {
+                                            invalidSingleKingMovement[0] = kingRow; //stores this invalid move location
+                                            invalidSingleKingMovement[1] = kingCol - 1;
+                                        }
                                     }
                                     //if king is above and to the left of attacker
                                     if (kingRow < curPieceRow && kingCol < curPieceCol && (k >= curPieceRow || l >= curPieceCol) && checkModePath[k, l] == true)
                                     {
                                         checkModePath[k, l] = false;
+                                        if (kingRow - 1 >= 0 && kingCol - 1 >= 0 && !(pawnarray.Contains(pieceNumber)))   //solves the problem of extra invalid position behind king on check except for pawns causing check
+                                        {
+                                            invalidSingleKingMovement[0] = kingRow - 1; //stores this invalid move location
+                                            invalidSingleKingMovement[1] = kingCol - 1;
+                                        }
                                     }
                                 }
                             }
