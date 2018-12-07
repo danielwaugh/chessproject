@@ -145,7 +145,7 @@ namespace Chess
                 else if (pieceNumber == 1 || pieceNumber == 8 || pieceNumber == 25 || pieceNumber == 32) //Checks if piece is Rook
                 {
                     Rook thisRook = new Rook(selectedPiece); //Creates new rook object
-                    thisRook.createDestination(piecePositions, turn); //Destination array created 
+                    thisRook.CreateDestination(piecePositions, turn); //Destination array created 
                     for (int i = 0; i < 8; i++) //Nested for loop to create available buttons for Rook Movement
                     {
                         for (int j = 0; j < 8; j++)
@@ -265,7 +265,7 @@ namespace Chess
                 if (pieceNumber == 1 || pieceNumber == 8 || pieceNumber == 25 || pieceNumber == 32) //Checks if piece is Rook
                 {
                     Rook thisRook = new Rook(selectedPiece); //Creates new rook object
-                    thisRook.createDestination(piecePositions, turn); //Destination array created 
+                    thisRook.CreateDestination(piecePositions, turn); //Destination array created 
                     for (int i = 0; i < 8; i++) //Nested for loop to create available buttons for Rook Movement
                     {
                         for (int j = 0; j < 8; j++)
@@ -539,7 +539,7 @@ namespace Chess
             if (pieceNumber == 1 || pieceNumber == 8 || pieceNumber == 25 || pieceNumber == 32) //Checks if piece is Rook
             {
                 Rook thisRook = new Rook(selectedPiece); //Creates new rook object
-                thisRook.createDestination(piecePositions, turn); //Destination array created 
+                thisRook.CreateDestination(piecePositions, turn); //Destination array created 
                 checkModePath = thisRook.validMoveLocations;    //sets valid locations for piece
             }
 
@@ -712,14 +712,14 @@ namespace Chess
                 Array.Clear(curButtonLoc, 0, checkModePath.Length);
                 curButtonLoc[Grid.GetRow(curButton) - 1, Grid.GetColumn(curButton) - 1] = 1;//get the location of the current button
                 Rook thisRook = new Rook(curButtonLoc); //Creates new King object
-                thisRook.createDestination(piecePositions, turn); //Destination array created 
+                thisRook.CreateDestination(piecePositions, turn); //Destination array created 
                 validKingMovements = OrArrays(validKingMovements, thisRook.validMoveLocations);
 
                 curButton = (Button)UIGlobal.XAMLpage.FindName($"p{32}");
                 Array.Clear(curButtonLoc, 0, checkModePath.Length);
                 curButtonLoc[Grid.GetRow(curButton) - 1, Grid.GetColumn(curButton) - 1] = 1;//get the location of the current button
                 thisRook = new Rook(curButtonLoc); //Creates new King object
-                thisRook.createDestination(piecePositions, turn); //Destination array created 
+                thisRook.CreateDestination(piecePositions, turn); //Destination array created 
                 validKingMovements = OrArrays(validKingMovements, thisRook.validMoveLocations);
 
                 curButton = (Button)UIGlobal.XAMLpage.FindName($"p{26}");
@@ -804,14 +804,14 @@ namespace Chess
                 Array.Clear(curButtonLoc, 0, checkModePath.Length);
                 curButtonLoc[Grid.GetRow(curButton) - 1, Grid.GetColumn(curButton) - 1] = 1;//get the location of the current button
                 Rook thisRook = new Rook(curButtonLoc); //Creates new King object
-                thisRook.createDestination(piecePositions, turn); //Destination array created 
+                thisRook.CreateDestination(piecePositions, turn); //Destination array created 
                 validKingMovements = OrArrays(validKingMovements, thisRook.validMoveLocations);
 
                 curButton = (Button)UIGlobal.XAMLpage.FindName($"p{8}");
                 Array.Clear(curButtonLoc, 0, checkModePath.Length);
                 curButtonLoc[Grid.GetRow(curButton) - 1, Grid.GetColumn(curButton) - 1] = 1;//get the location of the current button
                 thisRook = new Rook(curButtonLoc); //Creates new King object
-                thisRook.createDestination(piecePositions, turn); //Destination array created 
+                thisRook.CreateDestination(piecePositions, turn); //Destination array created 
                 validKingMovements = OrArrays(validKingMovements, thisRook.validMoveLocations);
 
                 curButton = (Button)UIGlobal.XAMLpage.FindName($"p{2}");
@@ -876,5 +876,45 @@ namespace Chess
             return returnarray;
         }
 
+        public override bool Equals(object obj)
+        {
+            var board = obj as Board;
+            return board != null &&
+                   EqualityComparer<int[,]>.Default.Equals(piecePositions, board.piecePositions) &&
+                   EqualityComparer<int[,]>.Default.Equals(selectedPiece, board.selectedPiece) &&
+                   EqualityComparer<List<Button>>.Default.Equals(createdButtons, board.createdButtons) &&
+                   EqualityComparer<Button>.Default.Equals(currentPiece, board.currentPiece) &&
+                   finishedMoveFlag == board.finishedMoveFlag &&
+                   turn == board.turn &&
+                   EqualityComparer<int[]>.Default.Equals(capturedPieceWhite, board.capturedPieceWhite) &&
+                   EqualityComparer<int[]>.Default.Equals(capturedPieceBlack, board.capturedPieceBlack) &&
+                   EqualityComparer<List<int>>.Default.Equals(capturedList, board.capturedList) &&
+                   checkmode == board.checkmode &&
+                   EqualityComparer<bool[,]>.Default.Equals(checkModePath, board.checkModePath) &&
+                   EqualityComparer<bool[,]>.Default.Equals(validKingMovements, board.validKingMovements);
+        }
+
+        public override int GetHashCode()
+        {
+            var hashCode = -838244041;
+            hashCode = hashCode * -1521134295 + EqualityComparer<int[,]>.Default.GetHashCode(piecePositions);
+            hashCode = hashCode * -1521134295 + EqualityComparer<int[,]>.Default.GetHashCode(selectedPiece);
+            hashCode = hashCode * -1521134295 + EqualityComparer<List<Button>>.Default.GetHashCode(createdButtons);
+            hashCode = hashCode * -1521134295 + EqualityComparer<Button>.Default.GetHashCode(currentPiece);
+            hashCode = hashCode * -1521134295 + finishedMoveFlag.GetHashCode();
+            hashCode = hashCode * -1521134295 + turn.GetHashCode();
+            hashCode = hashCode * -1521134295 + EqualityComparer<int[]>.Default.GetHashCode(capturedPieceWhite);
+            hashCode = hashCode * -1521134295 + EqualityComparer<int[]>.Default.GetHashCode(capturedPieceBlack);
+            hashCode = hashCode * -1521134295 + EqualityComparer<List<int>>.Default.GetHashCode(capturedList);
+            hashCode = hashCode * -1521134295 + checkmode.GetHashCode();
+            hashCode = hashCode * -1521134295 + EqualityComparer<bool[,]>.Default.GetHashCode(checkModePath);
+            hashCode = hashCode * -1521134295 + EqualityComparer<bool[,]>.Default.GetHashCode(validKingMovements);
+            return hashCode;
+        }
+
+        public override string ToString()
+        {
+            return base.ToString();
+        }
     }
 }
