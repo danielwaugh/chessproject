@@ -8,4 +8,4 @@ Make:
 For Json save/load:
 1. create start screen which allows selected new game or load game.
 2. class is good, but need to call functions using the start screen.
-3. game states are saved locally, no need to save/load from server.
+3. game states are saved locally, no need to save/load from server. progress is lost if closed is ok
