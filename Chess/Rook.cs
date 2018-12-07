@@ -7,6 +7,10 @@
 
         }
 
+        /// <summary>
+        /// Function updates the valid move locations array with a true or false for each index. True means the
+        /// object can move to that place and false means it cannot. 
+        /// </summary>
         public void CreateDestination(int[,] pieces, int turn)
         {
             int i = 0;

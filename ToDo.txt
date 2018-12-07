@@ -1,9 +1,15 @@
 For Checkmate functionality:
-Make:
 1. King can attack pieces in check
 2. Moving king Backwards one position
 3. If own pieces move out of way for check
 4. King attacking people causes check
+
+Dialog:
+1. Checkmate Text
+2. Stalemate Text
+
+For Pawn Turning into Queen:
+1. To Do
 
 For Json save/load:
 1. create start screen which allows selected new game or load game.

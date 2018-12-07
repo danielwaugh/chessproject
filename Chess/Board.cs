@@ -59,13 +59,13 @@ namespace Chess
             Button captureButton = (Button)UIGlobal.XAMLpage.FindName($"p{piece}");
             if (turn == 0)  //whites turn
             {
-                Grid.SetRow(captureButton, capturedPieceWhite[0]);
+                Grid.SetRow(captureButton, capturedPieceWhite[0]);  //sets the row and column in capture grid
                 Grid.SetColumn(captureButton, capturedPieceWhite[1]);
-                captureButton.IsEnabled = false;
+                captureButton.IsEnabled = false;    //disables the button
                 captureButton.Opacity = 1;
-                UIGlobal.getGrid().Children.Remove(captureButton);
-                UIGlobal.getPlayer1Grid().Children.Add(captureButton);
-                if (capturedPieceWhite[1] == 2)
+                UIGlobal.getGrid().Children.Remove(captureButton);  //removes from main grid
+                UIGlobal.getPlayer1Grid().Children.Add(captureButton);  //and adds to capture grid
+                if (capturedPieceWhite[1] == 2) //increments grid location 
                 {
                     capturedPieceWhite[0]++;
                     capturedPieceWhite[1] = 1;
@@ -77,13 +77,13 @@ namespace Chess
             }
             if (turn == 1)  //blacks turn
             {
-                Grid.SetRow(captureButton, capturedPieceBlack[0]);
-                Grid.SetColumn(captureButton, capturedPieceBlack[1]);
-                captureButton.IsEnabled = false;
+                Grid.SetRow(captureButton, capturedPieceBlack[0]);  //sets the row and column in capture grid
+                Grid.SetColumn(captureButton, capturedPieceBlack[1]);   
+                captureButton.IsEnabled = false;    //disables the button
                 captureButton.Opacity = 1;
-                UIGlobal.getGrid().Children.Remove(captureButton);
-                UIGlobal.getPlayer2Grid().Children.Add(captureButton);
-                if (capturedPieceBlack[1] == 2)
+                UIGlobal.getGrid().Children.Remove(captureButton);  //removes from main grid
+                UIGlobal.getPlayer2Grid().Children.Add(captureButton);  //and adds to capture grid
+                if (capturedPieceBlack[1] == 2) //increments grid location
                 {
                     capturedPieceBlack[0]++;
                     capturedPieceBlack[1] = 1;
@@ -671,32 +671,40 @@ namespace Chess
             }
         }
 
+        /// <summary>
+        /// goes through and gets all the valid movments of the opposing sides pieces. 
+        /// Is used to see where the king can go to make sure the kings movement does not
+        /// result in a check
+        /// </summary>
         private void ValidKingMovements()
         {
             Button curButton;
-            if(turn == 0)
+            if(turn == 0)   //whites turn
             {
                 turn = 1;
                 int[,] curButtonLoc = new int[8, 8];
                 for (int i = 17; i < 25; i++) //go through all black pawns
                 {
-                    if(capturedList.Contains(i))
+                    if(capturedList.Contains(i))    //makes sure the piece isn't captured
                     {
                         continue;
                     }
-                    Array.Clear(curButtonLoc, 0, checkModePath.Length);
-                    curButton = (Button)UIGlobal.XAMLpage.FindName($"p{i}");
+                    Array.Clear(curButtonLoc, 0, checkModePath.Length);     //clears the current locations from the last piece
+                    curButton = (Button)UIGlobal.XAMLpage.FindName($"p{i}");    //gets the pawn
                     curButtonLoc[Grid.GetRow(curButton) - 1, Grid.GetColumn(curButton) - 1] = 1;//get the location of the current button
-                    Pawn thisPawn = new Pawn(curButtonLoc); //Creates new King object
+                    Pawn thisPawn = new Pawn(curButtonLoc); //Creates new Pawn object
                     thisPawn.createDestination(piecePositions, turn); //Destination array created 
+                    //gets rid of valid locations for one place in front of pawn
                     if (Grid.GetRow(curButton) - 2 >= 0)
                     {
                         thisPawn.validMoveLocations[Grid.GetRow(curButton) - 2, Grid.GetColumn(curButton) - 1] = false;
                     }
+                    //gets rid of valid locations for two places in front of pawn
                     if (Grid.GetRow(curButton) - 3 >= 0)
                     {
                         thisPawn.validMoveLocations[Grid.GetRow(curButton) - 3, Grid.GetColumn(curButton) - 1] = false;
                     }
+                    //sets valid location for in front of and to the right and left
                     if (Grid.GetColumn(curButton) - 2 >= 0 && Grid.GetRow(curButton) - 2 >= 0)
                     {
                         thisPawn.validMoveLocations[Grid.GetRow(curButton) - 2, Grid.GetColumn(curButton) - 2] = true;
@@ -706,26 +714,30 @@ namespace Chess
                         thisPawn.validMoveLocations[Grid.GetRow(curButton) - 2, Grid.GetColumn(curButton)] = true;
 
                     }
+                    //ors the valid moves with the existing moves
                     validKingMovements = OrArrays(validKingMovements, thisPawn.validMoveLocations);
                 }
+
+                //handles getting rooks valid locations and ors it with valid locations
                 curButton = (Button)UIGlobal.XAMLpage.FindName($"p{25}");
                 Array.Clear(curButtonLoc, 0, checkModePath.Length);
                 curButtonLoc[Grid.GetRow(curButton) - 1, Grid.GetColumn(curButton) - 1] = 1;//get the location of the current button
-                Rook thisRook = new Rook(curButtonLoc); //Creates new King object
+                Rook thisRook = new Rook(curButtonLoc); //Creates new rook object
                 thisRook.CreateDestination(piecePositions, turn); //Destination array created 
                 validKingMovements = OrArrays(validKingMovements, thisRook.validMoveLocations);
 
                 curButton = (Button)UIGlobal.XAMLpage.FindName($"p{32}");
                 Array.Clear(curButtonLoc, 0, checkModePath.Length);
                 curButtonLoc[Grid.GetRow(curButton) - 1, Grid.GetColumn(curButton) - 1] = 1;//get the location of the current button
-                thisRook = new Rook(curButtonLoc); //Creates new King object
+                thisRook = new Rook(curButtonLoc);
                 thisRook.CreateDestination(piecePositions, turn); //Destination array created 
                 validKingMovements = OrArrays(validKingMovements, thisRook.validMoveLocations);
 
+                //handles getting knights valid locations and ors it with valid locations
                 curButton = (Button)UIGlobal.XAMLpage.FindName($"p{26}");
                 Array.Clear(curButtonLoc, 0, checkModePath.Length);
                 curButtonLoc[Grid.GetRow(curButton) - 1, Grid.GetColumn(curButton) - 1] = 1;//get the location of the current button
-                Knight thisKnight = new Knight(curButtonLoc); //Creates new King object
+                Knight thisKnight = new Knight(curButtonLoc); //Creates new Knight object
                 thisKnight.createDestination(piecePositions, turn); //Destination array created 
                 validKingMovements = OrArrays(validKingMovements, thisKnight.validMoveLocations);
 
@@ -736,10 +748,11 @@ namespace Chess
                 thisKnight.createDestination(piecePositions, turn); //Destination array created 
                 validKingMovements = OrArrays(validKingMovements, thisKnight.validMoveLocations);
 
+                //handles getting bishop valid locations and ors it with valid locations
                 curButton = (Button)UIGlobal.XAMLpage.FindName($"p{27}");
                 Array.Clear(curButtonLoc, 0, checkModePath.Length);
                 curButtonLoc[Grid.GetRow(curButton) - 1, Grid.GetColumn(curButton) - 1] = 1;//get the location of the current button
-                Bishop thisBishop = new Bishop(curButtonLoc); //Creates new King object
+                Bishop thisBishop = new Bishop(curButtonLoc); //Creates new bishop object
                 thisBishop.createDestination(piecePositions, turn); //Destination array created 
                 validKingMovements = OrArrays(validKingMovements, thisBishop.validMoveLocations);
 
@@ -750,6 +763,7 @@ namespace Chess
                 thisBishop.createDestination(piecePositions, turn); //Destination array created    
                 validKingMovements = OrArrays(validKingMovements, thisBishop.validMoveLocations);
 
+                //handles getting queen valid locations and ors it with valid locations
                 curButton = (Button)UIGlobal.XAMLpage.FindName($"p{28}");
                 Array.Clear(curButtonLoc, 0, checkModePath.Length);
                 curButtonLoc[Grid.GetRow(curButton) - 1, Grid.GetColumn(curButton) - 1] = 1;//get the location of the current button
@@ -757,6 +771,7 @@ namespace Chess
                 thisQueen.createDestination(piecePositions, turn); //Destination array created 
                 validKingMovements = OrArrays(validKingMovements, thisQueen.validMoveLocations);
 
+                //handles getting king valid locations and ors it with valid locations
                 curButton = (Button)UIGlobal.XAMLpage.FindName($"p{29}");
                 Array.Clear(curButtonLoc, 0, checkModePath.Length);
                 curButtonLoc[Grid.GetRow(curButton) - 1, Grid.GetColumn(curButton) - 1] = 1;//get the location of the current button
@@ -764,32 +779,36 @@ namespace Chess
                 thisKing.createDestination(piecePositions, turn); //Destination array created 
                 validKingMovements = OrArrays(validKingMovements, thisKing.validMoveLocations);
 
+                //sets turn back to white
                 turn = 0;
             }
-            else
+            else  //if the turn is blacks
             {
                 turn = 0;
 
-                int[,] curButtonLoc = new int[8, 8];
+                int[,] curButtonLoc = new int[8, 8];    //current location of button
                 for (int i = 9; i < 17; i++) //go through all white pawns
                 {
-                    if (capturedList.Contains(i))
+                    if (capturedList.Contains(i))   //checks if pawn is already captured
                     {
                         continue;
                     }
-                    Array.Clear(curButtonLoc, 0, checkModePath.Length);
-                    curButton = (Button)UIGlobal.XAMLpage.FindName($"p{i}");
+                    Array.Clear(curButtonLoc, 0, checkModePath.Length); //clears the location of the previous button
+                    curButton = (Button)UIGlobal.XAMLpage.FindName($"p{i}");    //finds pawn in xaml
                     curButtonLoc[Grid.GetRow(curButton) - 1, Grid.GetColumn(curButton) - 1] = 1;//get the location of the current button
-                    Pawn thisPawn = new Pawn(curButtonLoc); //Creates new King object
+                    Pawn thisPawn = new Pawn(curButtonLoc); //Creates new pawn object
                     thisPawn.createDestination(piecePositions, turn); //Destination array created
+                    //gets rid of valid locations for one place in front of pawn
                     if (Grid.GetRow(curButton) < 8)
                     {
                         thisPawn.validMoveLocations[Grid.GetRow(curButton), Grid.GetColumn(curButton) - 1] = false;
                     }
+                    //gets rid of valid locations for two places in front of pawn
                     if (Grid.GetRow(curButton) + 1 < 8)
                     {
                         thisPawn.validMoveLocations[Grid.GetRow(curButton) + 1, Grid.GetColumn(curButton) - 1] = false;
                     }
+                    //sets valid location for in front of and to the right and left
                     if (Grid.GetColumn(curButton) < 8 && Grid.GetRow(curButton) < 8)
                     {
                         thisPawn.validMoveLocations[Grid.GetRow(curButton), Grid.GetColumn(curButton)] = true;
@@ -800,10 +819,12 @@ namespace Chess
                     }
                     validKingMovements = OrArrays(validKingMovements, thisPawn.validMoveLocations);
                 }
+
+                //handles getting Rook valid locations and ors it with valid locations
                 curButton = (Button)UIGlobal.XAMLpage.FindName($"p{1}");
                 Array.Clear(curButtonLoc, 0, checkModePath.Length);
                 curButtonLoc[Grid.GetRow(curButton) - 1, Grid.GetColumn(curButton) - 1] = 1;//get the location of the current button
-                Rook thisRook = new Rook(curButtonLoc); //Creates new King object
+                Rook thisRook = new Rook(curButtonLoc); //Creates new Rook object
                 thisRook.CreateDestination(piecePositions, turn); //Destination array created 
                 validKingMovements = OrArrays(validKingMovements, thisRook.validMoveLocations);
 
@@ -814,10 +835,11 @@ namespace Chess
                 thisRook.CreateDestination(piecePositions, turn); //Destination array created 
                 validKingMovements = OrArrays(validKingMovements, thisRook.validMoveLocations);
 
+                //handles getting Knight valid locations and ors it with valid locations
                 curButton = (Button)UIGlobal.XAMLpage.FindName($"p{2}");
                 Array.Clear(curButtonLoc, 0, checkModePath.Length);
                 curButtonLoc[Grid.GetRow(curButton) - 1, Grid.GetColumn(curButton) - 1] = 1;//get the location of the current button
-                Knight thisKnight = new Knight(curButtonLoc); //Creates new King object
+                Knight thisKnight = new Knight(curButtonLoc); //Creates new Knight object
                 thisKnight.createDestination(piecePositions, turn); //Destination array created 
                 validKingMovements = OrArrays(validKingMovements, thisKnight.validMoveLocations);
 
@@ -828,10 +850,11 @@ namespace Chess
                 thisKnight.createDestination(piecePositions, turn); //Destination array created 
                 validKingMovements = OrArrays(validKingMovements, thisKnight.validMoveLocations);
 
+                //handles getting Bishop valid locations and ors it with valid locations
                 curButton = (Button)UIGlobal.XAMLpage.FindName($"p{3}");
                 Array.Clear(curButtonLoc, 0, checkModePath.Length);
                 curButtonLoc[Grid.GetRow(curButton) - 1, Grid.GetColumn(curButton) - 1] = 1;//get the location of the current button
-                Bishop thisBishop = new Bishop(curButtonLoc); //Creates new King object
+                Bishop thisBishop = new Bishop(curButtonLoc); //Creates new Bishop object
                 thisBishop.createDestination(piecePositions, turn); //Destination array created 
                 validKingMovements = OrArrays(validKingMovements, thisBishop.validMoveLocations);
 
@@ -842,13 +865,15 @@ namespace Chess
                 thisBishop.createDestination(piecePositions, turn); //Destination array created 
                 validKingMovements = OrArrays(validKingMovements, thisBishop.validMoveLocations);
 
+                //handles getting Queen valid locations and ors it with valid locations
                 curButton = (Button)UIGlobal.XAMLpage.FindName($"p{4}");
                 Array.Clear(curButtonLoc, 0, checkModePath.Length);
                 curButtonLoc[Grid.GetRow(curButton) - 1, Grid.GetColumn(curButton) - 1] = 1;//get the location of the current button
-                Queen thisQueen = new Queen(curButtonLoc); //Creates new King object
+                Queen thisQueen = new Queen(curButtonLoc); //Creates new Queen object
                 thisQueen.createDestination(piecePositions, turn); //Destination array created 
                 validKingMovements = OrArrays(validKingMovements, thisQueen.validMoveLocations);
 
+                //handles getting king valid locations and ors it with valid locations
                 curButton = (Button)UIGlobal.XAMLpage.FindName($"p{5}");
                 Array.Clear(curButtonLoc, 0, checkModePath.Length);
                 curButtonLoc[Grid.GetRow(curButton) - 1, Grid.GetColumn(curButton) - 1] = 1;//get the location of the current button
@@ -856,13 +881,23 @@ namespace Chess
                 thisKing.createDestination(piecePositions, turn); //Destination array created 
                 validKingMovements = OrArrays(validKingMovements, thisKing.validMoveLocations);
 
+                //set turn back to black
                 turn = 1;
             }
         }
 
+        /// <summary>
+        /// takes two inputs arrays and ors them together returning a new array 
+        /// with the results
+        /// </summary>
+        /// <param name="array1"></param>
+        /// <param name="array2"></param>
+        /// <returns></returns>
         private bool[,] OrArrays(bool[,] array1, bool[,] array2)
         {
+            //returned or array
             bool[,] returnarray = new bool[8, 8];
+            //goes through and ors the two arrays together and puts the results in the returnarray
             for(int i = 0; i < 8; i++)
             {
                 for(int k = 0; k < 8; k++)
