@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 
 namespace Chess
-{
+{ //look up uwp file access issues. Might reference email
     /// <summary>
     /// SaveState Class utilizes Newtonsoft.Json to serialize and deserialize data. This is
     /// used to save the state of the current game to be returned to later. 
