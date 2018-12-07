@@ -33,9 +33,13 @@ namespace Chess
 
         private int[] capturedPieceBlack = new int[2] { 1, 1 };
 
+        private List<int> capturedList = new List<int>();
+
         private bool checkmode = false;
 
         private bool[,] checkModePath = new bool[8, 8];
+
+        private bool[,] validKingMovements = new bool[8, 8];
 
         /// <summary>
         /// Constructor
@@ -89,6 +93,7 @@ namespace Chess
                     capturedPieceBlack[1]++;
                 }
             }
+            capturedList.Add(piece);    //add to the list of captured pieces
 
         }
 
@@ -111,6 +116,7 @@ namespace Chess
                     }
                 }
             }
+            ValidKingMovements();
             if (checkmode)
             {
                 if (pieceNumber == 5 || pieceNumber == 29) //Checks if piece is King
@@ -121,7 +127,7 @@ namespace Chess
                     {
                         for (int j = 0; j < 8; j++)
                         {
-                            if (thisKing.validMoveLocations[i, j] == true && checkModePath[i, j] == false)  //can only move to spots that wouldn't keep it in check
+                            if (thisKing.validMoveLocations[i, j] == true && checkModePath[i, j] == false && validKingMovements[i, j] == false)  //can only move to spots that wouldn't keep it in check
                             {
                                 Button curButton = new Button();    //creates button
                                 curButton.Width = 72;
@@ -136,7 +142,7 @@ namespace Chess
                         }
                     }
                 }
-                if (pieceNumber == 1 || pieceNumber == 8 || pieceNumber == 25 || pieceNumber == 32) //Checks if piece is Rook
+                else if (pieceNumber == 1 || pieceNumber == 8 || pieceNumber == 25 || pieceNumber == 32) //Checks if piece is Rook
                 {
                     Rook thisRook = new Rook(selectedPiece); //Creates new rook object
                     thisRook.createDestination(piecePositions, turn); //Destination array created 
@@ -279,7 +285,6 @@ namespace Chess
                         }
                     }
                 }
-
                 else if (pieceNumber == 3 || pieceNumber == 6 || pieceNumber == 27 || pieceNumber == 30) //Checks if piece is Bishop
                 {
                     Bishop thisBishop = new Bishop(selectedPiece); //Creates new Bishop object
@@ -358,7 +363,7 @@ namespace Chess
                     {
                         for (int j = 0; j < 8; j++)
                         {
-                            if (thisKing.validMoveLocations[i, j] == true)
+                            if (thisKing.validMoveLocations[i, j] == true && validKingMovements[i, j] == false)
                             {
                                 Button curButton = new Button();    //creates button
                                 curButton.Width = 72;
@@ -464,6 +469,7 @@ namespace Chess
             checkmode = false;
             CheckPopUp();
             kingCheck();
+            Array.Clear(validKingMovements, 0, validKingMovements.Length);
             Array.Clear(selectedPiece, 0, selectedPiece.Length);        //clears the aray of location of selected piece
             finishedMoveFlag = true;    //move is now finished
             ChangeTurn();       //changes the turn to the other player
@@ -648,6 +654,10 @@ namespace Chess
                 }
             }
         }
+
+        /// <summary>
+        /// Handles showing the user the Check Text when they are there king is in check
+        /// </summary>
         private void CheckPopUp()
         {
             TextBlock checkText = (TextBlock)UIGlobal.XAMLpage.FindName($"check");  //get the textblock containing the check text
@@ -659,6 +669,211 @@ namespace Chess
             {
                 checkText.Opacity = 0;  //make the text disapear
             }
+        }
+
+        private void ValidKingMovements()
+        {
+            Button curButton;
+            if(turn == 0)
+            {
+                turn = 1;
+                int[,] curButtonLoc = new int[8, 8];
+                for (int i = 17; i < 25; i++) //go through all black pawns
+                {
+                    if(capturedList.Contains(i))
+                    {
+                        continue;
+                    }
+                    Array.Clear(curButtonLoc, 0, checkModePath.Length);
+                    curButton = (Button)UIGlobal.XAMLpage.FindName($"p{i}");
+                    curButtonLoc[Grid.GetRow(curButton) - 1, Grid.GetColumn(curButton) - 1] = 1;//get the location of the current button
+                    Pawn thisPawn = new Pawn(curButtonLoc); //Creates new King object
+                    thisPawn.createDestination(piecePositions, turn); //Destination array created 
+                    if (Grid.GetRow(curButton) - 2 >= 0)
+                    {
+                        thisPawn.validMoveLocations[Grid.GetRow(curButton) - 2, Grid.GetColumn(curButton) - 1] = false;
+                    }
+                    if (Grid.GetRow(curButton) - 3 >= 0)
+                    {
+                        thisPawn.validMoveLocations[Grid.GetRow(curButton) - 3, Grid.GetColumn(curButton) - 1] = false;
+                    }
+                    if (Grid.GetColumn(curButton) - 2 >= 0 && Grid.GetRow(curButton) - 2 >= 0)
+                    {
+                        thisPawn.validMoveLocations[Grid.GetRow(curButton) - 2, Grid.GetColumn(curButton) - 2] = true;
+                    }
+                    if (Grid.GetColumn(curButton) < 8 && Grid.GetRow(curButton) - 2 >= 0)
+                    {
+                        thisPawn.validMoveLocations[Grid.GetRow(curButton) - 2, Grid.GetColumn(curButton)] = true;
+
+                    }
+                    validKingMovements = OrArrays(validKingMovements, thisPawn.validMoveLocations);
+                }
+                curButton = (Button)UIGlobal.XAMLpage.FindName($"p{25}");
+                Array.Clear(curButtonLoc, 0, checkModePath.Length);
+                curButtonLoc[Grid.GetRow(curButton) - 1, Grid.GetColumn(curButton) - 1] = 1;//get the location of the current button
+                Rook thisRook = new Rook(curButtonLoc); //Creates new King object
+                thisRook.createDestination(piecePositions, turn); //Destination array created 
+                validKingMovements = OrArrays(validKingMovements, thisRook.validMoveLocations);
+
+                curButton = (Button)UIGlobal.XAMLpage.FindName($"p{32}");
+                Array.Clear(curButtonLoc, 0, checkModePath.Length);
+                curButtonLoc[Grid.GetRow(curButton) - 1, Grid.GetColumn(curButton) - 1] = 1;//get the location of the current button
+                thisRook = new Rook(curButtonLoc); //Creates new King object
+                thisRook.createDestination(piecePositions, turn); //Destination array created 
+                validKingMovements = OrArrays(validKingMovements, thisRook.validMoveLocations);
+
+                curButton = (Button)UIGlobal.XAMLpage.FindName($"p{26}");
+                Array.Clear(curButtonLoc, 0, checkModePath.Length);
+                curButtonLoc[Grid.GetRow(curButton) - 1, Grid.GetColumn(curButton) - 1] = 1;//get the location of the current button
+                Knight thisKnight = new Knight(curButtonLoc); //Creates new King object
+                thisKnight.createDestination(piecePositions, turn); //Destination array created 
+                validKingMovements = OrArrays(validKingMovements, thisKnight.validMoveLocations);
+
+                curButton = (Button)UIGlobal.XAMLpage.FindName($"p{31}");
+                Array.Clear(curButtonLoc, 0, checkModePath.Length);
+                curButtonLoc[Grid.GetRow(curButton) - 1, Grid.GetColumn(curButton) - 1] = 1;//get the location of the current button
+                thisKnight = new Knight(curButtonLoc); //Creates new King object
+                thisKnight.createDestination(piecePositions, turn); //Destination array created 
+                validKingMovements = OrArrays(validKingMovements, thisKnight.validMoveLocations);
+
+                curButton = (Button)UIGlobal.XAMLpage.FindName($"p{27}");
+                Array.Clear(curButtonLoc, 0, checkModePath.Length);
+                curButtonLoc[Grid.GetRow(curButton) - 1, Grid.GetColumn(curButton) - 1] = 1;//get the location of the current button
+                Bishop thisBishop = new Bishop(curButtonLoc); //Creates new King object
+                thisBishop.createDestination(piecePositions, turn); //Destination array created 
+                validKingMovements = OrArrays(validKingMovements, thisBishop.validMoveLocations);
+
+                curButton = (Button)UIGlobal.XAMLpage.FindName($"p{30}");
+                Array.Clear(curButtonLoc, 0, checkModePath.Length);
+                curButtonLoc[Grid.GetRow(curButton) - 1, Grid.GetColumn(curButton) - 1] = 1;//get the location of the current button
+                thisBishop = new Bishop(curButtonLoc); //Creates new King object
+                thisBishop.createDestination(piecePositions, turn); //Destination array created    
+                validKingMovements = OrArrays(validKingMovements, thisBishop.validMoveLocations);
+
+                curButton = (Button)UIGlobal.XAMLpage.FindName($"p{28}");
+                Array.Clear(curButtonLoc, 0, checkModePath.Length);
+                curButtonLoc[Grid.GetRow(curButton) - 1, Grid.GetColumn(curButton) - 1] = 1;//get the location of the current button
+                Queen thisQueen = new Queen(curButtonLoc); //Creates new King object
+                thisQueen.createDestination(piecePositions, turn); //Destination array created 
+                validKingMovements = OrArrays(validKingMovements, thisQueen.validMoveLocations);
+
+                curButton = (Button)UIGlobal.XAMLpage.FindName($"p{29}");
+                Array.Clear(curButtonLoc, 0, checkModePath.Length);
+                curButtonLoc[Grid.GetRow(curButton) - 1, Grid.GetColumn(curButton) - 1] = 1;//get the location of the current button
+                King thisKing = new King(curButtonLoc); //Creates new King object
+                thisKing.createDestination(piecePositions, turn); //Destination array created 
+                validKingMovements = OrArrays(validKingMovements, thisKing.validMoveLocations);
+
+                turn = 0;
+            }
+            else
+            {
+                turn = 0;
+
+                int[,] curButtonLoc = new int[8, 8];
+                for (int i = 9; i < 17; i++) //go through all white pawns
+                {
+                    if (capturedList.Contains(i))
+                    {
+                        continue;
+                    }
+                    Array.Clear(curButtonLoc, 0, checkModePath.Length);
+                    curButton = (Button)UIGlobal.XAMLpage.FindName($"p{i}");
+                    curButtonLoc[Grid.GetRow(curButton) - 1, Grid.GetColumn(curButton) - 1] = 1;//get the location of the current button
+                    Pawn thisPawn = new Pawn(curButtonLoc); //Creates new King object
+                    thisPawn.createDestination(piecePositions, turn); //Destination array created
+                    if (Grid.GetRow(curButton) < 8)
+                    {
+                        thisPawn.validMoveLocations[Grid.GetRow(curButton), Grid.GetColumn(curButton) - 1] = false;
+                    }
+                    if (Grid.GetRow(curButton) + 1 < 8)
+                    {
+                        thisPawn.validMoveLocations[Grid.GetRow(curButton) + 1, Grid.GetColumn(curButton) - 1] = false;
+                    }
+                    if (Grid.GetColumn(curButton) < 8 && Grid.GetRow(curButton) < 8)
+                    {
+                        thisPawn.validMoveLocations[Grid.GetRow(curButton), Grid.GetColumn(curButton)] = true;
+                    }
+                    if (Grid.GetColumn(curButton) - 2 >= 0 && Grid.GetRow(curButton) < 8)
+                    {
+                        thisPawn.validMoveLocations[Grid.GetRow(curButton), Grid.GetColumn(curButton) - 2] = true;
+                    }
+                    validKingMovements = OrArrays(validKingMovements, thisPawn.validMoveLocations);
+                }
+                curButton = (Button)UIGlobal.XAMLpage.FindName($"p{1}");
+                Array.Clear(curButtonLoc, 0, checkModePath.Length);
+                curButtonLoc[Grid.GetRow(curButton) - 1, Grid.GetColumn(curButton) - 1] = 1;//get the location of the current button
+                Rook thisRook = new Rook(curButtonLoc); //Creates new King object
+                thisRook.createDestination(piecePositions, turn); //Destination array created 
+                validKingMovements = OrArrays(validKingMovements, thisRook.validMoveLocations);
+
+                curButton = (Button)UIGlobal.XAMLpage.FindName($"p{8}");
+                Array.Clear(curButtonLoc, 0, checkModePath.Length);
+                curButtonLoc[Grid.GetRow(curButton) - 1, Grid.GetColumn(curButton) - 1] = 1;//get the location of the current button
+                thisRook = new Rook(curButtonLoc); //Creates new King object
+                thisRook.createDestination(piecePositions, turn); //Destination array created 
+                validKingMovements = OrArrays(validKingMovements, thisRook.validMoveLocations);
+
+                curButton = (Button)UIGlobal.XAMLpage.FindName($"p{2}");
+                Array.Clear(curButtonLoc, 0, checkModePath.Length);
+                curButtonLoc[Grid.GetRow(curButton) - 1, Grid.GetColumn(curButton) - 1] = 1;//get the location of the current button
+                Knight thisKnight = new Knight(curButtonLoc); //Creates new King object
+                thisKnight.createDestination(piecePositions, turn); //Destination array created 
+                validKingMovements = OrArrays(validKingMovements, thisKnight.validMoveLocations);
+
+                curButton = (Button)UIGlobal.XAMLpage.FindName($"p{7}");
+                Array.Clear(curButtonLoc, 0, checkModePath.Length);
+                curButtonLoc[Grid.GetRow(curButton) - 1, Grid.GetColumn(curButton) - 1] = 1;//get the location of the current button
+                thisKnight = new Knight(curButtonLoc); //Creates new King object
+                thisKnight.createDestination(piecePositions, turn); //Destination array created 
+                validKingMovements = OrArrays(validKingMovements, thisKnight.validMoveLocations);
+
+                curButton = (Button)UIGlobal.XAMLpage.FindName($"p{3}");
+                Array.Clear(curButtonLoc, 0, checkModePath.Length);
+                curButtonLoc[Grid.GetRow(curButton) - 1, Grid.GetColumn(curButton) - 1] = 1;//get the location of the current button
+                Bishop thisBishop = new Bishop(curButtonLoc); //Creates new King object
+                thisBishop.createDestination(piecePositions, turn); //Destination array created 
+                validKingMovements = OrArrays(validKingMovements, thisBishop.validMoveLocations);
+
+                curButton = (Button)UIGlobal.XAMLpage.FindName($"p{6}");
+                Array.Clear(curButtonLoc, 0, checkModePath.Length);
+                curButtonLoc[Grid.GetRow(curButton) - 1, Grid.GetColumn(curButton) - 1] = 1;//get the location of the current button
+                thisBishop = new Bishop(curButtonLoc); //Creates new King object
+                thisBishop.createDestination(piecePositions, turn); //Destination array created 
+                validKingMovements = OrArrays(validKingMovements, thisBishop.validMoveLocations);
+
+                curButton = (Button)UIGlobal.XAMLpage.FindName($"p{4}");
+                Array.Clear(curButtonLoc, 0, checkModePath.Length);
+                curButtonLoc[Grid.GetRow(curButton) - 1, Grid.GetColumn(curButton) - 1] = 1;//get the location of the current button
+                Queen thisQueen = new Queen(curButtonLoc); //Creates new King object
+                thisQueen.createDestination(piecePositions, turn); //Destination array created 
+                validKingMovements = OrArrays(validKingMovements, thisQueen.validMoveLocations);
+
+                curButton = (Button)UIGlobal.XAMLpage.FindName($"p{5}");
+                Array.Clear(curButtonLoc, 0, checkModePath.Length);
+                curButtonLoc[Grid.GetRow(curButton) - 1, Grid.GetColumn(curButton) - 1] = 1;//get the location of the current button
+                King thisKing = new King(curButtonLoc); //Creates new King object
+                thisKing.createDestination(piecePositions, turn); //Destination array created 
+                validKingMovements = OrArrays(validKingMovements, thisKing.validMoveLocations);
+
+                turn = 1;
+            }
+        }
+
+        private bool[,] OrArrays(bool[,] array1, bool[,] array2)
+        {
+            bool[,] returnarray = new bool[8, 8];
+            for(int i = 0; i < 8; i++)
+            {
+                for(int k = 0; k < 8; k++)
+                {
+                    if (array1[i,k] == true || array2[i,k] == true)
+                    {
+                        returnarray[i, k] = true;
+                    }
+                }
+            }
+            return returnarray;
         }
 
     }

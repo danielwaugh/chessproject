@@ -1,0 +1,6 @@
+For Checkmate functionality:
+Make:
+1. King can attack pieces in check
+2. Moving king Backwards one position
+3. If own pieces move out of way for check
+4. King attacking people causes check

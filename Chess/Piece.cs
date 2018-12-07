@@ -1361,5 +1361,3 @@ namespace Chess
         }
     }
 }
-
-
