@@ -41,12 +41,14 @@ namespace Chess
 
         private bool[,] validKingMovements = new bool[8, 8];
 
+        private int[] checkAttackerLocation = new int[2];
+
         /// <summary>
         /// Constructor
         /// </summary>
         public Board()
         {
-            turn = 0;   //turn starts out with white pieces
+            turn = 0;   //turn starts out with white piece
         }
 
         /// <summary>
@@ -123,11 +125,12 @@ namespace Chess
                 {
                     King thisKing = new King(selectedPiece); //Creates new King object
                     thisKing.createDestination(piecePositions, turn); //Destination array created 
+                    checkModePath[checkAttackerLocation[0], checkAttackerLocation[1]] = (true ^ checkModePath[checkAttackerLocation[0], checkAttackerLocation[1]]); //toggles attacker cell so that king can attack it if it is right by the king
                     for (int i = 0; i < 8; i++) //Nested for loop to create available buttons for King Movement
                     {
                         for (int j = 0; j < 8; j++)
                         {
-                            if (thisKing.validMoveLocations[i, j] == true && checkModePath[i, j] == false && validKingMovements[i, j] == false)  //can only move to spots that wouldn't keep it in check
+                            if (thisKing.validMoveLocations[i, j] == true && checkModePath[i, j] == false  && validKingMovements[i, j] == false)  //can only move to spots that wouldn't keep it in check
                             {
                                 Button curButton = new Button();    //creates button
                                 curButton.Width = 72;
@@ -141,6 +144,7 @@ namespace Chess
                             }
                         }
                     }
+                    checkModePath[checkAttackerLocation[0], checkAttackerLocation[1]] = (true ^ checkModePath[checkAttackerLocation[0], checkAttackerLocation[1]]); //resets to original value
                 }
                 else if (pieceNumber == 1 || pieceNumber == 8 || pieceNumber == 25 || pieceNumber == 32) //Checks if piece is Rook
                 {
@@ -595,6 +599,8 @@ namespace Chess
                             int kingCol = Grid.GetColumn(captureButton) - 1;
                             int curPieceRow = Grid.GetRow(currentPiece) - 1;    //get current location of current piece
                             int curPieceCol = Grid.GetColumn(currentPiece) - 1;
+                            checkAttackerLocation[0] = curPieceRow;     //for use in king attacking attacker on defense
+                            checkAttackerLocation[1] = curPieceCol;
                             for (int k = 0; k < 8; k++) //go through all valid move locations and remove invalid moves under check conditions, outcome is only valid moves that defenders can go to
                             {
                                 for (int l = 0; l < 8; l++)
