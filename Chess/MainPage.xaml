@@ -292,8 +292,8 @@
             </Button.Background>
             <Image Source="/assets/brook2.png" />
         </Button>
-        <TextBlock HorizontalAlignment="Left" Text="Player 1 Captured" TextWrapping="Wrap" Width="122" Margin="162,42,0,7" VerticalAlignment="Stretch"/>
-        <TextBlock HorizontalAlignment="Left" Text="Player 2 Captured" TextWrapping="Wrap" Width="122" Margin="73,42,0,7" Grid.Column="9" VerticalAlignment="Stretch"/>
+        <TextBlock HorizontalAlignment="Left" Opacity="0" Name="player1captured" Text="Player 1 Captured" TextWrapping="Wrap" Width="122" Margin="162,42,0,7" VerticalAlignment="Stretch"/>
+        <TextBlock HorizontalAlignment="Left" Opacity="0" Name="player2captured" Text="Player 2 Captured" TextWrapping="Wrap" Width="122" Margin="73,42,0,7" Grid.Column="9" VerticalAlignment="Stretch"/>
         <TextBlock Opacity="0" Name="check" HorizontalAlignment="Center" Text="CHECK" TextWrapping="Wrap" Width="110" Margin="0,14,0,11" Grid.Column="4" Grid.ColumnSpan="2" FontSize="36" Grid.Row="9"/>
 
         <Grid x:Name="player1grid" Grid.Column="0" Grid.Row="0" Grid.RowSpan="10" >
@@ -373,6 +373,61 @@
             <Border Grid.Column="2" Grid.Row="6" Background="Gray"/>
             <Border Grid.Column="2" Grid.Row="7" Background="Gray"/>
             <Border Grid.Column="2" Grid.Row="8" Background="Gray"/>
+
+        </Grid>
+        <Grid Opacity="1" x:Name="startmenu" Grid.Column="0" Grid.Row="0" Grid.RowSpan="10" Grid.ColumnSpan="13">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="72"/>
+                <RowDefinition Height="72"/>
+                <RowDefinition Height="72"/>
+                <RowDefinition Height="72"/>
+                <RowDefinition Height="72"/>
+                <RowDefinition Height="72"/>
+                <RowDefinition Height="72"/>
+                <RowDefinition Height="*"/>
+
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="496"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="496"/>
+                
+            </Grid.ColumnDefinitions>
+
+            <Border Grid.Column="0" Grid.Row="0" Background="Black"/>
+            <Border Grid.Column="0" Grid.Row="1" Background="Black"/>
+            <Border Grid.Column="0" Grid.Row="2" Background="Black"/>
+            <Border Grid.Column="0" Grid.Row="3" Background="Black"/>
+            <Border Grid.Column="0" Grid.Row="4" Background="Black"/>
+            <Border Grid.Column="0" Grid.Row="5" Background="Black"/>
+            <Border Grid.Column="0" Grid.Row="6" Background="Black"/>
+            <Border Grid.Column="0" Grid.Row="7" Background="Black"/>
+            <Border Grid.Column="1" Grid.Row="0" Background="Black"/>
+            <Border Grid.Column="1" Grid.Row="1" Background="Black"/>
+            <Border Grid.Column="1" Grid.Row="2" Background="Black"/>
+            <Border Grid.Column="1" Grid.Row="3" Background="Black"/>
+            <Border Grid.Column="1" Grid.Row="4" Background="Black"/>
+            <Border Grid.Column="1" Grid.Row="5" Background="Black"/>
+            <Border Grid.Column="1" Grid.Row="6" Background="Black"/>
+            <Border Grid.Column="1" Grid.Row="7" Background="Black"/>
+            <Border Grid.Column="2" Grid.Row="1" Background="Black"/>
+            <Border Grid.Column="2" Grid.Row="2" Background="Black"/>
+            <Border Grid.Column="2" Grid.Row="3" Background="Black"/>
+            <Border Grid.Column="2" Grid.Row="4" Background="Black"/>
+            <Border Grid.Column="2" Grid.Row="5" Background="Black"/>
+            <Border Grid.Column="2" Grid.Row="6" Background="Black"/>
+            <Border Grid.Column="2" Grid.Row="7" Background="Black"/>
+
+            <TextBlock Grid.Column="1" Grid.Row="1" TextAlignment="center" HorizontalAlignment="center" Text="Chess" Width="295" VerticalAlignment="center" FontSize="115" Grid.RowSpan="3"/>
+
+
+            <Button IsEnabled="True" Opacity="1" Grid.Column="1" Grid.Row="4" Width="295" Height="72" Click="NewGame" Name="newgame">
+                <TextBlock Text="New Game" Width="250" FontSize="48" VerticalAlignment="center" TextAlignment="Center"/>
+            </Button>
+
+            <Button IsEnabled="True" Opacity="1" Grid.Column="1" Grid.Row="6" Width="295" Height="72" Click="LoadGame" Name="loadgame">
+                <TextBlock Text="Load Game" Width="250" FontSize="48" VerticalAlignment="center" TextAlignment="Center"/>
+            </Button>
 
         </Grid>
         <TextBlock Opacity="0" Name="checkmate" HorizontalAlignment="Left" Text="CHECKMATE" TextWrapping="Wrap" Width="210" Margin="44,10,0,7" Grid.ColumnSpan="4" Grid.Column="3" FontSize="36" Grid.Row="9" VerticalAlignment="Stretch"/>

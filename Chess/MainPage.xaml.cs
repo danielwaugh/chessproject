@@ -22,6 +22,8 @@ namespace Chess
 
         bool selectFlag = true;     //for selecting pieces. if it is true, it means no piece is selected. if it is false, the piece is not selected
 
+        Grid startMenu = new Grid();
+
         public MainPage()
         {
             this.InitializeComponent();     //initializes all the xaml objects and pre work for app
@@ -48,6 +50,21 @@ namespace Chess
                 chessBoard.UnselectPiece(currentPieceNumber);       //unselects piece only if it is already selected
                 selectFlag = true;      //tells the program that the piece has been unselected
             }
+        }
+
+        private void NewGame(object sender, RoutedEventArgs e)
+        {
+            startMenu = (Grid)this.FindName("startmenu");
+            this.getGrid().Children.Remove(startMenu);
+            TextBlock player1text = (TextBlock)this.FindName("player1captured");
+            player1text.Opacity = 1;
+            TextBlock player2text = (TextBlock)this.FindName("player2captured");
+            player2text.Opacity = 1;
+        }
+
+        private void LoadGame(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 
