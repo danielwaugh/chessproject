@@ -9,7 +9,7 @@ using Newtonsoft.Json;
 
 namespace Chess
 {
-    class Board
+    public class Board
     {
         /// <summary>
         /// holds the position of all the pieces on the 8x8 board (total of 32 pieces represented by corresponding

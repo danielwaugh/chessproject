@@ -18,7 +18,9 @@ namespace Chess
 {
     public sealed partial class MainPage : Page
     {
-        Board chessBoard;     //create new board object
+        private Board chessBoard;     //create new board object
+
+        private SaveState savedGame; //saved board is stored here
 
         bool selectFlag = true;     //for selecting pieces. if it is true, it means no piece is selected. if it is false, the piece is not selected
 
@@ -32,6 +34,8 @@ namespace Chess
             UIGlobal.XAMLpage = this;       //for use of making xaml objects public for other classes
             popUpMenu = (Grid)this.FindName("gamepopupmenu");
             this.getGrid().Children.Remove(popUpMenu);
+            savedGame = new SaveState();
+            ;
         }
 
         public Grid getGrid()
@@ -70,7 +74,9 @@ namespace Chess
 
         private void LoadGame(object sender, RoutedEventArgs e)
         {
-
+            chessBoard = null;
+            chessBoard = savedGame.Load();
+            getGrid().Children.Remove(startMenu);
         }
 
         private void MainMenu(object sender, RoutedEventArgs e)
@@ -82,7 +88,7 @@ namespace Chess
 
         private void SaveGame(object sender, RoutedEventArgs e)
         {
-
+            savedGame.Save(chessBoard);
         }
 
         private void ReturnToGame(object sender, RoutedEventArgs e)

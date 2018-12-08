@@ -14,11 +14,11 @@ namespace Chess
     public class SaveState
     {
         private string BoardToJson { get; set; } //Json Serialized string
-        void Save(Board SaveThis) //Method that saves the current board passed in
+        public void Save(Board SaveThis) //Method that saves the current board passed in
         {
             BoardToJson = JsonConvert.SerializeObject(SaveThis);
         }
-        Board Load(Board loadBoard) //Method that restores the board
+        public Board Load() //Method that restores the board
         {
             Board JsonToBoard = JsonConvert.DeserializeObject<Board>(BoardToJson);
             return JsonToBoard;
