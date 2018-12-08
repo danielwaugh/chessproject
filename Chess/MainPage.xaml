@@ -100,6 +100,10 @@
         <Border Grid.Column="7" Grid.Row="8" Background="Tan" />
         <Border Grid.Column="8" Grid.Row="8" Background="Brown" />
 
+        <Button IsEnabled="True" Opacity="1" Grid.Column="4" Grid.ColumnSpan="2" Grid.Row="0" Width="144" Height="40" Click="GameMenu" Name="gamemenu">
+            <TextBlock Text="Menu" Width="125" FontSize="30" VerticalAlignment="center" TextAlignment="Center"/>
+        </Button>
+
         <Button IsEnabled="True" Opacity="1" Grid.Column="1" Grid.Row="1" Width="72" Height="72" Click="SelectPiece" Name="p1">
             <Button.Background>
                 <SolidColorBrush Opacity="0"/>
@@ -430,6 +434,64 @@
             </Button>
 
         </Grid>
+
+        <Grid Opacity="0" x:Name="gamepopupmenu" Grid.Column="0" Grid.Row="0" Grid.RowSpan="10" Grid.ColumnSpan="13">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="72"/>
+                <RowDefinition Height="72"/>
+                <RowDefinition Height="72"/>
+                <RowDefinition Height="72"/>
+                <RowDefinition Height="72"/>
+                <RowDefinition Height="72"/>
+                <RowDefinition Height="72"/>
+                <RowDefinition Height="*"/>
+
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="496"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="496"/>
+
+            </Grid.ColumnDefinitions>
+
+            <Border Grid.Column="0" Grid.Row="0" Background="Black"/>
+            <Border Grid.Column="0" Grid.Row="1" Background="Black"/>
+            <Border Grid.Column="0" Grid.Row="2" Background="Black"/>
+            <Border Grid.Column="0" Grid.Row="3" Background="Black"/>
+            <Border Grid.Column="0" Grid.Row="4" Background="Black"/>
+            <Border Grid.Column="0" Grid.Row="5" Background="Black"/>
+            <Border Grid.Column="0" Grid.Row="6" Background="Black"/>
+            <Border Grid.Column="0" Grid.Row="7" Background="Black"/>
+            <Border Grid.Column="1" Grid.Row="0" Background="Black"/>
+            <Border Grid.Column="1" Grid.Row="1" Background="Black"/>
+            <Border Grid.Column="1" Grid.Row="2" Background="Black"/>
+            <Border Grid.Column="1" Grid.Row="3" Background="Black"/>
+            <Border Grid.Column="1" Grid.Row="4" Background="Black"/>
+            <Border Grid.Column="1" Grid.Row="5" Background="Black"/>
+            <Border Grid.Column="1" Grid.Row="6" Background="Black"/>
+            <Border Grid.Column="1" Grid.Row="7" Background="Black"/>
+            <Border Grid.Column="2" Grid.Row="1" Background="Black"/>
+            <Border Grid.Column="2" Grid.Row="2" Background="Black"/>
+            <Border Grid.Column="2" Grid.Row="3" Background="Black"/>
+            <Border Grid.Column="2" Grid.Row="4" Background="Black"/>
+            <Border Grid.Column="2" Grid.Row="5" Background="Black"/>
+            <Border Grid.Column="2" Grid.Row="6" Background="Black"/>
+            <Border Grid.Column="2" Grid.Row="7" Background="Black"/>
+
+
+            <Button IsEnabled="True" Opacity="1" Grid.Column="1" Grid.Row="2" Width="295" Height="72" Click="MainMenu" Name="mainmenu">
+                <TextBlock Text="Main Menu" Width="250" FontSize="48" VerticalAlignment="center" TextAlignment="Center"/>
+            </Button>
+
+            <Button IsEnabled="True" Opacity="1" Grid.Column="1" Grid.Row="4" Width="295" Height="72" Click="SaveGame" Name="savegame">
+                <TextBlock Text="Save Game" Width="250" FontSize="48" VerticalAlignment="center" TextAlignment="Center"/>
+            </Button>
+            <Button IsEnabled="True" Opacity="1" Grid.Column="1" Grid.Row="6" Width="295" Height="72" Click="ReturnToGame" Name="returntogame">
+                <TextBlock Text="Return To Game" Width="250" FontSize="35" VerticalAlignment="center" TextAlignment="Center"/>
+            </Button>
+
+        </Grid>
+        
         <TextBlock Opacity="0" Name="checkmate" HorizontalAlignment="Left" Text="CHECKMATE" TextWrapping="Wrap" Width="210" Margin="44,10,0,7" Grid.ColumnSpan="4" Grid.Column="3" FontSize="36" Grid.Row="9" VerticalAlignment="Stretch"/>
     </Grid>
 
