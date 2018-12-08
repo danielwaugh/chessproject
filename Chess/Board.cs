@@ -43,8 +43,6 @@ namespace Chess
 
         private int[] invalidSingleKingMovement = new int[2];
 
-        private int buttonCount = 0;
-
         /// <summary>
         /// Constructor
         /// </summary>
@@ -149,7 +147,6 @@ namespace Chess
                                     curButton.Click += Move;    //sets method to run when button is pressed
                                     UIGlobal.XAMLpage.getGrid().Children.Add(curButton);     //adds button to grid 
                                     createdButtons.Add(curButton);
-                                    buttonCount++;
                                 }
                             }
                         }
@@ -178,7 +175,6 @@ namespace Chess
                                     curButton.Click += Move;    //sets method to run when button is pressed
                                     UIGlobal.XAMLpage.getGrid().Children.Add(curButton);    //adds button to grid 
                                     createdButtons.Add(curButton);
-                                    buttonCount++;
                                 }
                             }
                         }
@@ -206,7 +202,6 @@ namespace Chess
                                     curButton.Click += Move;    //sets method to run when button is pressed
                                     UIGlobal.XAMLpage.getGrid().Children.Add(curButton);     //adds button to grid 
                                     createdButtons.Add(curButton);
-                                    buttonCount++;
                                 }
                             }
                         }
@@ -234,7 +229,6 @@ namespace Chess
                                     curButton.Click += Move;    //sets method to run when button is pressed
                                     UIGlobal.XAMLpage.getGrid().Children.Add(curButton);     //adds button to grid 
                                     createdButtons.Add(curButton);
-                                    buttonCount++;
                                 }
                             }
                         }
@@ -261,7 +255,6 @@ namespace Chess
                                     curButton.Click += Move;    //sets method to run when button is pressed
                                     UIGlobal.XAMLpage.getGrid().Children.Add(curButton);     //adds button to grid 
                                     createdButtons.Add(curButton);
-                                    buttonCount++;
                                 }
                             }
                         }
@@ -288,7 +281,6 @@ namespace Chess
                                     curButton.Click += Move;    //sets method to run when button is pressed
                                     UIGlobal.XAMLpage.getGrid().Children.Add(curButton);     //adds button to grid 
                                     createdButtons.Add(curButton);
-                                    buttonCount++;
                                 }
                             }
                         }
@@ -318,7 +310,6 @@ namespace Chess
                                     curButton.Click += Move;    //sets method to run when button is pressed
                                     UIGlobal.XAMLpage.getGrid().Children.Add(curButton);    //adds button to grid 
                                     createdButtons.Add(curButton);
-                                    buttonCount++;
                                 }
                             }
                         }
@@ -345,7 +336,6 @@ namespace Chess
                                     curButton.Click += Move;    //sets method to run when button is pressed
                                     UIGlobal.XAMLpage.getGrid().Children.Add(curButton);     //adds button to grid 
                                     createdButtons.Add(curButton);
-                                    buttonCount++;
                                 }
                             }
                         }
@@ -373,7 +363,6 @@ namespace Chess
                                     curButton.Click += Move;    //sets method to run when button is pressed
                                     UIGlobal.XAMLpage.getGrid().Children.Add(curButton);     //adds button to grid 
                                     createdButtons.Add(curButton);
-                                    buttonCount++;
                                 }
                             }
                         }
@@ -400,7 +389,6 @@ namespace Chess
                                     curButton.Click += Move;    //sets method to run when button is pressed
                                     UIGlobal.XAMLpage.getGrid().Children.Add(curButton);     //adds button to grid 
                                     createdButtons.Add(curButton);
-                                    buttonCount++;
                                 }
                             }
                         }
@@ -427,7 +415,6 @@ namespace Chess
                                     curButton.Click += Move;    //sets method to run when button is pressed
                                     UIGlobal.XAMLpage.getGrid().Children.Add(curButton);     //adds button to grid 
                                     createdButtons.Add(curButton);
-                                    buttonCount++;
                                 }
                             }
                         }
@@ -454,7 +441,6 @@ namespace Chess
                                     curButton.Click += Move;    //sets method to run when button is pressed
                                     UIGlobal.XAMLpage.getGrid().Children.Add(curButton);     //adds button to grid 
                                     createdButtons.Add(curButton);
-                                    buttonCount++;
                                 }
                             }
                         }
@@ -1115,11 +1101,7 @@ namespace Chess
 
         private void CheckMateStaleMateCheck()
         {
-            TextBlock checkmateText = (TextBlock)UIGlobal.XAMLpage.FindName($"checkmate");  //get the textblock containing the check text
-            if (buttonCount == 0)  //if we are in checkmate
-            {
-                checkmateText.Opacity = 1;  //show the text
-            }
+           //to do
         }
 
         public override bool Equals(object obj)
