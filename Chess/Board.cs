@@ -39,11 +39,11 @@ namespace Chess
 
         private bool[,] checkModePath = new bool[8, 8];
 
-        private bool[,] validKingMovements = new bool[8, 8];
-
         private int[] checkAttackerLocation = new int[2];
 
         private int[] invalidSingleKingMovement = new int[2];
+
+        private int buttonCount = 0;
 
         /// <summary>
         /// Constructor
@@ -108,6 +108,7 @@ namespace Chess
         /// <param name="piece"></param>
         public void SelectPiece(int pieceNumber, Button piece)
         {
+            int buttonCount = 0;
             finishedMoveFlag = false;
             currentPiece = piece;
             for (int i = 0; i < 8; i++) //Nested for loop to find selected piece location
@@ -120,13 +121,15 @@ namespace Chess
                     }
                 }
             }
-            ValidKingMovements();
+            bool[,] validKingMovements = new bool[8, 8];
+            validKingMovements = ValidKingMovements();
             if (checkmode)
             {
                 if (pieceNumber == 5 || pieceNumber == 29) //Checks if piece is King
                 {
                     King thisKing = new King(selectedPiece); //Creates new King object
                     thisKing.createDestination(piecePositions, turn); //Destination array created 
+
                     checkModePath[checkAttackerLocation[0], checkAttackerLocation[1]] = (true ^ checkModePath[checkAttackerLocation[0], checkAttackerLocation[1]]); //toggles attacker cell so that king can attack it if it is right by the king
                     checkModePath[invalidSingleKingMovement[0], invalidSingleKingMovement[1]] = (true ^ checkModePath[invalidSingleKingMovement[0], invalidSingleKingMovement[1]]);
                     for (int i = 0; i < 8; i++) //Nested for loop to create available buttons for King Movement
@@ -135,15 +138,19 @@ namespace Chess
                         {
                             if (thisKing.validMoveLocations[i, j] == true && checkModePath[i, j] == false  && validKingMovements[i, j] == false)  //can only move to spots that wouldn't keep it in check
                             {
-                                Button curButton = new Button();    //creates button
-                                curButton.Width = 72;
-                                curButton.Height = 72;
-                                curButton.Name = $"{i + 1},{j + 1}";    //gives it a name for indexing later (name: "grid row, grid column")
-                                Grid.SetRow(curButton, i + 1);  //sets the location in the grid
-                                Grid.SetColumn(curButton, j + 1);
-                                curButton.Click += Move;    //sets method to run when button is pressed
-                                UIGlobal.XAMLpage.getGrid().Children.Add(curButton);     //adds button to grid 
-                                createdButtons.Add(curButton);
+                                if (!WillNextMoveCauseCheck(i, j))
+                                {
+                                    Button curButton = new Button();    //creates button
+                                    curButton.Width = 72;
+                                    curButton.Height = 72;
+                                    curButton.Name = $"{i + 1},{j + 1}";    //gives it a name for indexing later (name: "grid row, grid column")
+                                    Grid.SetRow(curButton, i + 1);  //sets the location in the grid
+                                    Grid.SetColumn(curButton, j + 1);
+                                    curButton.Click += Move;    //sets method to run when button is pressed
+                                    UIGlobal.XAMLpage.getGrid().Children.Add(curButton);     //adds button to grid 
+                                    createdButtons.Add(curButton);
+                                    buttonCount++;
+                                }
                             }
                         }
                     }
@@ -160,15 +167,19 @@ namespace Chess
                         {
                             if (thisRook.validMoveLocations[i, j] == true && checkModePath[i, j] == true)   //can move to only spots defending the king
                             {
-                                Button curButton = new Button();    //creates button
-                                curButton.Width = 72;
-                                curButton.Height = 72;
-                                curButton.Name = $"{i + 1},{j + 1}";    //gives it a name for indexing later (name: "grid row, grid column")
-                                Grid.SetRow(curButton, i + 1);  //sets the location in the grid
-                                Grid.SetColumn(curButton, j + 1);
-                                curButton.Click += Move;    //sets method to run when button is pressed
-                                UIGlobal.XAMLpage.getGrid().Children.Add(curButton);    //adds button to grid 
-                                createdButtons.Add(curButton);
+                                if (!WillNextMoveCauseCheck(i, j))
+                                {
+                                    Button curButton = new Button();    //creates button
+                                    curButton.Width = 72;
+                                    curButton.Height = 72;
+                                    curButton.Name = $"{i + 1},{j + 1}";    //gives it a name for indexing later (name: "grid row, grid column")
+                                    Grid.SetRow(curButton, i + 1);  //sets the location in the grid
+                                    Grid.SetColumn(curButton, j + 1);
+                                    curButton.Click += Move;    //sets method to run when button is pressed
+                                    UIGlobal.XAMLpage.getGrid().Children.Add(curButton);    //adds button to grid 
+                                    createdButtons.Add(curButton);
+                                    buttonCount++;
+                                }
                             }
                         }
                     }
@@ -184,15 +195,19 @@ namespace Chess
                         {
                             if (thisBishop.validMoveLocations[i, j] == true && checkModePath[i, j] == true)     //can move to only spots defending the king
                             {
-                                Button curButton = new Button();    //creates button
-                                curButton.Width = 72;
-                                curButton.Height = 72;
-                                curButton.Name = $"{i + 1},{j + 1}";    //gives it a name for indexing later (name: "grid row, grid column")
-                                Grid.SetRow(curButton, i + 1);  //sets the location in the grid
-                                Grid.SetColumn(curButton, j + 1);
-                                curButton.Click += Move;    //sets method to run when button is pressed
-                                UIGlobal.XAMLpage.getGrid().Children.Add(curButton);     //adds button to grid 
-                                createdButtons.Add(curButton);
+                                if (!WillNextMoveCauseCheck(i, j))
+                                {
+                                    Button curButton = new Button();    //creates button
+                                    curButton.Width = 72;
+                                    curButton.Height = 72;
+                                    curButton.Name = $"{i + 1},{j + 1}";    //gives it a name for indexing later (name: "grid row, grid column")
+                                    Grid.SetRow(curButton, i + 1);  //sets the location in the grid
+                                    Grid.SetColumn(curButton, j + 1);
+                                    curButton.Click += Move;    //sets method to run when button is pressed
+                                    UIGlobal.XAMLpage.getGrid().Children.Add(curButton);     //adds button to grid 
+                                    createdButtons.Add(curButton);
+                                    buttonCount++;
+                                }
                             }
                         }
                     }
@@ -208,15 +223,19 @@ namespace Chess
                         {
                             if (thisQueen.validMoveLocations[i, j] == true && checkModePath[i, j] == true)  //can move to only spots defending the king
                             {
-                                Button curButton = new Button();    //creates button
-                                curButton.Width = 72;
-                                curButton.Height = 72;
-                                curButton.Name = $"{i + 1},{j + 1}";    //gives it a name for indexing later (name: "grid row, grid column")
-                                Grid.SetRow(curButton, i + 1);  //sets the location in the grid
-                                Grid.SetColumn(curButton, j + 1);
-                                curButton.Click += Move;    //sets method to run when button is pressed
-                                UIGlobal.XAMLpage.getGrid().Children.Add(curButton);     //adds button to grid 
-                                createdButtons.Add(curButton);
+                                if (!WillNextMoveCauseCheck(i, j))
+                                {
+                                    Button curButton = new Button();    //creates button
+                                    curButton.Width = 72;
+                                    curButton.Height = 72;
+                                    curButton.Name = $"{i + 1},{j + 1}";    //gives it a name for indexing later (name: "grid row, grid column")
+                                    Grid.SetRow(curButton, i + 1);  //sets the location in the grid
+                                    Grid.SetColumn(curButton, j + 1);
+                                    curButton.Click += Move;    //sets method to run when button is pressed
+                                    UIGlobal.XAMLpage.getGrid().Children.Add(curButton);     //adds button to grid 
+                                    createdButtons.Add(curButton);
+                                    buttonCount++;
+                                }
                             }
                         }
                     }
@@ -231,15 +250,19 @@ namespace Chess
                         {
                             if (thisKnight.validMoveLocations[i, j] == true && checkModePath[i, j] == true) //can move to only spots defending the king
                             {
-                                Button curButton = new Button();    //creates button
-                                curButton.Width = 72;
-                                curButton.Height = 72;
-                                curButton.Name = $"{i + 1},{j + 1}";    //gives it a name for indexing later (name: "grid row, grid column")
-                                Grid.SetRow(curButton, i + 1);  //sets the location in the grid
-                                Grid.SetColumn(curButton, j + 1);
-                                curButton.Click += Move;    //sets method to run when button is pressed
-                                UIGlobal.XAMLpage.getGrid().Children.Add(curButton);     //adds button to grid 
-                                createdButtons.Add(curButton);
+                                if (!WillNextMoveCauseCheck(i, j))
+                                {
+                                    Button curButton = new Button();    //creates button
+                                    curButton.Width = 72;
+                                    curButton.Height = 72;
+                                    curButton.Name = $"{i + 1},{j + 1}";    //gives it a name for indexing later (name: "grid row, grid column")
+                                    Grid.SetRow(curButton, i + 1);  //sets the location in the grid
+                                    Grid.SetColumn(curButton, j + 1);
+                                    curButton.Click += Move;    //sets method to run when button is pressed
+                                    UIGlobal.XAMLpage.getGrid().Children.Add(curButton);     //adds button to grid 
+                                    createdButtons.Add(curButton);
+                                    buttonCount++;
+                                }
                             }
                         }
                     }
@@ -254,15 +277,19 @@ namespace Chess
                         {
                             if (thisPawn.validMoveLocations[i, j] == true && checkModePath[i, j] == true)
                             {
-                                Button curButton = new Button();    //creates button
-                                curButton.Width = 72;
-                                curButton.Height = 72;
-                                curButton.Name = $"{i + 1},{j + 1}";    //gives it a name for indexing later (name: "grid row, grid column")
-                                Grid.SetRow(curButton, i + 1);  //sets the location in the grid
-                                Grid.SetColumn(curButton, j + 1);
-                                curButton.Click += Move;    //sets method to run when button is pressed
-                                UIGlobal.XAMLpage.getGrid().Children.Add(curButton);     //adds button to grid 
-                                createdButtons.Add(curButton);
+                                if (!WillNextMoveCauseCheck(i, j))
+                                {
+                                    Button curButton = new Button();    //creates button
+                                    curButton.Width = 72;
+                                    curButton.Height = 72;
+                                    curButton.Name = $"{i + 1},{j + 1}";    //gives it a name for indexing later (name: "grid row, grid column")
+                                    Grid.SetRow(curButton, i + 1);  //sets the location in the grid
+                                    Grid.SetColumn(curButton, j + 1);
+                                    curButton.Click += Move;    //sets method to run when button is pressed
+                                    UIGlobal.XAMLpage.getGrid().Children.Add(curButton);     //adds button to grid 
+                                    createdButtons.Add(curButton);
+                                    buttonCount++;
+                                }
                             }
                         }
                     }
@@ -280,15 +307,19 @@ namespace Chess
                         {
                             if (thisRook.validMoveLocations[i, j] == true)
                             {
-                                Button curButton = new Button();    //creates button
-                                curButton.Width = 72;
-                                curButton.Height = 72;
-                                curButton.Name = $"{i + 1},{j + 1}";    //gives it a name for indexing later (name: "grid row, grid column")
-                                Grid.SetRow(curButton, i + 1);  //sets the location in the grid
-                                Grid.SetColumn(curButton, j + 1);
-                                curButton.Click += Move;    //sets method to run when button is pressed
-                                UIGlobal.XAMLpage.getGrid().Children.Add(curButton);    //adds button to grid 
-                                createdButtons.Add(curButton);
+                                if (!WillNextMoveCauseCheck(i, j))
+                                {
+                                    Button curButton = new Button();    //creates button
+                                    curButton.Width = 72;
+                                    curButton.Height = 72;
+                                    curButton.Name = $"{i + 1},{j + 1}";    //gives it a name for indexing later (name: "grid row, grid column")
+                                    Grid.SetRow(curButton, i + 1);  //sets the location in the grid
+                                    Grid.SetColumn(curButton, j + 1);
+                                    curButton.Click += Move;    //sets method to run when button is pressed
+                                    UIGlobal.XAMLpage.getGrid().Children.Add(curButton);    //adds button to grid 
+                                    createdButtons.Add(curButton);
+                                    buttonCount++;
+                                }
                             }
                         }
                     }
@@ -303,15 +334,19 @@ namespace Chess
                         {
                             if (thisBishop.validMoveLocations[i, j] == true)
                             {
-                                Button curButton = new Button();    //creates button
-                                curButton.Width = 72;
-                                curButton.Height = 72;
-                                curButton.Name = $"{i + 1},{j + 1}";    //gives it a name for indexing later (name: "grid row, grid column")
-                                Grid.SetRow(curButton, i + 1);  //sets the location in the grid
-                                Grid.SetColumn(curButton, j + 1);
-                                curButton.Click += Move;    //sets method to run when button is pressed
-                                UIGlobal.XAMLpage.getGrid().Children.Add(curButton);     //adds button to grid 
-                                createdButtons.Add(curButton);
+                                if (!WillNextMoveCauseCheck(i, j))
+                                {
+                                    Button curButton = new Button();    //creates button
+                                    curButton.Width = 72;
+                                    curButton.Height = 72;
+                                    curButton.Name = $"{i + 1},{j + 1}";    //gives it a name for indexing later (name: "grid row, grid column")
+                                    Grid.SetRow(curButton, i + 1);  //sets the location in the grid
+                                    Grid.SetColumn(curButton, j + 1);
+                                    curButton.Click += Move;    //sets method to run when button is pressed
+                                    UIGlobal.XAMLpage.getGrid().Children.Add(curButton);     //adds button to grid 
+                                    createdButtons.Add(curButton);
+                                    buttonCount++;
+                                }
                             }
                         }
                     }
@@ -327,15 +362,19 @@ namespace Chess
                         {
                             if (thisQueen.validMoveLocations[i, j] == true)
                             {
-                                Button curButton = new Button();    //creates button
-                                curButton.Width = 72;
-                                curButton.Height = 72;
-                                curButton.Name = $"{i + 1},{j + 1}";    //gives it a name for indexing later (name: "grid row, grid column")
-                                Grid.SetRow(curButton, i + 1);  //sets the location in the grid
-                                Grid.SetColumn(curButton, j + 1);
-                                curButton.Click += Move;    //sets method to run when button is pressed
-                                UIGlobal.XAMLpage.getGrid().Children.Add(curButton);     //adds button to grid 
-                                createdButtons.Add(curButton);
+                                if (!WillNextMoveCauseCheck(i, j))
+                                {
+                                    Button curButton = new Button();    //creates button
+                                    curButton.Width = 72;
+                                    curButton.Height = 72;
+                                    curButton.Name = $"{i + 1},{j + 1}";    //gives it a name for indexing later (name: "grid row, grid column")
+                                    Grid.SetRow(curButton, i + 1);  //sets the location in the grid
+                                    Grid.SetColumn(curButton, j + 1);
+                                    curButton.Click += Move;    //sets method to run when button is pressed
+                                    UIGlobal.XAMLpage.getGrid().Children.Add(curButton);     //adds button to grid 
+                                    createdButtons.Add(curButton);
+                                    buttonCount++;
+                                }
                             }
                         }
                     }
@@ -350,15 +389,19 @@ namespace Chess
                         {
                             if (thisKnight.validMoveLocations[i, j] == true)
                             {
-                                Button curButton = new Button();    //creates button
-                                curButton.Width = 72;
-                                curButton.Height = 72;
-                                curButton.Name = $"{i + 1},{j + 1}";    //gives it a name for indexing later (name: "grid row, grid column")
-                                Grid.SetRow(curButton, i + 1);  //sets the location in the grid
-                                Grid.SetColumn(curButton, j + 1);
-                                curButton.Click += Move;    //sets method to run when button is pressed
-                                UIGlobal.XAMLpage.getGrid().Children.Add(curButton);     //adds button to grid 
-                                createdButtons.Add(curButton);
+                                if (!WillNextMoveCauseCheck(i, j))
+                                {
+                                    Button curButton = new Button();    //creates button
+                                    curButton.Width = 72;
+                                    curButton.Height = 72;
+                                    curButton.Name = $"{i + 1},{j + 1}";    //gives it a name for indexing later (name: "grid row, grid column")
+                                    Grid.SetRow(curButton, i + 1);  //sets the location in the grid
+                                    Grid.SetColumn(curButton, j + 1);
+                                    curButton.Click += Move;    //sets method to run when button is pressed
+                                    UIGlobal.XAMLpage.getGrid().Children.Add(curButton);     //adds button to grid 
+                                    createdButtons.Add(curButton);
+                                    buttonCount++;
+                                }
                             }
                         }
                     }
@@ -371,17 +414,21 @@ namespace Chess
                     {
                         for (int j = 0; j < 8; j++)
                         {
-                            if (thisKing.validMoveLocations[i, j] == true && validKingMovements[i, j] == false)
+                            if (thisKing.validMoveLocations[i, j] == true)
                             {
-                                Button curButton = new Button();    //creates button
-                                curButton.Width = 72;
-                                curButton.Height = 72;
-                                curButton.Name = $"{i + 1},{j + 1}";    //gives it a name for indexing later (name: "grid row, grid column")
-                                Grid.SetRow(curButton, i + 1);  //sets the location in the grid
-                                Grid.SetColumn(curButton, j + 1);
-                                curButton.Click += Move;    //sets method to run when button is pressed
-                                UIGlobal.XAMLpage.getGrid().Children.Add(curButton);     //adds button to grid 
-                                createdButtons.Add(curButton);
+                                if (!WillNextMoveCauseCheck(i, j))
+                                {
+                                    Button curButton = new Button();    //creates button
+                                    curButton.Width = 72;
+                                    curButton.Height = 72;
+                                    curButton.Name = $"{i + 1},{j + 1}";    //gives it a name for indexing later (name: "grid row, grid column")
+                                    Grid.SetRow(curButton, i + 1);  //sets the location in the grid
+                                    Grid.SetColumn(curButton, j + 1);
+                                    curButton.Click += Move;    //sets method to run when button is pressed
+                                    UIGlobal.XAMLpage.getGrid().Children.Add(curButton);     //adds button to grid 
+                                    createdButtons.Add(curButton);
+                                    buttonCount++;
+                                }
                             }
                         }
                     }
@@ -396,22 +443,24 @@ namespace Chess
                         {
                             if (thisPawn.validMoveLocations[i, j] == true)
                             {
-                                Button curButton = new Button();    //creates button
-                                curButton.Width = 72;
-                                curButton.Height = 72;
-                                curButton.Name = $"{i + 1},{j + 1}";    //gives it a name for indexing later (name: "grid row, grid column")
-                                Grid.SetRow(curButton, i + 1);  //sets the location in the grid
-                                Grid.SetColumn(curButton, j + 1);
-                                curButton.Click += Move;    //sets method to run when button is pressed
-                                UIGlobal.XAMLpage.getGrid().Children.Add(curButton);     //adds button to grid 
-                                createdButtons.Add(curButton);
+                                if (!WillNextMoveCauseCheck(i, j))
+                                {
+                                    Button curButton = new Button();    //creates button
+                                    curButton.Width = 72;
+                                    curButton.Height = 72;
+                                    curButton.Name = $"{i + 1},{j + 1}";    //gives it a name for indexing later (name: "grid row, grid column")
+                                    Grid.SetRow(curButton, i + 1);  //sets the location in the grid
+                                    Grid.SetColumn(curButton, j + 1);
+                                    curButton.Click += Move;    //sets method to run when button is pressed
+                                    UIGlobal.XAMLpage.getGrid().Children.Add(curButton);     //adds button to grid 
+                                    createdButtons.Add(curButton);
+                                    buttonCount++;
+                                }
                             }
                         }
                     }
                 }
             }
-
-
         }
 
         /// <summary>
@@ -477,7 +526,6 @@ namespace Chess
             checkmode = false;
             CheckPopUp();
             kingCheck();
-            Array.Clear(validKingMovements, 0, validKingMovements.Length);
             Array.Clear(selectedPiece, 0, selectedPiece.Length);        //clears the aray of location of selected piece
             finishedMoveFlag = true;    //move is now finished
             ChangeTurn();       //changes the turn to the other player
@@ -541,7 +589,7 @@ namespace Chess
         /// <summary>
         /// checks to see if the king is in the check stage.
         /// </summary>
-        private void kingCheck()
+       private void kingCheck()
         {
             int pieceNumber = Convert.ToInt32(currentPiece.Name.Substring(1));   //gets the current pieces identification number for xaml
             if (pieceNumber == 1 || pieceNumber == 8 || pieceNumber == 25 || pieceNumber == 32) //Checks if piece is Rook
@@ -729,8 +777,9 @@ namespace Chess
         /// Is used to see where the king can go to make sure the kings movement does not
         /// result in a check
         /// </summary>
-        private void ValidKingMovements()
+        private bool[,] ValidKingMovements()
         {
+            bool[,] validKingMovements = new bool[8, 8];
             Button curButton;
             if(turn == 0)   //whites turn
             {
@@ -937,6 +986,7 @@ namespace Chess
                 //set turn back to black
                 turn = 1;
             }
+            return validKingMovements;
         }
 
         /// <summary>
@@ -964,6 +1014,114 @@ namespace Chess
             return returnarray;
         }
 
+        private bool WillNextMoveCauseCheck(int newRow, int newCol)
+        {
+            int prevRow = 0;
+            int prevCol = 0;
+            int playersPieceNumber = 0;
+            for(int j = 0; j < 8; j++)
+            {
+                for(int k = 0; k < 8; k++)
+                {
+                    if (selectedPiece[j, k] == 1)
+                    {
+                        prevRow = j;
+                        prevCol = k;
+                        playersPieceNumber = piecePositions[j, k];
+                    }
+                }
+            }
+            int attackedPieceNumber = piecePositions[newRow, newCol];
+
+            Button prevButton = (Button)UIGlobal.XAMLpage.FindName($"p{playersPieceNumber}");
+            Button newButton = (Button)UIGlobal.XAMLpage.FindName($"p{attackedPieceNumber}");
+
+            bool[,] validKingMovements = new bool[8, 8];
+
+            int prevPieceNumber = piecePositions[newRow, newCol];
+
+            if (newButton != null)
+            {
+                Grid.SetRow(newButton, 1);
+                Grid.SetColumn(newButton, 1);
+                UIGlobal.getGrid().Children.Remove(newButton);  //removes from main grid
+                UIGlobal.getPlayer1Grid().Children.Add(newButton);  //and adds to capture grid
+
+                Grid.SetRow(prevButton, newRow + 1);
+                Grid.SetColumn(prevButton, newCol + 1);
+
+                piecePositions[prevRow, prevCol] = 0;
+                piecePositions[newRow, newCol] = playersPieceNumber;
+
+                validKingMovements = ValidKingMovements();
+
+                piecePositions[newRow, newCol] = prevPieceNumber;
+                piecePositions[prevRow, prevCol] = playersPieceNumber;
+
+                Grid.SetRow(prevButton, prevRow + 1);
+                Grid.SetColumn(prevButton, prevCol + 1);
+
+                Grid.SetRow(newButton, newRow + 1);  //sets the row and column in capture grid
+                Grid.SetColumn(newButton, newCol + 1);
+                UIGlobal.getPlayer1Grid().Children.Remove(newButton);  //and adds to capture grid
+                UIGlobal.getGrid().Children.Add(newButton);  //removes from main grid
+            }
+            else
+            {
+                Grid.SetRow(prevButton, newRow + 1);
+                Grid.SetColumn(prevButton, newCol + 1);
+
+                piecePositions[prevRow, prevCol] = 0;
+                piecePositions[newRow, newCol] = playersPieceNumber;
+
+                validKingMovements = ValidKingMovements();
+
+                piecePositions[newRow, newCol] = prevPieceNumber;
+                piecePositions[prevRow, prevCol] = playersPieceNumber;
+
+                Grid.SetRow(prevButton, prevRow + 1);
+                Grid.SetColumn(prevButton, prevCol + 1);
+            }
+            if(playersPieceNumber == 5 || playersPieceNumber == 29)
+            {
+                piecePositions[prevRow, prevCol] = 0;
+                piecePositions[newRow, newCol] = playersPieceNumber;
+            }
+            for (int l = 0; l < 8; l++)
+            {
+                for (int p = 0; p < 8; p++)
+                {
+                    if (validKingMovements[l, p] == true)
+                    {
+                        if (turn == 0 && piecePositions[l, p] == 5)
+                        {
+                            piecePositions[newRow, newCol] = prevPieceNumber;
+                            piecePositions[prevRow, prevCol] = playersPieceNumber;
+                            return true;
+                        }
+                        if (turn == 1 && piecePositions[l, p] == 29)
+                        {
+                            piecePositions[newRow, newCol] = prevPieceNumber;
+                            piecePositions[prevRow, prevCol] = playersPieceNumber;
+                            return true;
+                        }
+                    }
+                }
+            }
+            piecePositions[newRow, newCol] = prevPieceNumber;
+            piecePositions[prevRow, prevCol] = playersPieceNumber;
+            return false;
+        }
+
+        private void CheckMateStaleMateCheck()
+        {
+            TextBlock checkmateText = (TextBlock)UIGlobal.XAMLpage.FindName($"checkmate");  //get the textblock containing the check text
+            if (buttonCount == 0)  //if we are in checkmate
+            {
+                checkmateText.Opacity = 1;  //show the text
+            }
+        }
+
         public override bool Equals(object obj)
         {
             var board = obj as Board;
@@ -978,8 +1136,7 @@ namespace Chess
                    EqualityComparer<int[]>.Default.Equals(capturedPieceBlack, board.capturedPieceBlack) &&
                    EqualityComparer<List<int>>.Default.Equals(capturedList, board.capturedList) &&
                    checkmode == board.checkmode &&
-                   EqualityComparer<bool[,]>.Default.Equals(checkModePath, board.checkModePath) &&
-                   EqualityComparer<bool[,]>.Default.Equals(validKingMovements, board.validKingMovements);
+                   EqualityComparer<bool[,]>.Default.Equals(checkModePath, board.checkModePath);
         }
 
         public override int GetHashCode()
@@ -996,7 +1153,6 @@ namespace Chess
             hashCode = hashCode * -1521134295 + EqualityComparer<List<int>>.Default.GetHashCode(capturedList);
             hashCode = hashCode * -1521134295 + checkmode.GetHashCode();
             hashCode = hashCode * -1521134295 + EqualityComparer<bool[,]>.Default.GetHashCode(checkModePath);
-            hashCode = hashCode * -1521134295 + EqualityComparer<bool[,]>.Default.GetHashCode(validKingMovements);
             return hashCode;
         }
 

@@ -295,6 +295,8 @@
         <TextBlock HorizontalAlignment="Left" Text="Player 1 Captured" TextWrapping="Wrap" Width="122" Margin="162,42,0,7" VerticalAlignment="Stretch"/>
         <TextBlock HorizontalAlignment="Left" Text="Player 2 Captured" TextWrapping="Wrap" Width="122" Margin="73,42,0,7" Grid.Column="9" VerticalAlignment="Stretch"/>
         <TextBlock Opacity="0" Name="check" HorizontalAlignment="Center" Text="CHECK" TextWrapping="Wrap" Width="110" Margin="0,14,0,11" Grid.Column="4" Grid.ColumnSpan="2" FontSize="36" Grid.Row="9"/>
+        <TextBlock Opacity="0" x:Name="checkmate" HorizontalAlignment="Center" Text="CHECKMATE" TextWrapping="Wrap" Width="110" Margin="0,14,0,11" Grid.Column="4" Grid.ColumnSpan="2" FontSize="36" Grid.Row="9" VerticalAlignment="Stretch"/>
+        <TextBlock Opacity="0" x:Name="stakemate" HorizontalAlignment="Center" Text="STALEMATE" TextWrapping="Wrap" Width="110" Margin="0,14,0,11" Grid.Column="4" Grid.ColumnSpan="2" FontSize="36" Grid.Row="9" VerticalAlignment="Stretch"/>
 
         <Grid x:Name="player1grid" Grid.Column="0" Grid.Row="0" Grid.RowSpan="10" >
             <Grid.RowDefinitions>
@@ -375,7 +377,6 @@
             <Border Grid.Column="2" Grid.Row="8" Background="Gray"/>
 
         </Grid>
-
     </Grid>
 
 </Page>
