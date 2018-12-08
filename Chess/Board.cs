@@ -43,6 +43,8 @@ namespace Chess
 
         private int[] invalidSingleKingMovement = new int[2];
 
+        private int buttonCount = 0;
+
         /// <summary>
         /// Constructor
         /// </summary>
@@ -106,7 +108,6 @@ namespace Chess
         /// <param name="piece"></param>
         public void SelectPiece(int pieceNumber, Button piece)
         {
-            int buttonCount = 0;
             finishedMoveFlag = false;
             currentPiece = piece;
             for (int i = 0; i < 8; i++) //Nested for loop to find selected piece location
@@ -147,6 +148,7 @@ namespace Chess
                                     curButton.Click += Move;    //sets method to run when button is pressed
                                     UIGlobal.XAMLpage.getGrid().Children.Add(curButton);     //adds button to grid 
                                     createdButtons.Add(curButton);
+                                    buttonCount++;
                                 }
                             }
                         }
@@ -175,6 +177,7 @@ namespace Chess
                                     curButton.Click += Move;    //sets method to run when button is pressed
                                     UIGlobal.XAMLpage.getGrid().Children.Add(curButton);    //adds button to grid 
                                     createdButtons.Add(curButton);
+                                    buttonCount++;
                                 }
                             }
                         }
@@ -202,6 +205,7 @@ namespace Chess
                                     curButton.Click += Move;    //sets method to run when button is pressed
                                     UIGlobal.XAMLpage.getGrid().Children.Add(curButton);     //adds button to grid 
                                     createdButtons.Add(curButton);
+                                    buttonCount++;
                                 }
                             }
                         }
@@ -229,6 +233,7 @@ namespace Chess
                                     curButton.Click += Move;    //sets method to run when button is pressed
                                     UIGlobal.XAMLpage.getGrid().Children.Add(curButton);     //adds button to grid 
                                     createdButtons.Add(curButton);
+                                    buttonCount++;
                                 }
                             }
                         }
@@ -255,6 +260,7 @@ namespace Chess
                                     curButton.Click += Move;    //sets method to run when button is pressed
                                     UIGlobal.XAMLpage.getGrid().Children.Add(curButton);     //adds button to grid 
                                     createdButtons.Add(curButton);
+                                    buttonCount++;
                                 }
                             }
                         }
@@ -281,6 +287,7 @@ namespace Chess
                                     curButton.Click += Move;    //sets method to run when button is pressed
                                     UIGlobal.XAMLpage.getGrid().Children.Add(curButton);     //adds button to grid 
                                     createdButtons.Add(curButton);
+                                    buttonCount++;
                                 }
                             }
                         }
@@ -310,6 +317,7 @@ namespace Chess
                                     curButton.Click += Move;    //sets method to run when button is pressed
                                     UIGlobal.XAMLpage.getGrid().Children.Add(curButton);    //adds button to grid 
                                     createdButtons.Add(curButton);
+                                    buttonCount++;
                                 }
                             }
                         }
@@ -336,6 +344,7 @@ namespace Chess
                                     curButton.Click += Move;    //sets method to run when button is pressed
                                     UIGlobal.XAMLpage.getGrid().Children.Add(curButton);     //adds button to grid 
                                     createdButtons.Add(curButton);
+                                    buttonCount++;
                                 }
                             }
                         }
@@ -363,6 +372,7 @@ namespace Chess
                                     curButton.Click += Move;    //sets method to run when button is pressed
                                     UIGlobal.XAMLpage.getGrid().Children.Add(curButton);     //adds button to grid 
                                     createdButtons.Add(curButton);
+                                    buttonCount++;
                                 }
                             }
                         }
@@ -389,6 +399,7 @@ namespace Chess
                                     curButton.Click += Move;    //sets method to run when button is pressed
                                     UIGlobal.XAMLpage.getGrid().Children.Add(curButton);     //adds button to grid 
                                     createdButtons.Add(curButton);
+                                    buttonCount++;
                                 }
                             }
                         }
@@ -415,6 +426,7 @@ namespace Chess
                                     curButton.Click += Move;    //sets method to run when button is pressed
                                     UIGlobal.XAMLpage.getGrid().Children.Add(curButton);     //adds button to grid 
                                     createdButtons.Add(curButton);
+                                    buttonCount++;
                                 }
                             }
                         }
@@ -441,6 +453,7 @@ namespace Chess
                                     curButton.Click += Move;    //sets method to run when button is pressed
                                     UIGlobal.XAMLpage.getGrid().Children.Add(curButton);     //adds button to grid 
                                     createdButtons.Add(curButton);
+                                    buttonCount++;
                                 }
                             }
                         }
@@ -545,6 +558,7 @@ namespace Chess
                     curButton.Opacity = 1;
                 }
                 turn = 1;   //changes turn
+                CheckMateStaleMateCheck();
             }
             else
             {
@@ -569,6 +583,7 @@ namespace Chess
                     curButton.Opacity = .7;
                 }
                 turn = 0;   //changees turn
+                CheckMateStaleMateCheck();
             }
         }
 
@@ -1101,8 +1116,42 @@ namespace Chess
 
         private void CheckMateStaleMateCheck()
         {
-           //to do
+            TextBlock checkText = (TextBlock)UIGlobal.XAMLpage.FindName($"check");  //get the textblock containing the check text
+            TextBlock checkMateText = (TextBlock)UIGlobal.XAMLpage.FindName($"checkmate");  //get the textblock containing the check text
+
+            buttonCount = 0;
+            if (turn == 0)   //whites turn
+            {
+                for (int i = 1; i < 17; i++)
+                {
+                    if (capturedList.Contains(i))    //makes sure the piece isn't captured
+                    {
+                        continue;
+                    }
+                    SelectPiece(i, (Button)UIGlobal.XAMLpage.FindName($"p{i}"));
+                    UnselectPiece(i);
+                }
+            }
+            else //blacks turn
+            {
+                for (int i = 17; i < 33; i++)
+                {
+                    if (capturedList.Contains(i))    //makes sure the piece isn't captured
+                    {
+                        continue;
+                    }
+                    SelectPiece(i, (Button)UIGlobal.XAMLpage.FindName($"p{i}"));
+                    UnselectPiece(i);
+                }
+            }
+            if (buttonCount == 0)
+            {
+                checkText.Opacity = 0;
+                checkMateText.Opacity = 1;
+            }
+            buttonCount = 0;
         }
+        
 
         public override bool Equals(object obj)
         {
