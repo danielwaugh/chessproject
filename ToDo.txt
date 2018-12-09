@@ -12,6 +12,7 @@ For Pawn Turning into Queen:
 1. To Do
 
 For Json save/load:
-1. create start screen which allows selected new game or load game.
-2. class is good, but need to call functions using the start screen.
-3. game states are saved locally, no need to save/load from server. progress is lost if closed is ok
+1. create start screen which allows selected new game or load game. DONE
+2. class is good, but need to call functions using the start screen. DONE
+3. game states are saved locally, no need to save/load from server. progress is lost if closed is ok DONE
+4. add popup when game is saved to acknowledge success

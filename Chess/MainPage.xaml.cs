@@ -86,10 +86,7 @@ namespace Chess
             startMenu.Opacity = 1;
         }
 
-        private void SaveGame(object sender, RoutedEventArgs e)
-        {
-            savedGame.Save(chessBoard);
-        }
+        private void SaveGame(object sender, RoutedEventArgs e) => savedGame.Save(chessBoard);
 
         private void ReturnToGame(object sender, RoutedEventArgs e)
         {
