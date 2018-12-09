@@ -42,7 +42,7 @@ namespace Chess
         {
             return maingrid;        //returns the grid, so that the chess pieces can be used in external classes
         }
-        private void SelectPiece(object sender, RoutedEventArgs e)      //button action for all the pieces
+        public void SelectPiece(object sender, RoutedEventArgs e)      //button action for all the pieces
         {
             Button currentPieceButton = (Button)sender; //cast the object to a button type
             int currentPieceNumber = 0;     //to store current pieces number
@@ -241,6 +241,11 @@ namespace Chess
         public static Grid getPlayer2Grid()
         {
             return (Grid)XAMLpage.FindName("player2grid");
+        }
+
+        public static void RunSelectPieceOnce(Button curButton, RoutedEventArgs e)
+        {
+            XAMLpage.SelectPiece(curButton, e);
         }
     }
 }

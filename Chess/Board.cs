@@ -559,6 +559,7 @@ namespace Chess
                 }
                 turn = 1;   //changes turn
                 CheckMateStaleMateCheck();
+                UIGlobal.RunSelectPieceOnce(currentPiece, new RoutedEventArgs());
             }
             else
             {
@@ -584,6 +585,7 @@ namespace Chess
                 }
                 turn = 0;   //changees turn
                 CheckMateStaleMateCheck();
+                UIGlobal.RunSelectPieceOnce(currentPiece, new RoutedEventArgs());
             }
         }
 
