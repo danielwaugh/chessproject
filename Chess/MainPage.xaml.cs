@@ -35,7 +35,6 @@ namespace Chess
             popUpMenu = (Grid)this.FindName("gamepopupmenu");
             this.getGrid().Children.Remove(popUpMenu);
             savedGame = new SaveState();
-            ;
         }
 
         public Grid getGrid()
@@ -77,8 +76,8 @@ namespace Chess
         {
             chessBoard = null;
             chessBoard = savedGame.Load();
-            //RearangePieces();
-            //RearangePiecesLoad(chessBoard);
+            RearangePieces();
+            RearangePiecesLoad(chessBoard);
             getGrid().Children.Remove(startMenu);
         }
 
@@ -254,7 +253,7 @@ namespace Chess
                     Grid.SetRow(curPiece, whiteCaptured[0]);
                     Grid.SetColumn(curPiece, whiteCaptured[1]);
                     getGrid().Children.Remove(curPiece);
-                    UIGlobal.getPlayer1Grid().Children.Add(curPiece);
+                    UIGlobal.getPlayer2Grid().Children.Add(curPiece);
                     if (whiteCaptured[1] == 2) //increments grid location 
                     {
                         whiteCaptured[0]++;
@@ -270,7 +269,7 @@ namespace Chess
                     Grid.SetRow(curPiece, blackCaptured[0]);
                     Grid.SetColumn(curPiece, blackCaptured[1]);
                     getGrid().Children.Remove(curPiece);
-                    UIGlobal.getPlayer2Grid().Children.Add(curPiece);
+                    UIGlobal.getPlayer1Grid().Children.Add(curPiece);
                     if (blackCaptured[1] == 2) //increments grid location 
                     {
                         blackCaptured[0]++;

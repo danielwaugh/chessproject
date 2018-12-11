@@ -4,7 +4,6 @@ using System.Linq;
 using System.Reflection.Metadata.Ecma335;
 using System.Text;
 using System.Threading.Tasks;
-using Newtonsoft.Json;
 
 namespace Chess
 { //look up uwp file access issues. Might reference email
@@ -14,17 +13,16 @@ namespace Chess
     /// </summary>
     public class SaveState
     {
-        private string BoardToJson { get; set; } //Json Serialized string
+        private Board saveBoard = new Board(); //Json Serialized string
         public void Save(Board SaveThis) //Method that saves the current board passed in
         {
-            BoardToJson = JsonConvert.SerializeObject(SaveThis);
+            saveBoard = SaveThis;
         }
         public Board Load() //Method that restores the board
         {
             try
             {
-                Board JsonToBoard = JsonConvert.DeserializeObject<Board>(BoardToJson);
-                return JsonToBoard;
+                return saveBoard;
             }
             catch (System.ArgumentNullException)
             {
