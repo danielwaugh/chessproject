@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Metadata.Ecma335;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
@@ -20,8 +21,15 @@ namespace Chess
         }
         public Board Load() //Method that restores the board
         {
-            Board JsonToBoard = JsonConvert.DeserializeObject<Board>(BoardToJson);
-            return JsonToBoard;
+            try
+            {
+                Board JsonToBoard = JsonConvert.DeserializeObject<Board>(BoardToJson);
+                return JsonToBoard;
+            }
+            catch (System.ArgumentNullException)
+            {
+                return null;
+            }
         }
     }
 }
