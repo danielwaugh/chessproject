@@ -53,6 +53,16 @@ namespace Chess
             turn = 0;   //turn starts out with white piece
         }
 
+        public int[,] GetPiecePositions()
+        {
+            return piecePositions;
+        }
+
+        public List<int> GetCapturedPieces()
+        {
+            return capturedList;
+        }
+
         /// <summary>
         /// moves the appropriate captured piece from the board to the captured bank
         /// of the specefied player.

@@ -42,6 +42,7 @@ namespace Chess
         {
             return maingrid;        //returns the grid, so that the chess pieces can be used in external classes
         }
+
         public void SelectPiece(object sender, RoutedEventArgs e)      //button action for all the pieces
         {
             Button currentPieceButton = (Button)sender; //cast the object to a button type
@@ -76,6 +77,8 @@ namespace Chess
         {
             chessBoard = null;
             chessBoard = savedGame.Load();
+            //RearangePieces();
+            //RearangePiecesLoad(chessBoard);
             getGrid().Children.Remove(startMenu);
         }
 
@@ -212,6 +215,72 @@ namespace Chess
                 }
                 curPiece.IsEnabled = false;
                 curPiece.Opacity = 0.7;
+            }
+        }
+
+        private void RearangePiecesLoad(Board curBoard)
+        {
+            int[,] piecePositions = curBoard.GetPiecePositions();
+
+            int curPieceNumber = 0;
+
+            int[] blackCaptured = new int[2] { 1, 1 };
+
+            int[] whiteCaptured = new int[2] { 1, 1 };
+
+            for (int i = 0; i < 8; i++)
+            {
+                for (int k = 0; k < 8; k++)
+                {
+                    curPieceNumber = piecePositions[i, k];
+                    if(curPieceNumber == 0)
+                    {
+                        continue;
+                    }
+                    else
+                    {
+                        Button curPiece = (Button)this.FindName($"p{curPieceNumber}");  //need to check if it is in grid or in captured grid
+                        Grid.SetRow(curPiece, i + 1);
+                        Grid.SetColumn(curPiece, k + 1);
+                    }
+                }
+            }
+
+            foreach(int piece in curBoard.GetCapturedPieces())
+            {
+                Button curPiece = (Button)this.FindName($"p{piece}");
+                if (piece < 17)
+                {
+                    Grid.SetRow(curPiece, whiteCaptured[0]);
+                    Grid.SetColumn(curPiece, whiteCaptured[1]);
+                    getGrid().Children.Remove(curPiece);
+                    UIGlobal.getPlayer1Grid().Children.Add(curPiece);
+                    if (whiteCaptured[1] == 2) //increments grid location 
+                    {
+                        whiteCaptured[0]++;
+                        whiteCaptured[1] = 1;
+                    }
+                    else
+                    {
+                        whiteCaptured[1]++;
+                    }
+                }
+                else
+                {
+                    Grid.SetRow(curPiece, blackCaptured[0]);
+                    Grid.SetColumn(curPiece, blackCaptured[1]);
+                    getGrid().Children.Remove(curPiece);
+                    UIGlobal.getPlayer2Grid().Children.Add(curPiece);
+                    if (blackCaptured[1] == 2) //increments grid location 
+                    {
+                        blackCaptured[0]++;
+                        blackCaptured[1] = 1;
+                    }
+                    else
+                    {
+                        blackCaptured[1]++;
+                    }
+                }
             }
         }
     }
