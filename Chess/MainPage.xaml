@@ -395,7 +395,7 @@
                 <ColumnDefinition Width="496"/>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="496"/>
-                
+
             </Grid.ColumnDefinitions>
 
             <Border Grid.Column="0" Grid.Row="0" Background="Black"/>
@@ -435,7 +435,7 @@
 
         </Grid>
 
-        <Grid Opacity="0" x:Name="gamepopupmenu" Grid.Column="0" Grid.Row="0" Grid.RowSpan="10" Grid.ColumnSpan="13">
+        <Grid Opacity="1" x:Name="gamepopupmenu" Grid.Column="0" Grid.Row="0" Grid.RowSpan="10" Grid.ColumnSpan="13">
             <Grid.RowDefinitions>
                 <RowDefinition Height="72"/>
                 <RowDefinition Height="72"/>
@@ -491,8 +491,11 @@
             </Button>
 
         </Grid>
-        
+
         <TextBlock Opacity="0" Name="checkmate" HorizontalAlignment="Left" Text="CHECKMATE" TextWrapping="Wrap" Width="210" Margin="44,10,0,7" Grid.ColumnSpan="4" Grid.Column="3" FontSize="36" Grid.Row="9" VerticalAlignment="Stretch"/>
+
+        <TextBlock Opacity="0" Text="Auto Save On" Width="150" FontSize="18" VerticalAlignment="Top" TextAlignment="Center" Name="autosave" Margin="10,10,196,0" FocusVisualPrimaryBrush="#FFF01919" Foreground="#FFF70B0B"/>
+
     </Grid>
 
 </Page>
