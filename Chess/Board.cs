@@ -14,35 +14,35 @@ namespace Chess
         /// holds the position of all the pieces on the 8x8 board (total of 32 pieces represented by corresponding
         /// numbers, 0 represents empty position). These numbers map to the name of the xaml object in the uwp application
         /// </summary>
-        private int[,] piecePositions = new int[8, 8]
+        public int[,] piecePositions = new int[8, 8]
             { {1, 2, 3, 4, 5, 6, 7, 8}, {9, 10, 11, 12, 13, 14, 15, 16}, {0, 0, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0, 0, 0},
             {0, 0, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0, 0, 0}, {17, 18, 19, 20, 21, 22, 23, 24}, {25, 26, 27, 28, 29, 30, 31, 32} };
 
         public int[,] selectedPiece = new int[8, 8];         //holds the position of the currently selected piece
 
-        private List<Button> createdButtons = new List<Button>();   //holds a list of the buttons created when a piece is selected (desitination buttons)
+        public List<Button> createdButtons = new List<Button>();   //holds a list of the buttons created when a piece is selected (desitination buttons)
 
-        private Button currentPiece = new Button(); //holds the current piece that is selected
+        public Button currentPiece = new Button(); //holds the current piece that is selected
 
         public bool finishedMoveFlag = false;   //set when a move is finished
 
-        private int turn;       //holds whos turn it is
+        public int turn;       //holds whos turn it is
 
-        private int[] capturedPieceWhite = new int[2] { 1, 1 };
+        public int[] capturedPieceWhite = new int[2] { 1, 1 };
 
-        private int[] capturedPieceBlack = new int[2] { 1, 1 };
+        public int[] capturedPieceBlack = new int[2] { 1, 1 };
 
-        private List<int> capturedList = new List<int>();
+        public List<int> capturedList = new List<int>();
 
-        private bool checkmode = false;
+        public bool checkmode = false;
 
-        private bool[,] checkModePath = new bool[8, 8];
+        public bool[,] checkModePath = new bool[8, 8];
 
-        private int[] checkAttackerLocation = new int[2];
+        public int[] checkAttackerLocation = new int[2];
 
-        private int[] invalidSingleKingMovement = new int[2];
+        public int[] invalidSingleKingMovement = new int[2];
 
-        private int buttonCount = 0;
+        public int buttonCount = 0;
 
         /// <summary>
         /// Constructor
