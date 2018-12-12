@@ -13,7 +13,7 @@ namespace Chess
     /// </summary>
     public class SaveState
     {
-        private Board saveBoard = new Board(); //Saved board
+        private Board saveBoard; //Saved board
         public void Save(Board SaveThis) //Method that saves the current board passed in. 
         {
             saveBoard = SaveThis;

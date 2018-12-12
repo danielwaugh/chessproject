@@ -76,15 +76,18 @@ namespace Chess
         {
             chessBoard = null;
             chessBoard = savedGame.Load();
-            RearangePieces();
-            TextBlock player1text = (TextBlock)this.FindName("player1captured");
-            player1text.Opacity = 1;
-            TextBlock player2text = (TextBlock)this.FindName("player2captured");
-            player2text.Opacity = 1;
-            TextBlock autoSave = (TextBlock)this.FindName("autosave");
-            autoSave.Opacity = 1;
-            RearangePiecesLoad(chessBoard);
-            getGrid().Children.Remove(startMenu);
+            if(chessBoard != null)
+            {
+                RearangePieces();
+                TextBlock player1text = (TextBlock)this.FindName("player1captured");
+                player1text.Opacity = 1;
+                TextBlock player2text = (TextBlock)this.FindName("player2captured");
+                player2text.Opacity = 1;
+                TextBlock autoSave = (TextBlock)this.FindName("autosave");
+                autoSave.Opacity = 1;
+                RearangePiecesLoad(chessBoard);
+                getGrid().Children.Remove(startMenu);
+            }
         }
 
         private void MainMenu(object sender, RoutedEventArgs e)
