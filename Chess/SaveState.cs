@@ -13,12 +13,12 @@ namespace Chess
     /// </summary>
     public class SaveState
     {
-        private Board saveBoard = new Board(); //Json Serialized string
-        public void Save(Board SaveThis) //Method that saves the current board passed in
+        private Board saveBoard = new Board(); //Saved board
+        public void Save(Board SaveThis) //Method that saves the current board passed in. 
         {
             saveBoard = SaveThis;
         }
-        public Board Load() //Method that restores the board
+        public Board Load() //Method that restores the board. 
         {
             try
             {
