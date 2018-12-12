@@ -76,11 +76,13 @@ namespace Chess
         {
             chessBoard = null;
             chessBoard = savedGame.Load();
+            RearangePieces();
             TextBlock player1text = (TextBlock)this.FindName("player1captured");
             player1text.Opacity = 1;
             TextBlock player2text = (TextBlock)this.FindName("player2captured");
             player2text.Opacity = 1;
-            RearangePieces();
+            TextBlock autoSave = (TextBlock)this.FindName("autosave");
+            autoSave.Opacity = 1;
             RearangePiecesLoad(chessBoard);
             getGrid().Children.Remove(startMenu);
         }
@@ -96,6 +98,7 @@ namespace Chess
 
         private void SaveGame(object sender, RoutedEventArgs e)
         {
+            chessBoard.UnselectPiece(chessBoard.GetCurrentPieceNumber());
             savedGame.Save(chessBoard);
             TextBlock autoSave = (TextBlock)this.FindName("autosave");
             autoSave.Opacity = 1;
@@ -122,11 +125,11 @@ namespace Chess
 
         private void RearangePieces()
         {
-            for(int i = 1; i < 9; i++)
+            for (int i = 1; i < 9; i++)
             {
                 Button curPiece = (Button)this.FindName($"p{i}");
                 Grid parent = (Grid)curPiece.Parent;
-                if(parent.Name == "maingrid")
+                if (parent.Name == "maingrid")
                 {
                     Grid.SetRow(curPiece, 1);
                     Grid.SetColumn(curPiece, i);
@@ -243,7 +246,7 @@ namespace Chess
                 for (int k = 0; k < 8; k++)
                 {
                     curPieceNumber = piecePositions[i, k];
-                    if(curPieceNumber == 0)
+                    if (curPieceNumber == 0)
                     {
                         continue;
                     }
@@ -256,7 +259,7 @@ namespace Chess
                 }
             }
 
-            foreach(int piece in curBoard.GetCapturedPieces())
+            foreach (int piece in curBoard.GetCapturedPieces())
             {
                 Button curPiece = (Button)this.FindName($"p{piece}");
                 if (piece < 17)
@@ -292,6 +295,52 @@ namespace Chess
                     }
                 }
             }
+            if (chessBoard.GetTurn() == 0)  //turn = 0 is white, turn = 1 is black
+            {
+                for (int i = 1; i < 17; i++)    //sets all the white buttons to an opacity of 1 and enables the buttons
+                {
+                    Button curButton = UIGlobal.XAMLpage.FindName($"p{i}") as Button;   //gets piece by name
+                    if (!curButton.IsEnabled && curButton.Opacity == 1) //checks to see if it is in the captured bank
+                    {
+                        continue;
+                    }
+                    curButton.IsEnabled = true;
+                    curButton.Opacity = 1;
+                }
+                for (int i = 17; i < 33; i++)   //sets all the black buttons to an opacity of .7 and disables the buttons
+                {
+                    Button curButton = UIGlobal.XAMLpage.FindName($"p{i}") as Button;   //gets piece by name
+                    if (!curButton.IsEnabled && curButton.Opacity == 1) //checks to see if it is in the captured bank
+                    {
+                        continue;
+                    }
+                    curButton.IsEnabled = false;
+                    curButton.Opacity = .7;
+                }
+            }
+            else
+            {
+                for (int i = 1; i < 17; i++)     //sets all the white buttons to an opacity of .7 and disables the buttons
+                {
+                    Button curButton = UIGlobal.XAMLpage.FindName($"p{i}") as Button;   //gets piece by name
+                    if (!curButton.IsEnabled && curButton.Opacity == 1)  //checks to see if it is in the captured bank
+                    {
+                        continue;
+                    }
+                    curButton.IsEnabled = false;
+                    curButton.Opacity = .7;
+                }
+                for (int i = 17; i < 33; i++)    //sets all the black buttons to an opacity of 1 and enables the buttons
+                {
+                    Button curButton = UIGlobal.XAMLpage.FindName($"p{i}") as Button;   //gets piece by name
+                    if (!curButton.IsEnabled && curButton.Opacity == 1) //checks to see if it is in the captured bank
+                    {
+                        continue;
+                    }
+                    curButton.IsEnabled = true;
+                    curButton.Opacity = 1;
+                }
+            }
         }
     }
 
@@ -300,7 +349,7 @@ namespace Chess
     /// it would not be possible to modify the xaml file outside of the xaml main
     /// class. It is static (unchanging) and returns the grid of the xaml class. 
     /// </summary>
-    public static class UIGlobal        
+    public static class UIGlobal
     {
         public static MainPage XAMLpage { get; set; }       //create the main page object
 
@@ -325,3 +374,4 @@ namespace Chess
         }
     }
 }
+
