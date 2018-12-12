@@ -62,6 +62,11 @@ namespace Chess
 
         private void NewGame(object sender, RoutedEventArgs e)
         {
+            if (sender == null)
+            {
+                throw new ArgumentNullException(nameof(sender));
+            }
+
             startMenu = (Grid)this.FindName("startmenu");
             this.getGrid().Children.Remove(startMenu);
             TextBlock player1text = (TextBlock)this.FindName("player1captured");
@@ -94,7 +99,7 @@ namespace Chess
             startMenu.Opacity = 1;
         }
 
-        private void SaveGame(object sender, RoutedEventArgs e)
+        private void SaveGame()
         {
             savedGame.Save(chessBoard);
             TextBlock autoSave = (TextBlock)this.FindName("autosave");
