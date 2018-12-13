@@ -101,7 +101,7 @@ namespace Chess
             startMenu.Opacity = 1;
         }
 
-        private void SaveGame()
+        private void SaveGame(object sender, RoutedEventArgs e)
         {
             chessBoard.UnselectPiece(chessBoard.GetCurrentPieceNumber());
             savedGame.Save(chessBoard);
