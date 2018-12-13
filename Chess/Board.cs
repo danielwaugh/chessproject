@@ -5,7 +5,6 @@ using System.Text;
 using System.Threading.Tasks;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Newtonsoft.Json;
 
 namespace Chess
 {
@@ -63,6 +62,16 @@ namespace Chess
             return capturedList;
         }
 
+        public int GetTurn()
+        {
+            return turn;
+        }
+
+
+        public int GetCurrentPieceNumber()
+        {
+            return Convert.ToInt32(currentPiece.Name.Substring(1));
+        }
         /// <summary>
         /// moves the appropriate captured piece from the board to the captured bank
         /// of the specefied player.
